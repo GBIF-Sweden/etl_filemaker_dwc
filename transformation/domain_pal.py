@@ -56,6 +56,33 @@ def pad_zero(value: str) -> str:
     return value.zfill(2) if value != "" else value
 
 
+def pal_fix_synonyms(df: pd.DataFrame) -> pd.DataFrame:
+    """Fix synonyms by creating taxon remarks from species names and authors."""
+    df = df.copy()
+    try:
+        df["catalogNumber"] = df["catalogNumber"].ffill()
+        df["Species name"] = df["Species name"].fillna("")
+        df["Author"] = df["Author"].fillna("")
+
+        species = df["Species name"].fillna("")
+        author = df["Author"].fillna("")
+        df["taxonRemarks"] = (species + ", " + author).str.strip(", ")
+
+        agg_dict = {
+            col: "first"
+            for col in df.columns
+            if col not in ["taxonRemarks", "catalogNumber"]
+        }
+        agg_dict["taxonRemarks"] = lambda x: " | ".join(x)
+        df2 = df.groupby("catalogNumber", as_index=False).agg(agg_dict)
+
+        logging.info("pal_fix_synonyms transformation completed successfully.")
+        return df2
+    except Exception as e:
+        logging.exception(f"An unexpected error occurred in pal_fix_synonyms: {e}")
+        raise
+
+
 def pal_adhoc_transform(df: pd.DataFrame) -> pd.DataFrame:
     """Apply ad-hoc PAL transformations."""
     df = df.copy()
