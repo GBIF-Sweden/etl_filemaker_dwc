@@ -49,3 +49,29 @@ def pal_move_oceans(df: pd.DataFrame) -> pd.DataFrame:
         "Southern Ocean",
     ]
     return move_entities_to_column(df, "country", "waterBody", oceans)
+
+
+def pad_zero(value: str) -> str:
+    """Pad a string value with zeros to a minimum length of 2 characters."""
+    return value.zfill(2) if value != "" else value
+
+
+def pal_adhoc_transform(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply ad-hoc PAL transformations."""
+    df = df.copy()
+    try:
+        if "LocalityName" in df.columns and "SiteName" in df.columns:
+            df["locality"] = df["LocalityName"] + " - " + df["SiteName"]
+        else:
+            logging.info("Warning: 'LocalityName' or 'SiteName' column not found.")
+
+        df["month"] = df["month"].fillna("").astype(str).apply(pad_zero)
+        df["day"] = df["day"].fillna("").astype(str).apply(pad_zero)
+        df["createdDate"] = df["modified"]
+
+        logging.info("pal_adhoc_transform transformation completed successfully.")
+    except Exception as e:
+        logging.exception(f"An unexpected error occurred in adhoc_transform: {e}")
+        raise
+
+    return df
