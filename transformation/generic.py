@@ -35,3 +35,21 @@ def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
     except Exception as e:
         logging.exception(f"An error occurred in generate_occ_id_triplet: {e}")
         raise
+
+
+def create_dynamicproperties(
+    df: pd.DataFrame, list_of_columns: List[str]
+) -> pd.DataFrame:
+    """Adds a 'dynamicProperties' column with JSON payloads from selected columns."""
+
+    def build_row_properties(row: pd.Series) -> str:
+        properties = {}
+        for col in list_of_columns:
+            value = row.get(col, None)
+            if pd.notnull(value) and value != "":
+                properties[col] = value
+        return json.dumps(properties, ensure_ascii=False, separators=(",", ":"))
+
+    df = df.copy()
+    df["dynamicProperties"] = df.apply(build_row_properties, axis=1)
+    return df
