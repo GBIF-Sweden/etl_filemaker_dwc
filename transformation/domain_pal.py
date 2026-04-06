@@ -23,3 +23,17 @@ def move_entities_to_column(
     except Exception as e:
         logging.exception(f"Error in move_entities_to_column: {e}")
         raise
+
+
+def pal_move_continents(df: pd.DataFrame) -> pd.DataFrame:
+    """Move countries that are actually continents into a separate column."""
+    continents = [
+        "Africa",
+        "Antarctica",
+        "Asia",
+        "Europe",
+        "North America",
+        "Oceania",
+        "South America",
+    ]
+    return move_entities_to_column(df, "country", "continent", continents)
