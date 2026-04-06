@@ -8,6 +8,21 @@ import pandas as pd
 from fuzzywuzzy import fuzz
 
 
+def clean_whitespace(df: pd.DataFrame) -> pd.DataFrame:
+    """Cleans whitespace from all string columns in the DataFrame."""
+    df = df.copy()
+    try:
+        string_columns = df.select_dtypes(include=["object"]).columns
+        df[string_columns] = df[string_columns].apply(
+            lambda x: x.str.strip().str.replace(r"\s+", " ", regex=True)
+        )
+        logging.info(f"Whitespace cleaning applied to columns: {list(string_columns)}")
+        return df
+    except Exception as e:
+        logging.exception(f"An error occurred during clean_whitespace: {e}")
+        raise
+
+
 def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
     """Generates occurrenceID from institutionCode, collectionCode, and catalogNumber."""
     df = df.copy()
