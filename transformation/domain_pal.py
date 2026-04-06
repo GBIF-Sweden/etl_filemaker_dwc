@@ -37,3 +37,15 @@ def pal_move_continents(df: pd.DataFrame) -> pd.DataFrame:
         "South America",
     ]
     return move_entities_to_column(df, "country", "continent", continents)
+
+
+def pal_move_oceans(df: pd.DataFrame) -> pd.DataFrame:
+    """Move countries that are actually oceans into a separate column."""
+    oceans = [
+        "Pacific Ocean",
+        "Atlantic Ocean",
+        "Indian Ocean",
+        "Arctic Ocean",
+        "Southern Ocean",
+    ]
+    return move_entities_to_column(df, "country", "waterBody", oceans)
