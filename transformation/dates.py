@@ -4,6 +4,62 @@ import numpy as np
 import pandas as pd
 
 
+def create_date(
+    df: pd.DataFrame, col_year: str, col_month: str, col_day: str, col_date: str
+) -> pd.DataFrame:
+    """
+    Creates a new ISO 8601 partial date column from year, month, and day columns.
+    """
+    df = df.copy()
+    required = [col_year, col_month, col_day]
+    if not all(col in df.columns for col in required):
+        missing = [col for col in required if col not in df.columns]
+        raise KeyError(f"Missing required columns for date creation: {missing}")
+
+    year = (
+        df[col_year]
+        .fillna("")
+        .astype(str)
+        .str.replace(r"\.0$", "", regex=True)
+        .str.strip()
+    )
+    month = (
+        df[col_month]
+        .fillna("")
+        .astype(str)
+        .str.replace(r"\.0$", "", regex=True)
+        .str.strip()
+    )
+    day = (
+        df[col_day]
+        .fillna("")
+        .astype(str)
+        .str.replace(r"\.0$", "", regex=True)
+        .str.strip()
+    )
+
+    has_year = year != ""
+    has_month = month != ""
+    has_day = day != ""
+
+    df[col_date] = np.select(
+        [
+            has_year & has_month & has_day,
+            has_year & has_month,
+            has_year,
+        ],
+        [
+            year + "-" + month.str.zfill(2) + "-" + day.str.zfill(2),
+            year + "-" + month.str.zfill(2),
+            year,
+        ],
+        default="",
+    )
+
+    logging.info(f"Generated date column '{col_date}'.")
+    return df
+
+
 def convert_date_columns(df: pd.DataFrame, date_column: str) -> pd.DataFrame:
     """
     Converts a specified string column to a consistent ISO 8601 UTC datetime format.
