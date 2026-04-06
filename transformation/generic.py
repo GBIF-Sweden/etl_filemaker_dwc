@@ -52,6 +52,31 @@ def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
         raise
 
 
+def drop_duplicate_rows(df: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
+    """Removes duplicate rows based on the primary key column from the config."""
+    try:
+        load_config = config.get("load", {})
+        pk_column = load_config.get("database_table_pk_column")
+        if not pk_column:
+            raise ValueError("Primary key column not specified in load config.")
+        if pk_column not in df.columns:
+            raise ValueError(
+                f"Primary key column '{pk_column}' not found in DataFrame."
+            )
+
+        initial_rows = len(df)
+        df = df.drop_duplicates(subset=pk_column, keep="first")
+        rows_dropped = initial_rows - len(df)
+
+        logging.info(
+            f"Dropped {rows_dropped} duplicate rows based on primary key '{pk_column}'."
+        )
+        return df
+    except (ValueError, KeyError) as e:
+        logging.error(f"Error in drop_duplicate_rows: {e}")
+        raise
+
+
 def create_dynamicproperties(
     df: pd.DataFrame, list_of_columns: List[str]
 ) -> pd.DataFrame:
