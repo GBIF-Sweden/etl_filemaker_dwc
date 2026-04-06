@@ -1,0 +1,129 @@
+# --- Python Artifacts ---
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+wheels/
+pip-wheel-metadata/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+# --- Virtual Environments ---
+# Common virtual environment directories
+.env
+.venv
+env/
+venv/
+ENV/
+
+
+# --- Secrets and Credentials ---
+# IMPORTANT: Never commit secrets or local configurations to version control.
+# Use env.template file to provide a template for other developers.
+*.env
+.env.*
+!env.template
+credentials.yml
+db_credentials.yml
+
+
+# --- IDE and Editor Configurations ---
+# PyCharm
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Other editor temporary files
+*.swp
+*.swo
+*~
+
+
+# --- Testing and Coverage ---
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+
+# --- Operating System Files ---
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+
+# --- Project-Specific Outputs ---
+# Generated data files and logs
+logs/*.log
+output/**/*.zip
+output/**/*.csv
+data/BOT/processed/*.csv
+data/BOT/processed/*.txt
+data/PAL/processed/*.csv
+data/PAL/processed/*.txt
+data/ZOO/processed/*.csv
+data/ZOO/processed/*.txt
+
+# Keep directory structure but ignore contents
+!logs/.gitkeep
+!output/.gitkeep
+!data/.gitkeep
+
+# Darwin Core Archives
+*.dwca
+
+# Backup files
+*.bak
+*.backup
+*~
+config-files-bkup*/
+
+
+# --- Documentation Build Artifacts ---
+docs/_build/
+docs/.doctrees/
+site/
+
+
+# --- Temporary Files ---
+*.tmp
+*.temp
+.cache/
