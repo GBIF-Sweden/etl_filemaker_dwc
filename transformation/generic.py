@@ -189,6 +189,27 @@ def create_dynamicproperties(
     return df
 
 
+def trim_value(df: pd.DataFrame, column: str, value: str) -> pd.DataFrame:
+    """Trims occurrences of a specific value from the start and end of each string."""
+    df = df.copy()
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("The first argument must be a pandas DataFrame.")
+    if column not in df.columns:
+        raise ValueError(
+            f"The specified column '{column}' does not exist in the DataFrame."
+        )
+
+    df[column] = df[column].astype("string")
+    escaped_value = re.escape(value)
+    pattern = rf"^\s*{escaped_value}+\s*|\s*{escaped_value}+\s*$"
+    df[column] = df[column].replace(pattern, "", regex=True)
+
+    logging.info(
+        f"Cleaning column '{column}' of extra '{value}' completed successfully."
+    )
+    return df
+
+
 def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
     """Drops rows where the specified column is empty or null."""
     df = df.copy()
