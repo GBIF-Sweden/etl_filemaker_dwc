@@ -1,0 +1,147 @@
+dataset: paleobotany
+dwca_metadata:
+  dataset_name: "NRM Paleobotany Fossil Collection"
+  description: "Darwin Core Archive export for the NRM paleobotany fossil collection."
+  citation: "NRM Paleobotany Fossil Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+    basisOfRecord: FossilSpecimen
+    collectionCode: PAL
+    institutionCode: NRM
+  extract:
+    delimiter: ;
+    encoding: ISO-8859-1
+    srcFilePath: ./data/PAL/verbatim/pfossil.csv
+    quotechar: \"
+    dtype:
+      CollDay: str
+      CollMonth: str
+      CollYear: str
+      waterBody: str
+      Country: str
+      IdentifiedYear: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_paleobotany
+    database_table_pk_column: occurrenceID
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/PAL/processed/dwc_paleobotany.csv
+    write_to_db: true
+    write_to_file: true
+    write_to_dwca: true
+    dwcaPath: ./output/dr1014/dr1014.zip
+    dwc_fields:
+      - occurrenceID
+      - institutionCode
+      - collectionCode
+      - catalogNumber
+      - basisOfRecord
+      - modified
+      # - associatedMedia
+      - phylum
+      - class
+      - order
+      - family
+      - genus
+      - specificEpithet
+      - scientificNameAuthorship
+      - typeStatus
+      - identifiedBy
+      - dateIdentified
+      - recordedBy
+      - year
+      - month
+      - day
+      - eventDate
+      - continent
+      - waterBody
+      - country
+      - stateProvince
+      - county
+      - locality
+      - verbatimLatitude
+      - verbatimLongitude
+      - lithostratigraphicTerms
+      - earliestPeriodOrLowestSystem
+      - earliestEpochOrLowestSeries
+      - earliestAgeOrLowestStage
+      - latestPeriodOrHighestSystem
+      - latestEpochOrHighestSeries
+      - latestAgeOrHighestStage
+      - dynamicProperties
+  mapping:
+    Catalogue ID: catalogNumber
+    Associated Media: associatedMedia
+    DateStamp: modified
+    Phylum: phylum
+    Class: class
+    Order: order
+    Family: family
+    Genus: genus
+    Species: specificEpithet
+    Authority: scientificNameAuthorship
+    Type: typeStatus
+    Identifier: identifiedBy
+    IdentifiedYear: dateIdentified
+    Treatment: preparations
+    Collector: recordedBy
+    CollYear: year
+    CollMonth: month
+    CollDay: day
+    Lithostratigraphy: lithostratigraphicTerms
+    PeriodMax: earliestPeriodOrLowestSystem
+    EpochMax: earliestEpochOrLowestSeries
+    StageMax: earliestAgeOrLowestStage
+    PeriodMin: latestPeriodOrHighestSystem
+    EpochMin: latestEpochOrHighestSeries
+    StageMin: latestAgeOrHighestStage
+    Latitude: verbatimLatitude
+    Longitude: verbatimLongitude
+    CountyParish: county
+    RegionState: stateProvince
+    Country: country
+  transformations:
+  - function: pal_move_continents
+    params: {}
+  - function: pal_move_oceans
+    params: {}
+  - function: generate_occ_id_triplet
+    params: {}
+  - function: pal_adhoc_transform
+    params: {}
+  - function: convert_date_columns
+    params:
+      date_column: createdDate
+  - function: create_dynamicproperties
+    params:
+      list_of_columns:
+        - createdDate
+  - function: create_date
+    params:
+      col_year: year
+      col_month: month
+      col_day: day
+      col_date: eventDate
+  - function: clean_whitespace
+    params: {}
+  - function: drop_duplicate_rows
+    params: {}
+  - function: drop_empty_rows
+    params:
+      column_to_check: catalogNumber
+  - function: drop_unmapped_columns
+    params: {}
+
+  unmapped:
+  - Description
+  - Element
+  - Species name
+  - Author
+  - SiteName
+  - LocalityName
+  - associatedMedia
