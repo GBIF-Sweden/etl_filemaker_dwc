@@ -47,6 +47,8 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "pal_move_oceans": pal_move_oceans,
     "pal_adhoc_transform": pal_adhoc_transform,
     "pal_fix_synonyms": pal_fix_synonyms,
+    "clean_column_sex": clean_column_sex,
+    "clean_column_lifestage": clean_column_lifestage,
     "split_and_explode": split_and_explode,
     "convert_date_columns": convert_date_columns,
 }
