@@ -1,0 +1,97 @@
+dataset: mammals
+dwca_metadata:
+  dataset_name: "NRM Mammals Collection"
+  description: "Darwin Core Archive export for the NRM mammals collection."
+  citation: "NRM Mammals Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+#    basisOfRecord: PreservedSpecimen
+    collectionCode: Mammals
+    institutionCode: NRM
+    kingdom: Animalia
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/MAexport.csv
+    dtype:
+      catalogNumber: str
+      individualCount: str
+      day: str
+      month: str
+      year: str
+      endDay: str
+      endMonth: str
+      endYear: str
+      sex: str
+      dateIdentified: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_mammals
+    database_table_pk_column: occurrenceID
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/ZOO/processed/dwc_mammals.csv
+    write_to_db: true
+    write_to_file: true
+    write_to_dwca: true
+    dwcaPath: ./output/dr1018/dr1018.zip
+    dwc_fields: {}
+    batch_size: 100
+  mapping:
+    continent: higherGeography
+    createdDate: modified
+    Preservation: preservation
+  transformations:
+    - function: clean_whitespace
+      params: {}
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: clean_column_sex
+      params: {}
+    - function: clean_column_lifestage
+      params: {}
+    - function: trim_value
+      params:
+        column: month
+        value: "00"
+    - function: trim_value
+      params:
+        column: day
+        value: "00"
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+    - function: convert_date_columns
+      params:
+        date_column: modified
+#    - function: create_dynamicproperties
+#      params:
+#        list_of_columns:
+#          - createdDate
+#          - expeditionName
+#          - endDay
+#          - endMonth
+#          - endYear
+#          - preservation
+#          - synonyms
+    - function: trim_value
+      params:
+        column: dateIdentified
+        value: "-"
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: drop_duplicate_rows
+      params: {}
+    - function: drop_unmapped_columns
+      params: {}
+  unmapped:
+    - expeditionName
+    - sex_p
