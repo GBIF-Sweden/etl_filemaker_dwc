@@ -99,6 +99,49 @@ def drop_duplicate_rows(df: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFram
         raise
 
 
+def filter_by_string_match(
+    df: pd.DataFrame, column: str, string: str, keep_matches: bool = True
+) -> pd.DataFrame:
+    """Filters rows based on string match in a column."""
+    df = df.copy()
+    if column not in df.columns:
+        logging.warning(f"Column '{column}' not found. Skipping filter.")
+        return df
+
+    initial_rows = len(df)
+    mask = df[column].str.contains(string, na=False)
+
+    if keep_matches:
+        filtered_df = df[mask]
+        action = "Selected"
+        count = len(filtered_df)
+    else:
+        filtered_df = df[~mask]
+        action = "Dropped"
+        count = initial_rows - len(filtered_df)
+
+    logging.info(f"{action} {count} rows where '{column}' contains '{string}'.")
+    return filtered_df
+
+
+def drop_matched_string(
+    df: pd.DataFrame, column_to_check: str, string_to_match: str
+) -> pd.DataFrame:
+    """Drops rows where the specified column contains the given string."""
+    return filter_by_string_match(
+        df, column_to_check, string_to_match, keep_matches=False
+    )
+
+
+def select_matched_string(
+    df: pd.DataFrame, column_to_check: str, string_to_match: str
+) -> pd.DataFrame:
+    """Filters a DataFrame to include only rows where a column contains a string."""
+    return filter_by_string_match(
+        df, column_to_check, string_to_match, keep_matches=True
+    )
+
+
 def create_dynamicproperties(
     df: pd.DataFrame, list_of_columns: List[str]
 ) -> pd.DataFrame:
