@@ -210,6 +210,59 @@ def trim_value(df: pd.DataFrame, column: str, value: str) -> pd.DataFrame:
     return df
 
 
+def clean_column_sex(df: pd.DataFrame) -> pd.DataFrame:
+    """Cleans the 'sex' column and adds a standardized 'sex_p' column."""
+    df = df.copy()
+
+    sex_mapping = {
+        "Female": "Female",
+        "female": "Female",
+        "Female?": "Female",
+        "female?": "Female",
+        "Male": "Male",
+        "male": "Male",
+        "Male?": "Male",
+        "male?": "Male",
+        "0": "Unknown",
+        "0?": "Unknown",
+        "Male M": "Male",
+        "male M": "Male",
+        "Hermafrodit": "Hermaphrodite",
+        "Hermaphrodite": "Hermaphrodite",
+        "Hona": "Female",
+        "Okänt": "Unknown",
+        "Unknown": "Unknown",
+        "Castrated": "Castrated",
+        "-": "Unknown",
+        "Indeterminate": "Unknown",
+    }
+
+    df["sex"] = df["sex"].fillna("").astype(str).str.strip()
+    df["sex_p"] = df["sex"].map(sex_mapping)
+    mask_unmapped = df["sex_p"].isna() & (df["sex"] != "")
+
+    if mask_unmapped.any():
+        unique_unmapped = df.loc[mask_unmapped, "sex"].unique()
+        fuzzy_map = {}
+
+        for sex_value in unique_unmapped:
+            best_match = max(
+                sex_mapping.keys(), key=lambda x: fuzz.ratio(sex_value.lower(), x.lower())
+            )
+            if fuzz.ratio(sex_value.lower(), best_match.lower()) > 60:
+                fuzzy_map[sex_value] = sex_mapping[best_match]
+            else:
+                fuzzy_map[sex_value] = "Unknown"
+
+        df.loc[mask_unmapped, "sex_p"] = df.loc[mask_unmapped, "sex"].map(fuzzy_map)
+
+    df.loc[df["sex"] == "", "sex_p"] = ""
+    df["sex_p"] = df["sex_p"].fillna("Unknown")
+
+    logging.info("Cleaning column sex completed successfully.")
+    return df
+
+
 def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
     """Drops rows where the specified column is empty or null."""
     df = df.copy()
