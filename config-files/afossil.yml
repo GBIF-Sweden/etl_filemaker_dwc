@@ -1,0 +1,242 @@
+dataset: paleobotany
+dwca_metadata:
+  dataset_name: "NRM Paleozoology Fossil Collection"
+  description: "Darwin Core Archive export for the NRM paleozoology fossil collection."
+  citation: "NRM Paleozoology Fossil Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+    basisOfRecord: FossilSpecimen
+    collectionCode: PAL
+    institutionCode: NRM
+  dtype_dict:
+    CollDay: str
+    CollMonth: str
+    CollYear: str
+  extract:
+    delimiter: ;
+    encoding: ISO-8859-1
+    srcFilePath: ./data/PAL/verbatim/afossil.csv
+    quotechar: \"
+    dtype:
+      CollDay: str
+      CollMonth: str
+      CollYear: str
+      waterBody: str
+      Country: str
+      IdentifiedYear: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_paleozoology
+    database_table_pk_column: 'occurrenceID'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/PAL/processed/dwc_paleozoology.csv
+    write_to_db: true
+    write_to_file: true
+    multimedia_extension: true
+    multimedia_file_path: ./data/PAL/processed/multimedia_paleozoology.csv
+    multimedia_table: multimedia_paleozoology
+    multimedia_table_pk_column: 'identifier'
+    write_to_dwca: true
+    dwcaPath: ./output/dr1/dr1.zip
+    dwc_fields:
+      - occurrenceID
+      - institutionCode
+      - collectionCode
+      - catalogNumber
+      - basisOfRecord
+      - modified
+      # - associatedMedia
+      - phylum
+      - class
+      - order
+      - family
+      - genus
+      - specificEpithet
+      - scientificNameAuthorship
+      - typeStatus
+      - taxonRemarks
+      - identifiedBy
+      - dateIdentified
+      - recordedBy
+      - year
+      - month
+      - day
+      - eventDate
+      - continent
+      - waterBody
+      - country
+      - stateProvince
+      - county
+      - locality
+      - verbatimLatitude
+      - verbatimLongitude
+      - lithostratigraphicTerms
+      - earliestPeriodOrLowestSystem
+      - earliestEpochOrLowestSeries
+      - earliestAgeOrLowestStage
+      - latestPeriodOrHighestSystem
+      - latestEpochOrHighestSeries
+      - latestAgeOrHighestStage
+      - dynamicProperties
+    batch_size: 10000
+  mapping:
+    Catalogue ID: catalogNumber
+    Associated Media: associatedMedia
+    DateStamp: modified
+    Phylum: phylum
+    Class: class
+    Order: order
+    Family: family
+    Genus: genus
+    Species: specificEpithet
+    Authority: scientificNameAuthorship
+    Type: typeStatus
+    Identifier: identifiedBy
+    IdentifiedYear: dateIdentified
+    Treatment: preparations
+    Collector: recordedBy
+    CollYear: year
+    CollMonth: month
+    CollDay: day
+    Lithostratigraphy: lithostratigraphicTerms
+    PeriodMax: earliestPeriodOrLowestSystem
+    EpochMax: earliestEpochOrLowestSeries
+    StageMax: earliestAgeOrLowestStage
+    PeriodMin: latestPeriodOrHighestSystem
+    EpochMin: latestEpochOrHighestSeries
+    StageMin: latestAgeOrHighestStage
+    Latitude: verbatimLatitude
+    Longitude: verbatimLongitude
+    CountyParish: county
+    RegionState: stateProvince
+    Country: country
+  transformations:
+  - function: pal_move_continents
+    params: {}
+  - function: pal_move_oceans
+    params: {}
+  - function: generate_occ_id_triplet
+    params: {}
+  - function: pal_adhoc_transform
+    params: {}
+  - function: convert_date_columns
+    params:
+      date_column: createdDate
+  - function: create_dynamicproperties
+    params:
+      list_of_columns:
+        - createdDate
+  - function: pal_fix_synonyms
+    params: {}
+  - function: create_date
+    params:
+      col_year: year
+      col_month: month
+      col_day: day
+      col_date: eventDate
+  - function: clean_whitespace
+    params: {}
+  - function: drop_duplicate_rows
+    params: {}
+  - function: drop_empty_rows
+    params:
+      column_to_check: catalogNumber
+  unmapped: []
+
+multimedia:
+  defaults:
+    collectionCode: PAL
+    institutionCode: NRM
+    type: StillImage
+    license: http://creativecommons.org/licenses/by/4.0/legalcode
+  extract:
+    delimiter: ;
+    encoding: ISO-8859-1
+    srcFilePath: ./data/PAL/verbatim/afossil.csv
+    dtype:
+      Associated Media: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: multimedia_paleozoology
+    database_table_pk_column: 'identifier'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/PAL/processed/multimedia_paleozoology.csv
+    write_to_db: true
+    write_to_file: true
+    dwc_fields: { }
+    batch_size: 1000
+  mapping:
+    Catalogue ID: catalogNumber
+    Associated Media: identifier
+  transformations:
+    - function: clean_whitespace
+      params: { }
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: drop_empty_rows
+      params:
+        column_to_check: identifier
+    - function: generate_occ_id_triplet
+      params: { }
+    - function: split_and_explode
+      params:
+        column: identifier
+        delimiter: /
+    - function: drop_matched_string
+      params:
+        column_to_check: identifier
+        string_to_match: thumb
+    - function: addprefix
+      params:
+        target_column: identifier
+        prefix: https://media-service.nrm.se/images?dataset=pal&id=
+    - function: drop_unmapped_columns
+      params: { }
+  unmapped:
+    - DateStamp
+    - Phylum
+    - Class
+    - Order
+    - Family
+    - Genus
+    - Species
+    - Authority
+    - Type
+    - Preservation
+    - Identifier
+    - IdentifiedYear
+    - Species name
+    - Author
+    - Treatment
+    - Collector
+    - CollYear
+    - CollMonth
+    - CollDay
+    - SiteName
+    - Lithostratigraphy
+    - PeriodMax
+    - EpochMax
+    - StageMax
+    - PeriodMin
+    - EpochMin
+    - StageMin
+    - LocalityName
+    - Latitude
+    - Longitude
+    - CountyParish
+    - RegionState
+    - Country
+    - Continent
+    - waterBody
+    - institutionCode
+    - collectionCode
+    - catalogNumber
