@@ -23,6 +23,28 @@ def clean_whitespace(df: pd.DataFrame) -> pd.DataFrame:
         raise
 
 
+def addprefix(df: pd.DataFrame, target_column: str, prefix: str) -> pd.DataFrame:
+    """Prepends a prefix to non-empty values in a target column."""
+    df = df.copy()
+    try:
+        if target_column not in df.columns:
+            logging.warning(
+                f"Column '{target_column}' not found in addprefix. Skipping."
+            )
+            return df
+
+        mask = df[target_column].notna() & (df[target_column] != "")
+        df.loc[mask, target_column] = prefix + df.loc[mask, target_column].astype(str)
+
+        logging.info(f"addprefix transformation on column '{target_column}' completed.")
+        return df
+    except Exception as e:
+        logging.exception(
+            f"An error occurred in addprefix for column '{target_column}': {e}"
+        )
+        raise
+
+
 def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
     """Generates occurrenceID from institutionCode, collectionCode, and catalogNumber."""
     df = df.copy()
