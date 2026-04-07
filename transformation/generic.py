@@ -74,6 +74,35 @@ def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
         raise
 
 
+def drop_columns(df: pd.DataFrame, columns_to_drop: List[str]) -> pd.DataFrame:
+    """Drops specified columns from the DataFrame if they exist."""
+    df = df.copy()
+    existing_columns_to_drop = [col for col in columns_to_drop if col in df.columns]
+
+    if not existing_columns_to_drop:
+        logging.info("No columns to drop or none of the specified columns exist.")
+        return df
+
+    try:
+        df = df.drop(columns=existing_columns_to_drop)
+        logging.info(f"Dropped columns: {existing_columns_to_drop}")
+        return df
+    except Exception as e:
+        logging.exception(f"An unexpected error occurred in drop_columns: {e}")
+        raise
+
+
+def drop_unmapped_columns(df: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
+    """Drops columns specified in the 'unmapped' key of the configuration."""
+    unmapped_columns = config.get("unmapped", [])
+    if not unmapped_columns:
+        logging.info("No 'unmapped' columns specified in config to drop.")
+        return df
+
+    logging.info("Applying drop_unmapped_columns transformation.")
+    return drop_columns(df, unmapped_columns)
+
+
 def drop_duplicate_rows(df: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
     """Removes duplicate rows based on the primary key column from the config."""
     try:
