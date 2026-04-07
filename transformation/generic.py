@@ -210,6 +210,33 @@ def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
     return df_cleaned
 
 
+def replace_values(
+    df: pd.DataFrame, columns_to_replace: Any, to_replace: str, value: str = ""
+) -> pd.DataFrame:
+    """
+    Replace occurrences of a specified string in one or more columns of a DataFrame.
+    """
+    df = df.copy()
+    try:
+        if isinstance(columns_to_replace, str):
+            columns_to_replace = [columns_to_replace]
+
+        for column in columns_to_replace:
+            if column in df.columns:
+                df[column] = df[column].replace(to_replace, value)
+                df[column] = df[column].replace({np.nan: value})
+            else:
+                raise ValueError(f"Column '{column}' does not exist in the DataFrame.")
+
+        logging.info(
+            f"Cleaning string '{to_replace}' from columns '{columns_to_replace}' transformation completed successfully."
+        )
+        return df
+    except Exception as e:
+        logging.exception(f"An error occurred in replace_values: {e}")
+        raise
+
+
 def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataFrame:
     """Splits a column by delimiter and explodes the resulting list values."""
     df = df.copy()
