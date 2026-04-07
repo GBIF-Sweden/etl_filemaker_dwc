@@ -1,0 +1,193 @@
+dataset: herptiles
+dwca_metadata:
+  dataset_name: "NRM Herptiles Collection"
+  description: "Darwin Core Archive export for the NRM herptiles collection."
+  citation: "NRM Herptiles Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+#    basisOfRecord: PreservedSpecimen
+    collectionCode: NRM-Herps
+    institutionCode: NRM
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/herptiles.csv
+    dtype:
+      catalogNumber: str
+      individualCount: str
+      day: str
+      month: str
+      year: str
+      endDay: str
+      endMonth: str
+      endYear: str
+      waterBody: str
+      dateIdentified: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_herptiles
+    database_table_pk_column: occurrenceID
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/ZOO/processed/dwc_herptiles.csv
+    write_to_db: true
+    write_to_file: true
+    write_to_dwca: true
+    dwcaPath: ./output/dr7/dr7.zip
+    dwc_fields: {}
+  mapping:
+    genericName: genus
+    continent: higherGeography
+    createdDate: modified
+  transformations:
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - country
+        to_replace: 'UNKNOWN COUNTRY'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - country
+        to_replace: 'UNDETERMINED COUNTRY'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - higherGeography
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'UNKNOWN'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - higherGeography
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'Unkown'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - higherGeography
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'Unknown'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - higherGeography
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'N/A'
+        value: ''
+    - function: trim_value
+      params:
+        column: waterBody
+        value: ":"
+    - function: trim_value
+      params:
+        column: month
+        value: "00"
+    - function: trim_value
+      params:
+        column: day
+        value: "00"
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+    - function: trim_value
+      params:
+        column: dateIdentified
+        value: "-"
+    - function: clean_whitespace
+      params: {}
+    - function: convert_date_columns
+      params:
+        date_column: createdDate
+#    - function: create_dynamicproperties
+#      params:
+#        list_of_columns:
+#          - createdDate
+#          - expeditionName
+#          - endDay
+#          - endMonth
+#          - endYear
+#          - preservation
+#          - synonyms
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: drop_unmapped_columns
+      params: {}
+  unmapped:
+    - createdDate
+    - expeditionName
+    - endDay
+    - endMonth
+    - endYear
+#    - preservation
+#    - synonyms
+
+multimedia:
+  defaults:
+    collectionCode: NRM-Herps
+    institutionCode: NRM
+    type: StillImage
+    license: http://creativecommons.org/licenses/by/4.0/legalcode
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/Herptileimages.csv
+    dtype:
+      CatalogNumber: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: multimedia_herptile
+    database_table_pk_column: 'identifier'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/ZOO/processed/multimedia_herptile.csv
+    write_to_db: true
+    write_to_file: true
+  mapping:
+    CatalogNumber: catalogNumber
+    ImageFileName: identifier
+  transformations:
+    - function: clean_whitespace
+      params: {}
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: addprefix
+      params:
+        target_column: identifier
+        prefix: https://media-service.nrm.se/images?dataset=herps&id=Full_size/
+    - function: drop_unmapped_columns
+      params: {}
+  unmapped:
+    - CollCatID
+    - ImagePath
+    - ThumbPath
+    - ThumbFileName
+    - catalogNumber
+    - institutionCode
+    - collectionCode
+
