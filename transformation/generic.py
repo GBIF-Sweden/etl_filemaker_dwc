@@ -93,3 +93,24 @@ def create_dynamicproperties(
     df = df.copy()
     df["dynamicProperties"] = df.apply(build_row_properties, axis=1)
     return df
+
+
+def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
+    """Drops rows where the specified column is empty or null."""
+    df = df.copy()
+    if column_to_check not in df.columns:
+        logging.warning(
+            f"Column '{column_to_check}' not found for drop_empty_rows. Skipping."
+        )
+        return df
+
+    initial_rows = len(df)
+    mask_to_drop = df[column_to_check].isna() | (df[column_to_check] == "")
+    df_cleaned = df[~mask_to_drop]
+    rows_dropped = initial_rows - len(df_cleaned)
+
+    logging.info(
+        f"Dropped {rows_dropped} rows where '{column_to_check}' is null or empty."
+    )
+
+    return df_cleaned
