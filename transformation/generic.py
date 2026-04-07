@@ -136,3 +136,18 @@ def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
     )
 
     return df_cleaned
+
+
+def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataFrame:
+    """Splits a column by delimiter and explodes the resulting list values."""
+    df = df.copy()
+    if column not in df.columns:
+        raise ValueError(f"Column '{column}' not found in the DataFrame.")
+
+    df[column] = df[column].astype("string").str.split(delimiter)
+    exploded_df = df.explode(column)
+    exploded_df[column] = exploded_df[column].str.strip()
+    final_df = exploded_df.reset_index(drop=True)
+
+    logging.info(f"Exploded column '{column}' using delimiter '{delimiter}'.")
+    return final_df
