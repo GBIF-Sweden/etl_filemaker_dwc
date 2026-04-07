@@ -1,0 +1,103 @@
+dataset: birds
+dwca_metadata:
+  dataset_name: "NRM Birds Collection"
+  description: "Darwin Core Archive export for the NRM birds collection."
+  citation: "NRM Birds Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+    collectionCode: Birds
+    institutionCode: NRM
+    kingdom: Animalia
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/AVexport.csv
+    dtype:
+      catalogNumber: str
+      individualCount: str
+      day: str
+      month: str
+      year: str
+      endDay: str
+      endMonth: str
+      endYear: str
+      sex: str
+      dateIdentified: str
+      Preservation: str
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_birds
+    database_table_pk_column: occurrenceID
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/ZOO/processed/dwc_birds.csv
+    write_to_db: true
+    write_to_file: true
+    write_to_dwca: false
+    dwcaPath: ./output/dr1013/dr1013.zip
+    dwc_fields: {}
+  mapping:
+    continent: higherGeography
+    createdDate: modified
+    expeditionName: eventRemarks
+    Preservation: preservation
+  transformations:
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: clean_whitespace
+      params: {}
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: clean_column_sex
+      params: {}
+    - function: clean_column_lifestage
+      params: {}
+    - function: trim_value
+      params:
+        column: month
+        value: "00"
+    - function: trim_value
+      params:
+        column: day
+        value: "00"
+    - function: trim_value
+      params:
+        column: modified
+        value: "00"
+    - function: trim_value
+      params:
+        column: modified
+        value: "-"
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+    - function: convert_date_columns
+      params:
+        date_column: modified
+#    - function: create_dynamicproperties
+#      params:
+#        list_of_columns:
+#          - endDay
+#          - endMonth
+#          - endYear
+#          - synonyms
+    - function: trim_value
+      params:
+        column: dateIdentified
+        value: "-"
+    - function: drop_duplicate_rows
+      params: {}
+    - function: drop_unmapped_columns
+      params: {}
+  unmapped:
+#    - sex
+    - sex_p
+#    - dynamicProperties
