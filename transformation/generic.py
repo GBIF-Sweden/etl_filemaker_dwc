@@ -263,6 +263,60 @@ def clean_column_sex(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def clean_column_lifestage(df: pd.DataFrame) -> pd.DataFrame:
+    """Cleans the 'lifeStage' column and standardizes values in place."""
+    df = df.copy()
+
+    lifestage_mapping = {
+        "Adult": "adult",
+        "adult": "adult",
+        "Adult?": "adult",
+        "Adut": "adult",
+        "Embryo": "embryo",
+        "Featus": "fetus",
+        "Fetus": "fetus",
+        "Immature": "immature",
+        "Juvenil": "juvenile",
+        "juvenil": "juvenile",
+        "Juvenile": "juvenile",
+        "Juvenile?": "juvenile",
+        "Juvenlie": "juvenile",
+        "Okänd": "",
+        "Subadult": "subadult",
+        "Subadult?": "subadult",
+        "Unknown": "Unknown",
+    }
+
+    lifestage_mapping_lower = {k.lower(): v for k, v in lifestage_mapping.items()}
+    df["lifeStage"] = df["lifeStage"].fillna("").astype(str).str.strip().str.lower()
+    df["lifeStage_p"] = df["lifeStage"].map(lifestage_mapping_lower)
+    mask_unmapped = df["lifeStage_p"].isna() & (df["lifeStage"] != "")
+
+    if mask_unmapped.any():
+        unique_unmapped = df.loc[mask_unmapped, "lifeStage"].unique()
+        fuzzy_map = {}
+
+        for lifestage_value in unique_unmapped:
+            best_match = max(
+                lifestage_mapping_lower.keys(), key=lambda x: fuzz.ratio(lifestage_value, x)
+            )
+            if fuzz.ratio(lifestage_value, best_match) > 80:
+                fuzzy_map[lifestage_value] = lifestage_mapping_lower[best_match]
+            else:
+                fuzzy_map[lifestage_value] = ""
+
+        df.loc[mask_unmapped, "lifeStage_p"] = df.loc[mask_unmapped, "lifeStage"].map(
+            fuzzy_map
+        )
+
+    df["lifeStage_p"] = df["lifeStage_p"].fillna("")
+    df["lifeStage"] = df["lifeStage_p"]
+    df = df.drop(columns=["lifeStage_p"])
+
+    logging.info("Cleaning column lifeStage completed successfully.")
+    return df
+
+
 def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
     """Drops rows where the specified column is empty or null."""
     df = df.copy()
