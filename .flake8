@@ -1,0 +1,24 @@
+[flake8]
+# Comma-separated list of directories to exclude from linting.
+# This is the standard recommended list.
+exclude =
+    .git,
+    __pycache__,
+    .tox,
+    .venv,
+    venv,
+    env,
+    build,
+    dist,
+    docs/
+
+# You can also configure other linting rules here.
+# For example, to set the max line length to be compatible with the 'black' formatter:
+max-line-length = 88
+
+# Ignore specific warnings.
+# W503: line break before binary operator (black handles this)
+# E501: line too long (black handles this)
+ignore =
+    W503,
+    E501
