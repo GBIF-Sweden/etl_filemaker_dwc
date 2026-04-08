@@ -1,0 +1,205 @@
+dataset: mosses
+dwca_metadata:
+  dataset_name: "NRM Bryophytes Collection"
+  description: "Darwin Core Archive export for the NRM bryophytes collection."
+  citation: "NRM Bryophytes Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+    basisOfRecord: PreservedSpecimen
+    institutionCode: S
+    collectionCode: S-Bryophytes
+    institutionID: 'S'
+    collectionID: 'https://scientific-collections.gbif.org/collection/c54dfec0-d9d1-48db-bb57-38846544e117'
+    kingdom: 'Plantae'
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/mossor/naturarvkollekt.csv
+    quotechar: \"
+  dtype:
+    registreringsnummer_text: str
+    insamlingsnummer: str
+    insamlingsaar: str
+    insamlingsmaanad: str
+    insamlingsdag: str
+  mapping:
+    registreringsnummer_text: catalogNumber
+    skapad_datum: createdDate
+    aendrad_datum: modified
+    lokal: locality
+    habitat_substrat: habitat
+    land: country
+    provins: stateProvince
+    distrikt: municipality
+    webbkoordinat: verbatimCoordinates
+    insamlare: recordedBy
+    insamlingsnummer: recordNumber
+    insamlingsaar: year
+    insamlingsmaanad: month
+    insamlingsdag: day
+    typ: typeStatus
+    annan_etikettinformation: occurrenceRemarks
+    namn_med_auktor: originalNameUsage
+  transformations:
+    - function: clean_whitespace
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+    - function: convert_date_columns
+      params:
+        date_column: createdDate
+#    - function: create_dynamicproperties
+#      params:
+#        list_of_columns:
+#          - createdDate
+  unmapped: []
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_mosses
+    database_table_pk_column: 'occurrenceID'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/BOT/processed/dwc_mosses.csv
+    write_to_db: true
+    write_to_file: true
+    write_to_dwca: true
+    dwcaPath: ./output/dr24/dr24.zip
+    dwc_fields:
+      - occurrenceID
+      - institutionCode
+      - collectionCode
+      - institutionID
+      - collectionID
+      - catalogNumber
+      - modified
+      - basisOfRecord
+      - typeStatus
+      - occurrenceRemarks
+      - recordedBy
+      - recordNumber
+      - year
+      - month
+      - day
+      - eventDate
+      - country
+      - stateProvince
+      - municipality
+      - locality
+      - verbatimCoordinates
+      - habitat
+      - kingdom
+      - originalNameUsage
+      - genus
+      - scientificName
+      - scientificNameAuthorship
+      - dynamicProperties
+multimedia:
+  defaults:
+    collectionCode: S-Bryophytes
+    institutionCode: S
+    license: http://creativecommons.org/licenses/by/4.0/legalcode
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/KboBilder.csv
+  mapping:
+    _fk_registreringsnummer: catalogNumber
+    fotograf: creator
+    bildtext_krypto_s: description
+    webbsoekvaeg1: identifier
+  unmapped: []
+  transformations:
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: addprefix
+      params:
+        target_column: identifier
+        prefix: https://media-service.nrm.se/images?dataset=kbo&id=
+    - function: drop_matched_string
+      params:
+        column_to_check: identifier
+        string_to_match: tumme
+    - function: drop_matched_string
+      params:
+        column_to_check: identifier
+        string_to_match: stor
+    - function: drop_unmapped_columns
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: identifier
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: multimedia_mosses
+    database_table_pk_column: 'identifier'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/BOT/processed/multimedia_mosses.csv
+    write_to_db: true
+    write_to_file: true
+    dwc_fields:
+      - occurrenceID
+      - identifier
+      - creator
+      - description
+      - license
+
+katalog:
+  extract:
+    delimiter: ;
+    encoding: latin1
+    srcFilePath: ./data/BOT/verbatim/mossor/naturarvkatalog.csv
+
+namn:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/mossor/naturarvnamn.csv
+  mapping:
+    namn: scientificName
+    auktor: scientificNameAuthorship
+    slaekte: genus
+    aktuellt_namn: isCurrent
+
+best:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/mossor/naturarvbest.csv
+  mapping:
+    registreringsnummer: catalogNumber
+    artnamn_med_auktor: scientificName
+    bestaemmare: identifiedBy
+    aartal: dateIdentified
+    kommentar: identificationRemarks
+
+exsicat:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/mossor/naturarvexsickat.csv
+
+merges:
+  - source: katalog
+    left_on: katalogID
+    right_on: katalogID
+    how: left
+  - source: namn
+    left_on: katalognamnsID
+    right_on: namnID
+    how: left
