@@ -1,0 +1,206 @@
+dataset: algae
+dwca_metadata:
+  dataset_name: "NRM Algae Collection"
+  description: "Darwin Core Archive export for the NRM algae collection."
+  citation: "NRM Algae Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+    basisOfRecord: PreservedSpecimen
+    institutionCode: S
+    collectionCode: Algae
+    institutionID: ''
+    collectionID: ''
+    kingdom: ''
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/alger/naturarvkollekt.csv
+    quotechar: \"
+  dtype:
+    registreringsnummer_text: str
+    insamlingsnummer: str
+    insamlingsaar: str
+    insamlingsmaanad: str
+    insamlingsdag: str
+    aendrad_datum: str
+  mapping:
+    registreringsnummer_text: catalogNumber
+    skapad_datum: createdDate
+    aendrad_datum: modified
+    lokal: locality
+    habitat_substrat: habitat
+    land: country
+    provins: stateProvince
+    distrikt: municipality
+    webbkoordinat: verbatimCoordinates
+    insamlare: recordedBy
+    insamlingsnummer: recordNumber
+    insamlingsaar: year
+    insamlingsmaanad: month
+    insamlingsdag: day
+    typ: typeStatus
+    annan_etikettinformation: occurrenceRemarks
+    namn_med_auktor: originalNameUsage
+  transformations:
+    - function: clean_whitespace
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+    - function: convert_date_columns
+      params:
+        date_column: createdDate
+#    - function: create_dynamicproperties
+#      params:
+#        list_of_columns:
+#          - createdDate
+  unmapped: []
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_algae
+    database_table_pk_column: 'occurrenceID'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/BOT/processed/dwc_algae.csv
+    write_to_db: true
+    write_to_file: true
+    write_to_dwca: true
+    dwcaPath: ./output/dr41/dr41.zip
+    dwc_fields:
+      - occurrenceID
+      - institutionCode
+      - collectionCode
+      - institutionID
+      - collectionID
+      - catalogNumber
+      - modified
+      - basisOfRecord
+      - typeStatus
+      - occurrenceRemarks
+      - recordedBy
+      - recordNumber
+      - year
+      - month
+      - day
+      - eventDate
+      - country
+      - stateProvince
+      - municipality
+      - locality
+      - verbatimCoordinates
+      - habitat
+      - kingdom
+      - originalNameUsage
+      - genus
+      - scientificName
+      - scientificNameAuthorship
+      - dynamicProperties
+multimedia:
+  defaults:
+    collectionCode: Algae
+    institutionCode: S
+    license: http://creativecommons.org/licenses/by/4.0/legalcode
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/KboBilder.csv
+  mapping:
+    _fk_registreringsnummer: catalogNumber
+    fotograf: creator
+    bildtext_krypto_s: description
+    webbsoekvaeg1: identifier
+  unmapped: []
+  transformations:
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: addprefix
+      params:
+        target_column: identifier
+        prefix: https://media-service.nrm.se/images?dataset=kbo&id=
+    - function: drop_matched_string
+      params:
+        column_to_check: identifier
+        string_to_match: tumme
+    - function: drop_matched_string
+      params:
+        column_to_check: identifier
+        string_to_match: stor
+    - function: drop_unmapped_columns
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: identifier
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: multimedia_algae
+    database_table_pk_column: 'identifier'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/BOT/processed/multimedia_algae.csv
+    write_to_db: true
+    write_to_file: true
+    dwc_fields:
+      - occurrenceID
+      - identifier
+      - creator
+      - description
+      - license
+
+katalog:
+  extract:
+    delimiter: ;
+    encoding: latin1
+    srcFilePath: ./data/BOT/verbatim/alger/naturarvkatalog.csv
+
+namn:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/alger/naturarvnamn.csv
+  mapping:
+    namn: scientificName
+    auktor: scientificNameAuthorship
+    slaekte: genus
+    aktuellt_namn: isCurrent
+
+best:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/alger/naturarvbest.csv
+  mapping:
+    registreringsnummer: catalogNumber
+    artnamn_med_auktor: scientificName
+    bestaemmare: identifiedBy
+    aartal: dateIdentified
+    kommentar: identificationRemarks
+
+exsicat:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/alger/naturarvexsickat.csv
+
+merges:
+  - source: katalog
+    left_on: katalogID
+    right_on: katalogID
+    how: left
+  - source: namn
+    left_on: katalognamnsID
+    right_on: namnID
+    how: left
