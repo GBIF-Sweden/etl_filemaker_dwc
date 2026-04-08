@@ -1,0 +1,62 @@
+# .github/workflows/docker-publish.yml
+
+name: Build and Push Docker Image
+
+# This workflow runs on pushes to the main branch and when a new release is created.
+on:
+  push:
+    branches: [ "main" ]
+  release:
+    types: [ "created" ]
+
+env:
+  # The GitHub Container Registry to push to
+  REGISTRY: ghcr.io
+  # The name of the image, derived from the repository name
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    # Grant permissions for the GITHUB_TOKEN to write to the GitHub Packages registry
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            # Set 'latest' tag for pushes to the default branch (main)
+            type=raw,value=latest,enable={{is_default_branch}}
+            # Set version tag for git tags (e.g., v1.2.3)
+            type=ref,event=tag
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Enable layer caching to speed up subsequent builds.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            # In a CI environment, we use a static UID/GID for the non-root user.
+            # This differs from the Makefile's dynamic approach but is standard for CI.
+            USER_ID=1001
+            GROUP_ID=1001
