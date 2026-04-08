@@ -365,6 +365,44 @@ def replace_values(
         raise
 
 
+def merge_columns(
+    df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str
+) -> pd.DataFrame:
+    """Merges values from two specified columns into a target column."""
+    df = df.copy()
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("Expected df to be a pandas DataFrame.")
+    if (
+        not isinstance(firstcolumn, str)
+        or not isinstance(secondcolumn, str)
+        or not isinstance(targetcolumn, str)
+    ):
+        raise TypeError("Column names must be strings.")
+
+    for col in [firstcolumn, secondcolumn]:
+        if col not in df.columns:
+            raise KeyError(f"Column '{col}' not found in DataFrame.")
+
+    s1 = df[firstcolumn].fillna("").astype(str)
+    s2 = df[secondcolumn].fillna("").astype(str)
+    df[targetcolumn] = (s1 + " " + s2).str.strip()
+
+    mask_exact = s1 == s2
+    df.loc[mask_exact, targetcolumn] = s1[mask_exact]
+
+    mask_fuzzy_check = ~mask_exact
+    if mask_fuzzy_check.any():
+        s1_sub = s1[mask_fuzzy_check]
+        s2_sub = s2[mask_fuzzy_check]
+        ratios = [fuzz.ratio(a, b) for a, b in zip(s1_sub, s2_sub)]
+        indices_to_update = s1_sub.index[np.array(ratios) >= 80]
+
+        if not indices_to_update.empty:
+            df.loc[indices_to_update, targetcolumn] = s2.loc[indices_to_update]
+
+    return df
+
+
 def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataFrame:
     """Splits a column by delimiter and explodes the resulting list values."""
     df = df.copy()
