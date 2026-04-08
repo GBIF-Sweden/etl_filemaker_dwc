@@ -1,0 +1,235 @@
+dataset: pollen
+dwca_metadata:
+  dataset_name: "NRM Pollen Reference Collection"
+  description: "Darwin Core Archive export for the NRM pollen reference collection."
+  citation: "NRM Pollen Reference Collection. Darwin Core Archive export."
+  rights: "CC BY 4.0"
+  license: "https://creativecommons.org/licenses/by/4.0/"
+occurrence:
+  defaults:
+    basisOfRecord: PreservedSpecimen
+    institutionCode: NRM
+    collectionCode: POLLENREFERENCE
+    institutionID: ''
+    collectionID: ''
+    type: 'PhysicalObject'
+    kingdom: 'Plantae'
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/fbo/naturarvkollekt_pollen.csv
+    quotechar: \"
+  dtype:
+    Herbarium number: str
+    startår: str
+    insamlingsaar: str
+    startmånad: str
+    startdag: str
+    altitud min m: str
+    altitud max m: str
+    latitud grader: str
+    latitud minuter: str
+    latitud sekuder: str
+    latitud riktning: str
+    longitud grader: str
+    longitud minuter: str
+    longitud sekunder: str
+    longitud riktning: str
+  mapping:
+    Herbarium number: catalogNumber
+    skapad: createdDate
+    uppdaterat: modified
+    familj: family
+    genus: genus
+    specie: specificEpithet
+    auktor: scientificNameAuthorship
+    infraspec taxa1: infraspecificEpithet
+    Type: typeStatus
+    basionym: originalNameUsage
+    Collector: recordedBy
+    insamlingsnummer: fieldNumber
+    startår: year
+    startmånad: month
+    startdag: day
+    Locality: locality
+    habitat: habitat
+    Country: country
+    Province: stateProvince
+    Parish: municipality
+    Comments: occurrenceRemarks
+    altitud min m: minimumElevationInMeters
+    altitud max m: maximumElevationInMeters
+  transformations:
+    #- function: select_matched_string
+    #  params:
+    #    column_to_check: Herbarium
+    #    string_to_match: Pollensamlingen
+    - function: clean_whitespace
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: generate_dms_coordinates_column
+      params:
+        degrees_column_name: latitud grader
+        minutes_column_name: latitud minuter
+        seconds_column_name: latitud sekuder
+        direction_column_name: latitud riktning
+        dms_column_name: verbatimLatitude
+    - function: generate_dms_coordinates_column
+      params:
+        degrees_column_name: longitud grader
+        minutes_column_name: longitud minuter
+        seconds_column_name: longitud sekunder
+        direction_column_name: longitud riktning
+        dms_column_name: verbatimLongitude
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+    - function: convert_date_columns
+      params:
+        date_column: createdDate
+#    - function: create_dynamicproperties
+#      params:
+#        list_of_columns:
+#          - createdDate
+  unmapped: []
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: dwc_pollen
+    database_table_pk_column: 'occurrenceID'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/BOT/processed/dwc_pollen.csv
+    write_to_db: true
+    write_to_file: true
+    dwc_fields:
+      - type
+      - modified
+      - institutionID
+      - institutionCode
+      - collectionID
+      - collectionCode
+      - catalogNumber
+      - occurrenceID
+      - basisOfRecord
+      - typeStatus
+      - occurrenceRemarks
+      - recordedBy
+      - fieldNumber
+      - year
+      - month
+      - day
+      - eventDate
+      - country
+      - stateProvince
+      - municipality
+      - locality
+      - habitat
+      - minimumElevationInMeters
+      - maximumElevationInMeters
+      - verbatimLatitude
+      - verbatimLongitude
+      - kingdom
+      - family
+      - genus
+      - specificEpithet
+      - scientificNameAuthorship
+      - infraspecificEpithet
+      - scientificName
+      - originalNameUsage
+      - dynamicProperties
+multimedia:
+  defaults:
+    collectionCode: POLLENREFERENCE
+    institutionCode: NRM
+    license: http://creativecommons.org/licenses/by/4.0/legalcode
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/FboBilder.csv
+  mapping:
+    herbarienummer: catalogNumber
+    imaged_by: creator
+    webb_file_ref_large_NY: identifier
+  unmapped: []
+  transformations:
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: addprefix
+      params:
+        target_column: identifier
+        prefix: https://media-service.nrm.se/images?dataset=fbo&id=
+    - function: drop_unmapped_columns
+      params: {}
+    - function: drop_duplicate_rows
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: identifier
+  load:
+    database_hostname: localhost
+    database_name: local_filemaker_exports
+    database_port: '3306'
+    database_table: multimedia_pollen
+    database_table_pk_column: 'identifier'
+    delimiter: "\t"
+    encoding: utf8
+    targetFilePath: ./data/BOT/processed/multimedia_pollen.csv
+    write_to_db: true
+    write_to_file: true
+    dwc_fields:
+      - occurrenceID
+      - identifier
+      - creator
+      - license
+
+katalog:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/fbo/naturarvkatalog.csv
+  mapping:
+    släkte plus art: scientificName
+
+namn:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/fbo/naturarvnamn.csv
+  mapping:
+    namn: scientificName
+    auktor: scientificNameAuthorship
+    slaekte: genus
+    aktuellt_namn: isCurrent
+
+best:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/fbo/naturarvbestamningar.csv
+  mapping:
+    registreringsnummer: catalogNumber
+    artnamn_med_auktor: scientificName
+    bestaemmare: identifiedBy
+    aartal: dateIdentified
+    kommentar: identificationRemarks
+
+exsicat:
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/BOT/verbatim/fbo/naturarvexsickat.csv
+
+merges:
+  - source: katalog
+    left_on: art id
+    right_on: art id
+    how: left
