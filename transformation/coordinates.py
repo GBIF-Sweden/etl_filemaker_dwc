@@ -52,3 +52,37 @@ def generate_dms_coordinates_column(
     )
     logging.info(f"Generated DMS coordinates in column '{dms_column_name}'.")
     return df
+
+
+def clean_coordinates(coordinate_string: str) -> str:
+    """
+    Cleans a coordinate string by standardizing latitude and/or longitude coordinates.
+    """
+
+    def standardize_coordinate(coord: str) -> str:
+        pattern = re.compile(r"(\d+)°(\d*)'(\d*)''?([NSEW])")
+        match = pattern.match(coord)
+        if not match:
+            return coord
+
+        degrees, minutes, seconds, direction = match.groups()
+        if minutes == "":
+            return f"{degrees}°{direction}"
+        if seconds == "":
+            return f"{degrees}°{minutes}'{direction}"
+        return f"{degrees}°{minutes}'{seconds}''{direction}"
+
+    coordinates = coordinate_string.split()
+    standardized_coordinates = [standardize_coordinate(coord) for coord in coordinates]
+    return " ".join(standardized_coordinates)
+
+
+def update_coordinates(df: pd.DataFrame, coordinate_column: str) -> pd.DataFrame:
+    """Updates the values in a coordinate column by cleaning the coordinates."""
+    df = df.copy()
+    df[coordinate_column] = df[coordinate_column].fillna("")
+    df[coordinate_column] = df[coordinate_column].astype(str)
+    df["verbatimCoordinates"] = df[coordinate_column].apply(clean_coordinates)
+
+    logging.info(f"Cleaning column '{coordinate_column}' completed successfully.")
+    return df
