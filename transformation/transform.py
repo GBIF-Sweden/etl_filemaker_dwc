@@ -5,6 +5,7 @@ import pandas as pd
 
 from transformation.coordinates import (
     generate_dms_coordinates_column,
+    update_coordinates,
 )
 from transformation.dates import convert_date_columns, create_date
 from transformation.domain_pal import (
@@ -23,6 +24,7 @@ from transformation.generic import (
     drop_matched_string,
     drop_unmapped_columns,
     generate_occ_id_triplet,
+    merge_columns,
     select_matched_string,
     split_and_explode,
 )
@@ -45,6 +47,8 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "generate_dms_coordinates_column": generate_dms_coordinates_column,
     "create_date": create_date,
     "replace_values": replace_values,
+    "merge_columns": merge_columns,
+    "update_coordinates": update_coordinates,
     "create_dynamicproperties": create_dynamicproperties,
     "trim_value": trim_value,
     "pal_move_continents": pal_move_continents,
