@@ -3,6 +3,9 @@ from typing import Any, Callable, Dict, List
 
 import pandas as pd
 
+from transformation.coordinates import (
+    generate_dms_coordinates_column,
+)
 from transformation.dates import convert_date_columns, create_date
 from transformation.domain_pal import (
     pal_adhoc_transform,
@@ -39,6 +42,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "drop_matched_string": drop_matched_string,
     "select_matched_string": select_matched_string,
     "drop_empty_rows": drop_empty_rows,
+    "generate_dms_coordinates_column": generate_dms_coordinates_column,
     "create_date": create_date,
     "replace_values": replace_values,
     "create_dynamicproperties": create_dynamicproperties,
