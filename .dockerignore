@@ -1,0 +1,93 @@
+# This file prevents local development artifacts from being copied into the Docker image.
+# Only include what's necessary to run the application in production.
+
+# --- Version Control and CI/CD ---
+.git
+.gitignore
+.gitattributes
+.github/
+
+# --- Docker and Build Files ---
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+Makefile
+
+# --- Documentation ---
+README.md
+CONTRIBUTING.md
+CHANGELOG.md
+*.md
+docs/
+
+# --- IDE and Editor Configuration ---
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.editorconfig
+
+# --- Python Virtual Environment and Cache ---
+.venv/
+venv/
+virtualenv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# --- Secrets and Environment Files ---
+# NEVER include these in the image - use environment variables or secrets management
+.env
+.env.*
+!env.template
+*.pem
+*.key
+credentials.yml
+db_credentials.yml
+
+# --- Local Data, Logs, and Outputs ---
+# These should be mounted as volumes, not built into the image
+data/
+output/
+logs/
+*.log
+*.csv
+*.zip
+*.dwca
+
+# --- Testing Artifacts ---
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+nosetests.xml
+*.cover
+
+# --- Temporary and Backup Files ---
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+.DS_Store
+Thumbs.db
+config-files-bkup*/
+
+# --- Python Distribution ---
+build/
+dist/
+*.egg-info/
+*.egg
+wheels/
+
+# --- Local Scripts and Experiments ---
+scratch/
+temp/
+temptest.py
+test_*.py
+debug_*.py
