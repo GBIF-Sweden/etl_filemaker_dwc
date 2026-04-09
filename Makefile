@@ -12,6 +12,10 @@ IMAGE_TAG  := 0.0.1
 # e.g., make run CONFIG_FILE=config-files/another_config.yml
 CONFIG_FILE ?= config-files/algae.yml
 
+# Prefer the project virtual environment when it exists, otherwise fall back to
+# the active Python on PATH.
+PYTHON ?= $(shell if [ -x .venv/bin/python ]; then echo .venv/bin/python; else echo python; fi)
+
 # --- Path Configuration ---
 # Define data paths relative to the project directory for better portability.
 # These can be overridden from the command line if needed.
@@ -31,7 +35,7 @@ HOST_GROUP_ID := $(shell id -g)
 
 # --- Targets ---
 # Phony targets are rules that don't represent actual files.
-.PHONY: help install lint format build run clean clean-data
+.PHONY: help install lint format test check build build-clean run run-local clean clean-data
 
 # Default target: runs when you just type 'make'.
 default: help
@@ -43,9 +47,14 @@ help:
 	@echo "  install    Install Python dependencies locally using pip."
 	@echo "  lint       Run flake8 to lint the Python source code."
 	@echo "  format     Automatically format the code using black."
+	@echo "  test       Run the Python test suite."
+	@echo "  check      Run tests and linting."
 	@echo "  build      Build the Docker image for the application."
+	@echo "  build-clean Build the Docker image without cache."
 	@echo "  run        Run the ETL process using credentials from a .env file."
 	@echo "             Example: make run [CONFIG_FILE=config-files/your_config.yml]"
+	@echo "  run-local  Run the ETL process locally with Python."
+	@echo "             Example: make run-local [CONFIG_FILE=config-files/your_config.yml]"
 	@echo "  clean      Remove logs and Python cache artifacts."
 	@echo "  clean-data Remove generated DwC-A archives and processed export files."
 
@@ -61,13 +70,30 @@ format:
 	@echo "--> Formatting source code with black..."
 	black .
 
+test:
+	@echo "--> Running Python test suite..."
+	$(PYTHON) -m pytest
+
+check: test lint
+
 build:
 	@echo "--> Building Docker image '$(IMAGE_NAME):$(IMAGE_TAG)'..."
 	docker build \
-        --no-cache \
 		--build-arg USER_ID=$(HOST_USER_ID) \
 		--build-arg GROUP_ID=$(HOST_GROUP_ID) \
 		-t $(IMAGE_NAME):$(IMAGE_TAG) .
+
+build-clean:
+	@echo "--> Building Docker image '$(IMAGE_NAME):$(IMAGE_TAG)' without cache..."
+	docker build \
+		--no-cache \
+		--build-arg USER_ID=$(HOST_USER_ID) \
+		--build-arg GROUP_ID=$(HOST_GROUP_ID) \
+		-t $(IMAGE_NAME):$(IMAGE_TAG) .
+
+run-local:
+	@echo "--> Running ETL locally with config file: $(CONFIG_FILE)"
+	$(PYTHON) main.py $(CONFIG_FILE)
 
 run:
 	@echo "--> Running ETL container with config file: $(CONFIG_FILE)"
@@ -75,7 +101,7 @@ run:
 	@if [ ! -f .env ]; then \
 		echo "Error: .env file not found."; \
 		echo "Please create a .env file with your DB_USER and DB_PASSWORD."; \
-		echo "You can copy .env.example to .env and fill it out."; \
+		echo "You can copy env.template to .env and fill it out."; \
 		exit 1; \
 	fi
 	@# Ensure output directory exists on the host to avoid permission errors.
