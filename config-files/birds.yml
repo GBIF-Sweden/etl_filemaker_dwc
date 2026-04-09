@@ -37,7 +37,7 @@ occurrence:
     targetFilePath: ./data/ZOO/processed/dwc_birds.csv
     write_to_db: true
     write_to_file: true
-    write_to_dwca: false
+    write_to_dwca: true
     dwcaPath: ./output/dr1013/dr1013.zip
     dwc_fields: {}
   mapping:

@@ -70,10 +70,10 @@ occurrence:
     - function: drop_empty_rows
       params:
         column_to_check: catalogNumber
-    #- function: drop_matched_string
-    #  params:
-    #    column_to_check: Herbarium
-    #    string_to_match: Pollensamlingen
+    - function: drop_matched_string
+      params:
+        column_to_check: Herbarium
+        string_to_match: Pollensamlingen
     - function: generate_occ_id_triplet
       params: {}
     - function: generate_dms_coordinates_column

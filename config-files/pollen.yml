@@ -17,7 +17,12 @@ occurrence:
   extract:
     delimiter: ;
     encoding: utf8
-    srcFilePath: ./data/BOT/verbatim/fbo/naturarvkollekt_pollen.csv
+    srcFilePath:
+      - ./data/BOT/verbatim/fbo/naturarvkollekt_del1.csv
+      - ./data/BOT/verbatim/fbo/naturarvkollekt_del2.csv
+      - ./data/BOT/verbatim/fbo/naturarvkollekt_del3.csv
+      - ./data/BOT/verbatim/fbo/naturarvkollekt_del4.csv
+      - ./data/BOT/verbatim/fbo/naturarvkollekt_del5.csv
     quotechar: \"
   dtype:
     Herbarium number: str
@@ -60,10 +65,10 @@ occurrence:
     altitud min m: minimumElevationInMeters
     altitud max m: maximumElevationInMeters
   transformations:
-    #- function: select_matched_string
-    #  params:
-    #    column_to_check: Herbarium
-    #    string_to_match: Pollensamlingen
+    - function: select_matched_string
+      params:
+        column_to_check: Herbarium
+        string_to_match: Pollensamlingen
     - function: clean_whitespace
       params: {}
     - function: drop_empty_rows
@@ -108,8 +113,10 @@ occurrence:
     delimiter: "\t"
     encoding: utf8
     targetFilePath: ./data/BOT/processed/dwc_pollen.csv
-    write_to_db: true
+    write_to_db: false
     write_to_file: true
+    write_to_dwca: true
+    dwcaPath: ./output/dr1013/dr1061.zip
     dwc_fields:
       - type
       - modified
@@ -183,7 +190,7 @@ multimedia:
     delimiter: "\t"
     encoding: utf8
     targetFilePath: ./data/BOT/processed/multimedia_pollen.csv
-    write_to_db: true
+    write_to_db: false
     write_to_file: true
     dwc_fields:
       - occurrenceID
