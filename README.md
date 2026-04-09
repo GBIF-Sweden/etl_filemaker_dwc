@@ -1,17 +1,17 @@
 # ETL FileMaker to Darwin Core
 
-A robust, configuration-driven ETL (Extract, Transform, Load) pipeline for converting FileMaker CSV exports to Darwin Core Archive (DwC-A) format for biodiversity data publishing.
+A configuration-driven ETL pipeline for converting FileMaker CSV exports to
+Darwin Core Archive (DwC-A) output for biodiversity data publishing.
 
 ## Features
 
-- **Configuration-Driven**: YAML-based configuration for flexible data mapping and transformations
-- **Modular Architecture**: Clean separation of extraction, transformation, and loading logic
-- **Pure Functions**: Transformation functions are side-effect free and fully tested
-- **Vectorized Operations**: Optimized pandas operations for high performance
-- **Darwin Core Compliance**: Generates valid DwC-A archives with occurrence and multimedia extensions
-- **Database Integration**: Optional MySQL/MariaDB upsert support with configurable batch sizes
-- **Comprehensive Logging**: Rotating file logs with detailed execution tracking
-- **Docker Support**: Containerized deployment for reproducibility
+- YAML-based configuration for each pipeline
+- Separation of extraction, transformation, and loading logic
+- Pure transformation functions with tests
+- Darwin Core Archive generation with occurrence and multimedia output
+- Optional MySQL/MariaDB upsert support
+- Rotating file logging
+- Docker support for reproducible runs
 
 ## Project Structure
 
@@ -23,9 +23,9 @@ etl_filemaker_dwc/
 ├── loading/              # Database and file output handlers
 ├── utils/                # Logging and utility functions
 ├── tests/                # Unit and integration tests
-├── data/                 # Input data directory
-├── output/               # DwC-A output directory
-├── logs/                 # Application logs
+├── data/                 # Runtime input symlink or mounted path
+├── output/               # Runtime output symlink or mounted path
+├── logs/                 # Runtime log symlink or mounted path
 ├── main.py               # ETL orchestration script
 ├── requirements.txt      # Python dependencies
 ├── Makefile             # Build and run commands
@@ -67,7 +67,12 @@ etl_filemaker_dwc/
 
 ### Running the ETL
 
-**Local execution:**
+**Local execution in the virtualenv:**
+```bash
+make run-local CONFIG_FILE=config-files/algae.yml
+```
+
+**Direct Python execution:**
 ```bash
 python main.py config-files/algae.yml
 ```
@@ -82,6 +87,10 @@ make run CONFIG_FILE=config-files/algae.yml
 make build
 make run CONFIG_FILE=config-files/algae.yml
 ```
+
+`make run` expects `.env`, `config-files/`, `data/`, `output/`, and `logs/` to
+be available in the working tree. Use `env.template` as the local environment
+template.
 
 ## Configuration
 
@@ -132,6 +141,24 @@ merges:
     how: left
 ```
 
+### Included Pipelines
+
+The migrated configs currently include:
+
+- `config-files/afossil.yml`
+- `config-files/pfossil.yml`
+- `config-files/EVmain.yml`
+- `config-files/EVtype.yml`
+- `config-files/fish.yml`
+- `config-files/herptiles.yml`
+- `config-files/mammals.yml`
+- `config-files/birds.yml`
+- `config-files/fbo.yml`
+- `config-files/algae.yml`
+- `config-files/fungi.yml`
+- `config-files/mosses.yml`
+- `config-files/pollen.yml`
+
 ### DwC-A Metadata Guidance
 
 If `write_to_dwca: true`, the config must include a top-level `dwca_metadata` block.
@@ -143,30 +170,43 @@ If `write_to_dwca: true`, the config must include a top-level `dwca_metadata` bl
 
 ### Available Transformations
 
-- `clean_whitespace` - Remove leading/trailing whitespace
-- `generate_occ_id_triplet` - Create occurrenceID from institution:collection:catalog
-- `drop_empty_rows` - Remove rows with null values in specified column
-- `drop_duplicate_rows` - Remove duplicates based on primary key
-- `create_date` - Generate ISO date from year/month/day columns
-- `merge_columns` - Merge columns with fuzzy matching
-- `clean_column_sex` - Standardize sex values
-- `clean_column_lifestage` - Standardize life stage values
-- `pal_move_continents` - Move continent values to correct column
-- `pal_move_oceans` - Move ocean values to correct column
-- And many more...
+The active transformation modules are:
+
+- `transformation/generic.py`
+- `transformation/domain_pal.py`
+- `transformation/coordinates.py`
+- `transformation/dates.py`
+
+Common functions used by the current configs include:
+
+- `clean_whitespace`
+- `generate_occ_id_triplet`
+- `drop_empty_rows`
+- `drop_duplicate_rows`
+- `create_date`
+- `convert_date_columns`
+- `generate_dms_coordinates_column`
+- `select_matched_string`
+- `drop_matched_string`
+- `merge_columns`
+- `clean_column_sex`
+- `clean_column_lifestage`
+- `pal_move_continents`
+- `pal_move_oceans`
+- `pal_fix_synonyms`
 
 ## Testing
 
-Run the test suite:
+Run the test suite through the Makefile:
 
 ```bash
-pytest
+make test
 ```
 
 Run with coverage:
 
 ```bash
-pytest --cov=. --cov-report=html
+.venv/bin/python -m pytest --cov=. --cov-report=html
 ```
 
 ## Output
@@ -200,10 +240,13 @@ The project follows strict code quality standards:
 
 ### Adding New Transformations
 
-1. Add function to `transformation/transform.py`
-2. Register in `TRANSFORMATION_DISPATCHER`
-3. Add tests to `tests/test_transformation.py`
-4. Update configuration YAML files
+1. Add the function to the appropriate module, usually `transformation/generic.py`,
+   `transformation/domain_pal.py`, `transformation/coordinates.py`, or
+   `transformation/dates.py`.
+2. Import and register it in `transformation/transform.py` if it should be
+   callable from YAML.
+3. Add or update tests in `tests/test_transformation.py`.
+4. Update the relevant YAML config file.
 
 ## Troubleshooting
 
@@ -216,6 +259,14 @@ The project follows strict code quality standards:
 **DwC-A Metadata**: If `write_to_dwca: true`, the config must include a top-level `dwca_metadata` block with dataset metadata.
 
 **Memory Issues**: For large datasets, increase batch size or process in chunks.
+
+**Merge Key Errors**: If the ETL fails with a merge error such as `KeyError:
+'art id'`, confirm the input CSV header exists after extraction and that the
+merge keys in the config match the processed column names exactly.
+
+**Mixed-Type Whitespace Cleanup**: `clean_whitespace` now preserves non-string
+values inside object columns. If you see unexpected values in a transformed
+column, inspect the source CSV types rather than assuming string cleanup failed.
 
 ### Logs
 
