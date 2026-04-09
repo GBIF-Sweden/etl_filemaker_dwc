@@ -14,9 +14,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /build
 
-# Install dependencies into a wheels directory for easy copying
+# Install dependencies into a wheels directory for easy copying.
+# Include transitive dependencies so runtime install can stay offline.
 COPY requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /build/wheels -r requirements.txt
+RUN pip wheel --no-cache-dir --wheel-dir /build/wheels -r requirements.txt
 
 
 # --- Stage 2: Runtime Environment ---
