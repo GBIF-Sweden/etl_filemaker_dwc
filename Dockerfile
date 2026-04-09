@@ -19,13 +19,8 @@ WORKDIR /build
 COPY requirements.txt .
 RUN pip wheel --no-cache-dir --wheel-dir /build/wheels -r requirements.txt
 
-
 # --- Stage 2: Runtime Environment ---
 FROM python:3.12-slim
-
-# Build arguments for non-root user
-ARG USER_ID=10001
-ARG GROUP_ID=10001
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -36,10 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxml2 \
     libxslt1.1 \
     && rm -rf /var/lib/apt/lists/*
-
-# Create non-root user and group
-RUN addgroup --gid "$GROUP_ID" appgroup && \
-    adduser --disabled-password --gecos '' --uid "$USER_ID" --gid "$GROUP_ID" appuser
 
 WORKDIR /app
 
@@ -53,10 +44,7 @@ RUN pip install --no-cache-dir --no-index --find-links=/wheels -r requirements.t
 COPY . .
 
 # Initialize directories and set ownership
-RUN mkdir -p /app/data /app/output /app/logs && \
-    chown -R appuser:appgroup /app/data /app/output /app/logs /app
-
-USER appuser
+RUN mkdir -p /app/data /app/output /app/logs
 
 # Entrypoint for the ETL process
 ENTRYPOINT ["python", "main.py"]
