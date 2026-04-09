@@ -14,7 +14,11 @@ def clean_whitespace(df: pd.DataFrame) -> pd.DataFrame:
     try:
         string_columns = df.select_dtypes(include=["object"]).columns
         df[string_columns] = df[string_columns].apply(
-            lambda x: x.str.strip().str.replace(r"\s+", " ", regex=True)
+            lambda x: x.map(
+                lambda value: re.sub(r"\s+", " ", value.strip())
+                if isinstance(value, str)
+                else value
+            )
         )
         logging.info(f"Whitespace cleaning applied to columns: {list(string_columns)}")
         return df

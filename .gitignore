@@ -92,6 +92,10 @@ $RECYCLE.BIN/
 
 # --- Project-Specific Outputs ---
 # Generated data files and logs
+data
+data/
+output
+output/
 logs/*.log
 output/**/*.zip
 output/**/*.csv

@@ -47,6 +47,19 @@ def test_clean_whitespace():
     assert df_res["B"].tolist() == [1, 2, 3]
 
 
+def test_clean_whitespace_preserves_mixed_object_values():
+    df = pd.DataFrame(
+        {
+            "A": pd.Series(["  foo  ", 7, None], dtype=object),
+            "B": [1, 2, 3],
+        }
+    )
+    df_res = clean_whitespace(df)
+
+    assert df_res["A"].tolist() == ["foo", 7, None]
+    assert df_res["B"].tolist() == [1, 2, 3]
+
+
 def test_clean_column_sex():
     df = pd.DataFrame(
         {"sex": ["Male", "female", "0", "Unknown", "MALE", "Femle", ""]}
