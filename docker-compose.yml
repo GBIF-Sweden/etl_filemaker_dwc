@@ -1,0 +1,13 @@
+services:
+  etl:
+    build:
+      context: .
+    image: etl_filemaker_dwc:0.0.1
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./config-files:/app/config-files
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./logs:/app/logs
