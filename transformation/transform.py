@@ -4,11 +4,15 @@ from typing import Any, Callable, Dict, List
 import pandas as pd
 
 from transformation.coordinates import (
+    clean_coordinates,
+    construct_coordinate_string,
     generate_dms_coordinates_column,
     update_coordinates,
 )
 from transformation.dates import convert_date_columns, create_date
 from transformation.domain_pal import (
+    move_entities_to_column,
+    pad_zero,
     pal_adhoc_transform,
     pal_fix_synonyms,
     pal_move_continents,
@@ -16,6 +20,8 @@ from transformation.domain_pal import (
 )
 from transformation.generic import (
     addprefix,
+    clean_column_lifestage,
+    clean_column_sex,
     clean_whitespace,
     create_dynamicproperties,
     drop_columns,
@@ -23,10 +29,13 @@ from transformation.generic import (
     drop_empty_rows,
     drop_matched_string,
     drop_unmapped_columns,
+    filter_by_string_match,
     generate_occ_id_triplet,
     merge_columns,
+    replace_values,
     select_matched_string,
     split_and_explode,
+    trim_value,
 )
 
 
@@ -126,3 +135,43 @@ def merge_dataframes(
             logging.error(f"Merge failed due to missing column: {e}")
             raise
     return base_df
+
+
+cleanCoordinates = clean_coordinates
+
+__all__ = [
+    "TransformationError",
+    "TRANSFORMATION_DISPATCHER",
+    "addprefix",
+    "apply_transformations",
+    "clean_column_lifestage",
+    "clean_column_sex",
+    "clean_coordinates",
+    "clean_whitespace",
+    "cleanCoordinates",
+    "construct_coordinate_string",
+    "convert_date_columns",
+    "create_date",
+    "create_dynamicproperties",
+    "drop_columns",
+    "drop_duplicate_rows",
+    "drop_empty_rows",
+    "drop_matched_string",
+    "drop_unmapped_columns",
+    "filter_by_string_match",
+    "generate_dms_coordinates_column",
+    "generate_occ_id_triplet",
+    "merge_columns",
+    "merge_dataframes",
+    "move_entities_to_column",
+    "pad_zero",
+    "pal_adhoc_transform",
+    "pal_fix_synonyms",
+    "pal_move_continents",
+    "pal_move_oceans",
+    "replace_values",
+    "select_matched_string",
+    "split_and_explode",
+    "trim_value",
+    "update_coordinates",
+]
