@@ -59,6 +59,7 @@ logs/
 *.dwca
 
 # --- Testing Artifacts ---
+tests/
 .pytest_cache/
 .coverage
 .coverage.*
