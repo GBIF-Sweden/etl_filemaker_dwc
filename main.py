@@ -109,6 +109,67 @@ def get_merge_specifications(
     return merge_specs
 
 
+def extract_and_transform_sources(config: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
+    """
+    Identifies source keys dynamically and processes them into DataFrames.
+    """
+    reserved_keys = ["dataset", "merges", "database"]
+
+    if "occurrence" not in config:
+        logging.warning("'occurrence' source missing in config. This is likely an error.")
+
+    source_keys = [
+        k
+        for k, v in config.items()
+        if k not in reserved_keys
+        and isinstance(v, dict)
+        and ("extract" in v or "mapping" in v)
+    ]
+
+    dataframes = {}
+    for key in source_keys:
+        logging.info(f"Processing source: {key}")
+        try:
+            dataframes[key] = process_source(config[key])
+        except Exception as e:
+            logging.warning(
+                f"Failed to process source '{key}': {e}. Skipping this source."
+            )
+            dataframes[key] = pd.DataFrame()
+
+    # Initialize missing expected keys as empty DFs to prevent downstream errors
+    for key in ["occurrence", "multimedia"]:
+        if key not in dataframes:
+            logging.info(f"'{key}' source not found. Initializing empty DataFrame.")
+            dataframes[key] = pd.DataFrame()
+
+    return dataframes
+
+
+def prepare_multimedia_dataframe(
+    config: Dict[str, Any], dataframes: Dict[str, pd.DataFrame]
+) -> pd.DataFrame:
+    """
+    Ensures the 'multimedia' DataFrame has the expected structure even if empty.
+    """
+    df_multimedia = dataframes.get("multimedia", pd.DataFrame())
+
+    if df_multimedia.empty:
+        logging.info(
+            "Multimedia DataFrame is empty. Ensuring it has expected columns."
+        )
+        multimedia_config = config.get("multimedia", {})
+        multimedia_mapping = multimedia_config.get("mapping", {})
+        expected_multimedia_cols = list(multimedia_mapping.values())
+
+        if "occurrenceID" not in expected_multimedia_cols:
+            expected_multimedia_cols.append("occurrenceID")
+
+        df_multimedia = pd.DataFrame(columns=expected_multimedia_cols)
+
+    return df_multimedia
+
+
 def main(config_path: str):
     """
     Orchestrates the ETL process from configuration to final output.
@@ -118,103 +179,28 @@ def main(config_path: str):
         db_config = get_db_config() if requires_db_config(config) else {}
 
         # --- EXTRACT & TRANSFORM ---
-        # Identify source keys dynamically.
-        # We assume any key that is a dictionary and has an 'extract' or 'mapping' key is a source.
-        # We explicitly exclude reserved keys.
-        reserved_keys = ["dataset", "merges", "database"]
-
-        # Ensure 'occurrence' is always processed first or exists
-        if "occurrence" not in config:
-            logging.warning("'occurrence' source missing in config. This is likely an error.")
-
-        source_keys = [
-            k for k, v in config.items()
-            if k not in reserved_keys and isinstance(v, dict) and ("extract" in v or "mapping" in v)
-        ]
-
-        # Ensure occurrence is in the list if it exists (it should be based on logic above)
-        # We might want to enforce order? occurrence first?
-        # For now, just process all identified sources.
-
-        dataframes = {}
-
-        for key in source_keys:
-            logging.info(f"Processing source: {key}")
-            try:
-                dataframes[key] = process_source(config[key])
-            except Exception as e:
-                logging.warning(f"Failed to process source '{key}': {e}. Skipping this source.")
-                # Initialize as empty DataFrame so it doesn't break downstream logic
-                dataframes[key] = pd.DataFrame()
-
-        # Initialize missing expected keys as empty DFs to prevent downstream errors
-        # This is a fallback for legacy logic that might expect specific keys
-        expected_keys = ["occurrence", "multimedia"]
-        for key in expected_keys:
-            if key not in dataframes:
-                logging.info(f"'{key}' source not found. Initializing empty DataFrame.")
-                dataframes[key] = pd.DataFrame()
-
-        # --- Specific handling for 'multimedia' DataFrame ---
-        # This ensures that even if 'multimedia' was processed but resulted in an empty DF,
-        # or if it wasn't in config and was initialized as a generic empty DF,
-        # it will have the expected columns for downstream operations.
-        if "multimedia" in dataframes and dataframes["multimedia"].empty:
-            logging.info(
-                "Multimedia DataFrame is empty. Ensuring it has expected columns for further processing."
-            )
-
-            # Get the expected column names from the 'multimedia' config's mapping.
-            # The 'mapping' section defines the final column names after transformation.
-            multimedia_config = config.get("multimedia", {})
-            multimedia_mapping = multimedia_config.get("mapping", {})
-
-            # Extract the new column names (values of the mapping)
-            expected_multimedia_cols = list(multimedia_mapping.values())
-
-            # Ensure critical columns like 'occurrenceID' are always present,
-            # even if they weren't explicitly in the mapping (e.g., if they are source columns)
-            if "occurrenceID" not in expected_multimedia_cols:
-                expected_multimedia_cols.append("occurrenceID")
-
-            # Replace the empty DataFrame with a new empty DataFrame that has the correct columns
-            dataframes["multimedia"] = pd.DataFrame(columns=expected_multimedia_cols)
+        dataframes = extract_and_transform_sources(config)
+        dataframes["multimedia"] = prepare_multimedia_dataframe(config, dataframes)
 
         # --- MERGE ---
-        # dataset_type = config.get("dataset") # No longer needed for merging
         merge_specs = get_merge_specifications(config, dataframes)
         df_occurrence = merge_dataframes(dataframes["occurrence"], merge_specs)
 
-        # Define values considered as dirty/missing
-        null_values = [
-            None,
-            np.nan,
-            "None",
-            "none",
-            "NaN",
-            "nan",
-            "null",
-            "NULL",
-            "Null",
-        ]
-        # Replace null values with empty string in the entire DataFrame
+        null_values = [None, np.nan, "None", "none", "NaN", "nan", "null", "NULL", "Null"]
         df_occurrence = df_occurrence.replace(null_values, "")
 
         # --- FILTER ---
         occurrence_ids = df_occurrence["occurrenceID"].unique()
         df_multimedia_filtered = dataframes["multimedia"][
             dataframes["multimedia"]["occurrenceID"].isin(occurrence_ids)
-        ]
-        df_multimedia_filtered = df_multimedia_filtered.replace(null_values, "")
+        ].replace(null_values, "")
 
         # --- LOAD ---
-        # Process and load the main 'occurrence' data
         load_config_occurrence = config.get("occurrence", {}).get("load", {})
         df_occurrence_final = handle_output(
             df_occurrence, load_config_occurrence, db_config, source_name="occurrence"
         )
 
-        # Process and load the 'multimedia' data
         load_config_multimedia = config.get("multimedia", {}).get("load", {})
         df_multimedia_final = handle_output(
             df_multimedia_filtered,
