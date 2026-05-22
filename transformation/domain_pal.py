@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import Any, Dict, List, Union
 
 import pandas as pd
 
@@ -68,7 +68,7 @@ def pal_fix_synonyms(df: pd.DataFrame) -> pd.DataFrame:
         author = df["Author"].fillna("")
         df["taxonRemarks"] = (species + ", " + author).str.strip(", ")
 
-        agg_dict = {
+        agg_dict: Dict[str, Any] = {
             col: "first"
             for col in df.columns
             if col not in ["taxonRemarks", "catalogNumber"]

@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -184,7 +184,7 @@ def create_dwca_archive(
             f"Missing required column '{media_identifier_col}'. Skipping extension."
         )
         # Create an empty list for the extension frame
-        ext_frame = []
+        ext_frame: List[ContentData] = []
     else:
         initial_rows = len(multimedia_df_cleaned)
         # Drop rows where the identifier is NaN, None, or an empty string
