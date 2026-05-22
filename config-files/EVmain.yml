@@ -184,6 +184,4 @@ multimedia:
     - ImagePath
     - ThumbPath
     - ThumbFileName
-    - catalogNumber
-    - institutionCode
-    - collectionCode
+
