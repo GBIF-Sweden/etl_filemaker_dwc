@@ -2,10 +2,10 @@
 
 name: Build and Push Docker Image
 
-# This workflow runs on pushes to the main branch and when a new release is created.
+# This workflow runs on pushes to the master branch and when a new release is created.
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   release:
     types: [ "created" ]
 
@@ -40,7 +40,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            # Set 'latest' tag for pushes to the default branch (main)
+            # Set 'latest' tag for pushes to the default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
             # Set version tag for git tags (e.g., v1.2.3)
             type=ref,event=tag
