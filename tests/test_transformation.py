@@ -156,8 +156,9 @@ def test_replace_values_raises_for_missing_column():
         replace_values(df, "missing", "foo")
 
 
-def test_convert_date_columns_raises_for_missing_column():
+def test_convert_date_columns_skips_missing_column():
     df = pd.DataFrame({"createdDate": ["2024-01-01"]})
 
-    with pytest.raises(KeyError, match="not found"):
-        convert_date_columns(df, "missing")
+    df_res = convert_date_columns(df, "missing")
+
+    assert df_res.equals(df)

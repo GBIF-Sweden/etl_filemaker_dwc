@@ -65,7 +65,10 @@ def convert_date_columns(df: pd.DataFrame, date_column: str) -> pd.DataFrame:
     Converts a specified string column to a consistent ISO 8601 UTC datetime format.
     """
     if date_column not in df.columns:
-        raise KeyError(f"Column '{date_column}' not found in DataFrame.")
+        logging.warning(
+            f"Column '{date_column}' not found in DataFrame. Skipping date conversion."
+        )
+        return df.copy()
 
     df = df.copy()
     original_dates_series = df[date_column].copy()
