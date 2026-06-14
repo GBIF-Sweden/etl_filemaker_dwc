@@ -25,6 +25,7 @@ occurrence:
       endYear: str
       dateIdentified: str
   load:
+    database_hostname: localhost
     database_name: local_filemaker_exports
     database_port: '3306'
     database_table: dwc_invertebrates_type
