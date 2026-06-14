@@ -88,3 +88,105 @@ def test_handle_output_writes_configured_file(tmp_path):
     assert result.equals(df)
     assert output_path.exists()
     assert "occurrenceID\tscientificName" in output_path.read_text(encoding="utf-8")
+
+
+def test_upsert_dataframe_in_batches_deduplicates_and_uses_upsert(monkeypatch: pytest.MonkeyPatch):
+    import loading.load as load_module
+
+    df = pd.DataFrame(
+        {
+            "occurrenceID": ["1", "1", "2"],
+            "scientificName": ["Alpha", "Beta", "Gamma"],
+            "ignored": ["x", "y", "z"],
+        }
+    )
+    load_config = {
+        "database_hostname": "localhost",
+        "database_port": "3306",
+        "database_name": "db",
+        "database_table": "table_name",
+        "database_table_pk_column": "occurrenceID",
+    }
+    db_config = {"database_user": "user", "database_password": "password"}
+
+    class FakeColumn:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeTable:
+        def __init__(self):
+            self.c = [FakeColumn("occurrenceID"), FakeColumn("scientificName")]
+            self.columns = self.c
+
+    class FakeResult:
+        rowcount = 1
+
+        def fetchall(self):
+            return []
+
+    class FakeSession:
+        def __init__(self):
+            self.executed = []
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def execute(self, stmt):
+            self.executed.append(stmt)
+            return FakeResult()
+
+        def commit(self):
+            return None
+
+        def rollback(self):
+            return None
+
+    class FakeInsert:
+        def __init__(self, table):
+            self.table = table
+            self.records = None
+            self.on_duplicate = None
+            self.prefix = None
+            self.inserted = {"occurrenceID": "new.occurrenceID", "scientificName": "new.scientificName"}
+
+        def values(self, records):
+            self.records = records
+            return self
+
+        def on_duplicate_key_update(self, **kwargs):
+            self.on_duplicate = kwargs
+            return self
+
+        def prefix_with(self, prefix):
+            self.prefix = prefix
+            return self
+
+    fake_sessions = []
+    fake_insert = None
+
+    monkeypatch.setattr(load_module, "create_engine", lambda *_args, **_kwargs: MagicMock(dispose=lambda: None))
+    monkeypatch.setattr(load_module, "Table", lambda *_args, **_kwargs: FakeTable())
+    monkeypatch.setattr(
+        load_module,
+        "sessionmaker",
+        lambda **_kwargs: (lambda: fake_sessions.append(FakeSession()) or fake_sessions[-1]),
+    )
+
+    def fake_insert_factory(table):
+        nonlocal fake_insert
+        fake_insert = FakeInsert(table)
+        return fake_insert
+
+    monkeypatch.setattr(load_module, "insert", fake_insert_factory)
+
+    upsert_dataframe_in_batches(df, load_config, db_config, batch_size=1000)
+
+    assert fake_insert is not None
+    assert len(fake_sessions) == 1
+    assert len(fake_sessions[0].executed) == 2
+    assert len(fake_insert.records) == 2
+    assert fake_insert.on_duplicate is not None
+    assert "scientificName" in fake_insert.on_duplicate

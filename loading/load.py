@@ -52,23 +52,23 @@ def upsert_dataframe_in_batches(
             df_filtered = df_filtered.replace({np.nan: None})
             total_rows = df_filtered.shape[0]
             pk = load_config["database_table_pk_column"]
-            # ✅ count unique keys
-            unique_pk = df_filtered[pk].nunique(dropna=True)
+            if pk not in df_filtered.columns:
+                raise KeyError(f"Primary key column '{pk}' was not found in the data.")
 
-            # ✅ get the unique rows (keep first occurrence of each PK)
+            unique_pk = df_filtered[pk].nunique(dropna=True)
             df_unique = df_filtered.drop_duplicates(subset=[pk], keep="first")
 
             logging.info(f"Total rows in df_filtered: {total_rows}")
             logging.info(f"Unique {pk} values: {unique_pk}")
             logging.info(f"Rows after drop_duplicates on {pk}: {len(df_unique)}")
+            logging.info(f"Duplicate {pk} rows in df_filtered: {total_rows - unique_pk}")
 
-            # Optional: show how many duplicate rows you had
-            logging.info(
-                f"Duplicate {pk} rows in df_filtered: {total_rows - unique_pk}")
+            insertable_columns = [col.name for col in table.columns if col.name in df_unique.columns]
+            df_unique = df_unique[insertable_columns]
 
-            for start in range(0, len(df_filtered), batch_size):
-                end = min(start + batch_size, len(df_filtered))
-                batch_df = df_filtered.iloc[start:end]
+            for start in range(0, len(df_unique), batch_size):
+                end = min(start + batch_size, len(df_unique))
+                batch_df = df_unique.iloc[start:end]
                 records = batch_df.to_dict(orient="records")
 
                 if not records:
@@ -76,8 +76,16 @@ def upsert_dataframe_in_batches(
 
                 try:
                     stmt = insert(table).values(records)
+                    update_columns = {
+                        column.name: stmt.inserted[column.name]
+                        for column in table.columns
+                        if column.name != pk and column.name in batch_df.columns
+                    }
+                    if update_columns:
+                        stmt = stmt.on_duplicate_key_update(**update_columns)
+                    else:
+                        stmt = stmt.prefix_with("IGNORE")
 
-                    stmt = insert(table).values(records).prefix_with("IGNORE")
                     result = session.execute(stmt)
                     session.commit()
                     logging.info(f"Batch {start}:{end} rowcount={result.rowcount}")
@@ -135,6 +143,7 @@ def handle_output(
         # Use the source_name to create a unique default filename
         default_filename = f"{source_name}_output.csv"
         file_path = load_config.get("targetFilePath", default_filename)
+        Path(file_path).parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(
             file_path,
             sep=load_config.get("delimiter", ","),
@@ -212,10 +221,9 @@ def create_dwca_archive(
 
     dwca_path_str = load_config.get("dwcaPath")
     if not dwca_path_str:
-        logging.error(
+        raise ValueError(
             "Cannot create DwC-A: 'dwcaPath' is not specified in the configuration."
         )
-        return
 
     # Convert to a Path object for robust handling
     dwca_path = Path(dwca_path_str)
@@ -225,10 +233,7 @@ def create_dwca_archive(
     try:
         dwca_path.parent.mkdir(parents=True, exist_ok=True)
     except OSError as e:
-        logging.error(
-            f"Failed to create directory for DwC-A at {dwca_path.parent}: {e}"
-        )
-        return
+        raise OSError(f"Failed to create directory for DwC-A at {dwca_path.parent}: {e}") from e
 
     required_metadata_fields = [
         "dataset_name",
