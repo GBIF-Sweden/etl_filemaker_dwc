@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 
 import main
+from extraction.extract import ExtractionError
 
 
 def test_requires_db_config_false_when_no_source_writes_to_db():
@@ -95,4 +96,25 @@ def test_main_reraises_failures(monkeypatch: pytest.MonkeyPatch):
     )
 
     with pytest.raises(RuntimeError, match="load failed"):
+        main.main("config.yml")
+
+
+def test_main_fails_when_required_source_extraction_fails(monkeypatch: pytest.MonkeyPatch):
+    config = {
+        "dataset": "example",
+        "occurrence": {
+            "extract": {"srcFilePath": "/tmp/input.csv"},
+            "mapping": {"id": "occurrenceID"},
+            "load": {"write_to_db": False, "write_to_file": False, "write_to_dwca": False},
+        },
+    }
+
+    monkeypatch.setattr(main, "load_yaml_config", lambda _path: config)
+    monkeypatch.setattr(
+        main,
+        "extract_from_csv",
+        lambda _cfg: (_ for _ in ()).throw(ExtractionError("source failed")),
+    )
+
+    with pytest.raises(ExtractionError, match="source failed"):
         main.main("config.yml")

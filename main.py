@@ -6,18 +6,12 @@ from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
-from config.config_loader import load_yaml_config
+from config.config_loader import load_yaml_config, validate_pipeline_config
 from dotenv import load_dotenv
 from extraction.extract import extract_from_csv
 from loading.load import create_dwca_archive, handle_output
 from transformation.transform import apply_transformations, merge_dataframes
 from utils.logging_utils import configure_logging
-
-# Configure logging for the application
-configure_logging()
-
-# Load environment variables from the .env file
-load_dotenv(dotenv_path=".env")
 
 
 def get_db_config():
@@ -129,13 +123,7 @@ def extract_and_transform_sources(config: Dict[str, Any]) -> Dict[str, pd.DataFr
     dataframes = {}
     for key in source_keys:
         logging.info(f"Processing source: {key}")
-        try:
-            dataframes[key] = process_source(config[key])
-        except Exception as e:
-            logging.warning(
-                f"Failed to process source '{key}': {e}. Skipping this source."
-            )
-            dataframes[key] = pd.DataFrame()
+        dataframes[key] = process_source(config[key])
 
     # Initialize missing expected keys as empty DFs to prevent downstream errors
     for key in ["occurrence", "multimedia"]:
@@ -175,7 +163,10 @@ def main(config_path: str):
     Orchestrates the ETL process from configuration to final output.
     """
     try:
+        configure_logging()
+        load_dotenv(dotenv_path=".env")
         config = load_yaml_config(config_path)
+        validate_pipeline_config(config)
         db_config = get_db_config() if requires_db_config(config) else {}
 
         # --- EXTRACT & TRANSFORM ---
@@ -186,10 +177,19 @@ def main(config_path: str):
         merge_specs = get_merge_specifications(config, dataframes)
         df_occurrence = merge_dataframes(dataframes["occurrence"], merge_specs)
 
+        if "occurrenceID" not in df_occurrence.columns:
+            raise ValueError(
+                "The occurrence data does not contain 'occurrenceID' after transformation."
+            )
+
         null_values = [None, np.nan, "None", "none", "NaN", "nan", "null", "NULL", "Null"]
         df_occurrence = df_occurrence.replace(null_values, "")
 
         # --- FILTER ---
+        if "occurrenceID" not in dataframes["multimedia"].columns:
+            raise ValueError(
+                "The multimedia data does not contain 'occurrenceID' after transformation."
+            )
         occurrence_ids = df_occurrence["occurrenceID"].unique()
         df_multimedia_filtered = dataframes["multimedia"][
             dataframes["multimedia"]["occurrenceID"].isin(occurrence_ids)
