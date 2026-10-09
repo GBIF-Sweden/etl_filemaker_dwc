@@ -37,9 +37,16 @@ from transformation.generic import (
     split_and_explode,
     trim_value,
 )
+from transformation.sensitive_species import (
+    diffuse_coordinates,
+    sds_diffusion_sos,
+    sds_generalization_ala,
+    sds_generalization_gbif,
+)
 
 
 class TransformationError(Exception):
+
     """Custom exception for transformation failures."""
 
 
@@ -68,6 +75,9 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "clean_column_lifestage": clean_column_lifestage,
     "split_and_explode": split_and_explode,
     "convert_date_columns": convert_date_columns,
+    "sds_diffusion_sos": sds_diffusion_sos,
+    "sds_generalization_ala": sds_generalization_ala,
+    "sds_generalization_gbif": sds_generalization_gbif,
 }
 
 
@@ -158,6 +168,7 @@ __all__ = [
     "drop_empty_rows",
     "drop_matched_string",
     "drop_unmapped_columns",
+    "diffuse_coordinates",
     "filter_by_string_match",
     "generate_dms_coordinates_column",
     "generate_occ_id_triplet",
@@ -170,6 +181,9 @@ __all__ = [
     "pal_move_continents",
     "pal_move_oceans",
     "replace_values",
+    "sds_generalization_ala",
+    "sds_generalization_gbif",
+    "sds_diffusion_sos",
     "select_matched_string",
     "split_and_explode",
     "trim_value",
