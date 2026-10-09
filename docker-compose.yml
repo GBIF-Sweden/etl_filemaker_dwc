@@ -8,6 +8,7 @@ services:
       - .env
     volumes:
       - ./config-files:/app/config-files
+      - ./sensitivity-rules:/app/sensitivity-rules:ro
       - ./data:/app/data
       - ./output:/app/output
       - ./logs:/app/logs

@@ -110,6 +110,7 @@ run:
 		--name "$(IMAGE_NAME)-container" \
 		--env-file .env \
 		-v "$(PROJECT_DIR)/config-files:/app/config-files" \
+		-v "$(PROJECT_DIR)/sensitivity-rules:/app/sensitivity-rules:ro" \
 		-v "$(INPUT_DATA_DIR):/app/data" \
 		-v "$(OUTPUT_DATA_DIR):/app/output" \
 		-v "$(LOGS_DIR):/app/logs" \
