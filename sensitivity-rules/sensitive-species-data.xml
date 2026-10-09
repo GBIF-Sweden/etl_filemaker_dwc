@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sensitiveSpeciesList>
+  <sensitiveSpecies name="Dactylorhiza incarnata var. ochroleuca × majalis subsp. majalis" family="Orchidaceae" guid="10021416" rank="SPECIES" commonName="vaxnycklar × majnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Circus macrourus x cyaneus" family="Accipitridae" guid="10078348" rank="SPECIES" commonName="stäpphök x blå kärrhök">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium adulterinum × trichomanes subsp. trichomanes" family="Aspleniaceae" guid="10105336" rank="SPECIES" commonName="brunbräken × vanlig svartbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cephalanthera longifolia × rubra" family="Orchidaceae" guid="10107319" rank="SPECIES" commonName="hybridskogslilja">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza maculata subsp. fuchsii × majalis subsp. majalis" family="Orchidaceae" guid="10115719" rank="SPECIES" commonName="skogsnycklar × majnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Orchis mascula × spitzelii" family="Orchidaceae" guid="10177181" rank="SPECIES" commonName="Sankt Pers nycklar × alpnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Viola alba × odorata" family="Violaceae" guid="10202093" rank="SPECIES" commonName="silverviol × luktviol">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Epipactis atrorubens × phyllanthes" family="Orchidaceae" guid="10256973" rank="SPECIES" commonName="purpurknipprot × kal knipprot">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium adulterinum × trichomanes" family="Aspleniaceae" guid="10313917" rank="SPECIES" commonName="brunbräken × svartbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dendrocopos leucotos x major" family="Picidae" guid="10341635" rank="SPECIES" commonName="vitryggig hackspett x större hackspett">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gymnadenia conopsea × Pseudorchis albida" family="Orchidaceae" guid="10381712" rank="SPECIES" commonName="brudsporre × vityxne">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Sticta fuliginoides" family="Lobariaceae" guid="10385873" rank="SPECIES" commonName="stiftärrlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Prostomis mandibularis" family="Prostomidae" guid="1045176" rank="SPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Lytta vesicatoria" family="Meloidae" guid="1046592" rank="SPECIES" commonName="spansk fluga">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza incarnata var. incarnata × majalis subsp. majalis" family="Orchidaceae" guid="10475897" rank="SPECIES" commonName="äkta ängsnycklar × majnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cephalanthera damasonium × longifolia" family="Orchidaceae" guid="10503134" rank="SPECIES" commonName="stor skogslilja × vit skogslilja">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Epipactis leptochila × phyllanthes" family="Orchidaceae" guid="10520040" rank="SPECIES" commonName="grön knipprot × kal knipprot">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza maculata subsp. maculata × majalis subsp. majalis" family="Orchidaceae" guid="10617732" rank="SPECIES" commonName="Jungfru Marie nycklar × majnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza incarnata var. incarnata × majalis subsp. integrata" family="Orchidaceae" guid="10619023" rank="SPECIES" commonName="äkta ängsnycklar × englandsnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Epipactis helleborine × phyllanthes" family="Orchidaceae" guid="10653483" rank="SPECIES" commonName="skogsknipprot × kal knipprot">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Liparis" family="Orchidaceae" guid="11984575" rank="GENUS" commonName="gulyxnen">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Nomada integra" family="Apidae" guid="1343808" rank="SPECIES" commonName="slåttergökbi">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Sphecodes spinulosus" family="Halictidae" guid="1351462" rank="SPECIES" commonName="taggblodbi">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Halictus quadricinctus" family="Halictidae" guid="1353236" rank="SPECIES" commonName="storbandbi">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Andrena chrysopyga" family="Andrenidae" guid="1358209" rank="SPECIES" commonName="stäppsandbi">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Melitaea britomartis" family="Nymphalidae" guid="1913178" rank="SPECIES" commonName="veronikanätfjäril">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Plebejus argyrognomon norvegicus" family="Lycaenidae" guid="1926824" rank="SUBSPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Parnassius mnemosyne" family="Papilionidae" guid="1938520" rank="SPECIES" commonName="mnemosynefjäril">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Eresus sandaliatus" family="Eresidae" guid="2164353" rank="SPECIES" commonName="nyckelpigespindel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Myotis bechsteinii" family="Vespertilionidae" guid="2432427" rank="SPECIES" commonName="Bechsteins fladdermus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ursus arctos" family="Ursidae" guid="2433433" rank="SPECIES" commonName="brunbjörn">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Lynx lynx" family="Felidae" guid="2435240" rank="SPECIES" commonName="lo">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tetrao urogallus" family="Phasianidae" guid="2473577" rank="SPECIES" commonName="tjäder">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Coracias garrulus" family="Coraciidae" guid="2475365" rank="SPECIES" commonName="blåkråka">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Merops apiaster" family="Meropidae" guid="2475443" rank="SPECIES" commonName="biätare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Alcedo atthis" family="Alcedinidae" guid="2475532" rank="SPECIES" commonName="kungsfiskare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dendrocopos leucotos" family="Picidae" guid="2477927" rank="SPECIES" commonName="vitryggig hackspett">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Charadrius alexandrinus" family="Charadriidae" guid="2480311" rank="SPECIES" commonName="svartbent strandpipare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Pernis apivorus" family="Accipitridae" guid="2480420" rank="SPECIES" commonName="bivråk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Haliaeetus albicilla" family="Accipitridae" guid="2480449" rank="SPECIES" commonName="havsörn">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Circus cyaneus" family="Accipitridae" guid="2480487" rank="SPECIES" commonName="blå kärrhök">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Circus macrourus" family="Accipitridae" guid="2480491" rank="SPECIES" commonName="stäpphök">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Circus pygargus" family="Accipitridae" guid="2480495" rank="SPECIES" commonName="ängshök">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Clanga pomarina/clanga" family="Accipitridae" guid="2480505" rank="SPECIESAGGREGATE" commonName="mindre skrikörn/större skrikörn">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Aquila chrysaetos/Haliaeetus albicilla" family="Accipitridae" guid="2480506" rank="SPECIESAGGREGATE" commonName="kungsörn/havsörn">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Clanga clanga" family="Accipitridae" guid="2480509" rank="SPECIES" commonName="större skrikörn">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Buteo lagopus" family="Accipitridae" guid="2480524" rank="SPECIES" commonName="fjällvråk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Accipiter gentilis" family="Accipitridae" guid="2480589" rank="SPECIES" commonName="duvhök">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Pandion haliaetus" family="Pandionidae" guid="2480726" rank="SPECIES" commonName="fiskgjuse">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco subbuteo" family="Falconidae" guid="2481035" rank="SPECIES" commonName="lärkfalk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco peregrinus/rusticolus" family="Falconidae" guid="2481047" rank="SPECIESAGGREGATE" commonName="pilgrimsfalk/jaktfalk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco vespertinus" family="Falconidae" guid="2481062" rank="SPECIES" commonName="aftonfalk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Limosa lapponica" family="Scolopacidae" guid="2481681" rank="SPECIES" commonName="myrspov">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gallinago media" family="Scolopacidae" guid="2481831" rank="SPECIES" commonName="dubbelbeckasin">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ciconia nigra" family="Ciconiidae" guid="2481909" rank="SPECIES" commonName="svart stork">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gavia stellata" family="Gaviidae" guid="2481958" rank="SPECIES" commonName="smålom">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asio flammeus" family="Strigidae" guid="2497295" rank="SPECIES" commonName="jorduggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Strix uralensis/nebulosa" family="Strigidae" guid="2497509" rank="SPECIESAGGREGATE" commonName="slaguggla/lappuggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Strix nebulosa" family="Strigidae" guid="2497522" rank="SPECIES" commonName="lappuggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Surnia ulula" family="Strigidae" guid="2497894" rank="SPECIES" commonName="hökuggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tyto alba" family="Tytonidae" guid="2497921" rank="SPECIES" commonName="tornuggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Anser erythropus" family="Anatidae" guid="2498026" rank="SPECIES" commonName="fjällgås">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Anser fabalis" family="Anatidae" guid="2498027" rank="SPECIES" commonName="sädgås">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Upupa epops" family="Upupidae" guid="2498415" rank="SPECIES" commonName="härfågel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Pyrenula occidentalis" family="Pyrenulaceae" guid="2598867" rank="SPECIES" commonName="atlantisk vårtlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Trapeliopsis viridescens" family="Trapeliaceae" guid="2599773" rank="SPECIES" commonName="svartfruktig knotterlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Evernia illyrica" family="Parmeliaceae" guid="2605258" rank="SPECIES" commonName="grå ringlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cetrelia cetrarioides" family="Parmeliaceae" guid="2605867" rank="SPECIES" commonName="Speckled Iceland Lichen">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cetrelia olivetorum s.lat." family="Parmeliaceae" guid="2605872" rank="SPECIESAGGREGATE" commonName="jättesköldlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cetrelia monachorum" family="Parmeliaceae" guid="2605874" rank="SPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Bryoria smithii" family="Parmeliaceae" guid="2606562" rank="SPECIES" commonName="stiftbroktagel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Calicium lenticulare" family="Caliciaceae" guid="2609250" rank="SPECIES" commonName="skuggspiklav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Botrychium simplex" family="Ophioglossaceae" guid="2650180" rank="SPECIES" commonName="dvärglåsbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium ceterach" family="Aspleniaceae" guid="2650617" rank="SPECIES" commonName="mjältbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium adulterinum" family="Aspleniaceae" guid="2650652" rank="SPECIES" commonName="brunbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium scolopendrium" family="Aspleniaceae" guid="2650669" rank="SPECIES" commonName="hjorttunga">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Polystichum braunii" family="Dryopteridaceae" guid="2651092" rank="SPECIES" commonName="skuggbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Pseudorchis albida" family="Orchidaceae" guid="2787993" rank="SPECIES" commonName="vityxne">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ophrys apifera" family="Orchidaceae" guid="2792998" rank="SPECIES" commonName="biblomster">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cephalanthera rubra" family="Orchidaceae" guid="2795845" rank="SPECIES" commonName="röd skogslilja">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cephalanthera damasonium" family="Orchidaceae" guid="2795952" rank="SPECIES" commonName="stor skogslilja">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Platanthera obtusata" family="Orchidaceae" guid="2798436" rank="SPECIES" commonName="lappfela">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Platanthera obtusata subsp. oligantha" family="Orchidaceae" guid="2798444" rank="SUBSPECIES" commonName="lappfela">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Malaxis monophyllos" family="Orchidaceae" guid="2808211" rank="SPECIES" commonName="knottblomster">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Anacamptis pyramidalis" family="Orchidaceae" guid="2808330" rank="SPECIES" commonName="salepsrot">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Anacamptis palustris" family="Orchidaceae" guid="2808399" rank="SPECIES" commonName="kärrnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza majalis subsp. majalis × subsp. integrata var. integrata" family="Orchidaceae" guid="2809736" rank="SPECIES" commonName="majnycklar × äkta englandsnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza majalis" family="Orchidaceae" guid="2810155" rank="SPECIES" commonName="dubbelnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza majalis subsp. majalis" family="Orchidaceae" guid="2810177" rank="SUBSPECIES" commonName="majnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza majalis subsp. integrata" family="Orchidaceae" guid="2810278" rank="SUBSPECIES" commonName="englandsnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cypripedium" family="Orchidaceae" guid="2820318" rank="GENUS" commonName="guckuskor">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cypripedium calceolus" family="Orchidaceae" guid="2820517" rank="SPECIES" commonName="guckusko">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Calypso" family="Orchidaceae" guid="2838907" rank="GENUS" commonName="nornor">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gymnadenia odoratissima" family="Orchidaceae" guid="2840474" rank="SPECIES" commonName="luktsporre">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gymnadenia runei" family="Orchidaceae" guid="2840551" rank="SPECIES" commonName="brudkulla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gymnadenia nigra" family="Orchidaceae" guid="2840590" rank="SPECIES" commonName="brunkulla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Epipogium" family="Orchidaceae" guid="2849248" rank="GENUS" commonName="skogsfrur">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Epipogium aphyllum" family="Orchidaceae" guid="2849252" rank="SPECIES" commonName="skogsfru">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Orchis spitzelii" family="Orchidaceae" guid="2849584" rank="SPECIES" commonName="alpnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Chenopodium vulvaria" family="Amaranthaceae" guid="3083932" rank="SPECIES" commonName="stinkmålla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Menegazzia subsimilis" family="Parmeliaceae" guid="3408876" rank="SPECIES" commonName="atlantisk hållav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Orobanche purpurea" family="Orobanchaceae" guid="3730307" rank="SPECIES" commonName="röllikesnyltrot">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ranunculus ophioglossifolius" family="Ranunculaceae" guid="3931003" rank="SPECIES" commonName="gotlandsranunkel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Reitterelater dubius" family="Elateridae" guid="4428690" rank="SPECIES" commonName="eksavknäppare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Lacon lepidopterus" family="Elateridae" guid="4428899" rank="SPECIES" commonName="skimlig fjällknäppare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Lacon querceus" family="Elateridae" guid="4428902" rank="SPECIES" commonName="ekfjällknäppare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ischnodes sanguinicollis" family="Elateridae" guid="4428989" rank="SPECIES" commonName="almknäppare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cardiophorus gramineus" family="Elateridae" guid="4429138" rank="SPECIES" commonName="ekhjärtknäppare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ampedus nigerrimus" family="Elateridae" guid="4429467" rank="SPECIES" commonName="blanksvart rödrock">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Meloe brevicollis" family="Meloidae" guid="4457545" rank="SPECIES" commonName="korthalsad majbagge">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Melitta melanura" family="Melittidae" guid="5040855" rank="SPECIES" commonName="storblomsterbi">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gulo gulo" family="Mustelidae" guid="5219073" rank="SPECIES" commonName="järv">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Canis lupus" family="Canidae" guid="5219173" rank="SPECIES" commonName="varg [inkl. hund]">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Vulpes lagopus" family="Canidae" guid="5219303" rank="SPECIES" commonName="fjällräv">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Milvus migrans" family="Accipitridae" guid="5229167" rank="SPECIES" commonName="brun glada">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Milvus milvus" family="Accipitridae" guid="5229168" rank="SPECIES" commonName="röd glada">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tuber aestivum" family="Tuberaceae" guid="5258469" rank="SPECIES" commonName="sommartryffel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tuber mesentericum" family="Tuberaceae" guid="5258471" rank="SPECIES" commonName="bagnolitryffel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Sticta limbata" family="Lobariaceae" guid="5260683" rank="SPECIES" commonName="grynig ärrlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Sticta sylvatica" family="Lobariaceae" guid="5260687" rank="SPECIES" commonName="ärrlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Lobaria hallii" family="Lobariaceae" guid="5260708" rank="SPECIES" commonName="hårig skrovellav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Stereocaulon delisei" family="Stereocaulaceae" guid="5261372" rank="SPECIES" commonName="bohuspåskrislav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Epipactis phyllanthes" family="Orchidaceae" guid="5318980" rank="SPECIES" commonName="kal knipprot">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Liparis loeselii" family="Orchidaceae" guid="5323092" rank="SPECIES" commonName="gulyxne">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Calypso bulbosa" family="Orchidaceae" guid="5323572" rank="SPECIES" commonName="norna">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Plebejus argyrognomon" family="Lycaenidae" guid="5714680" rank="SPECIES" commonName="kronärtsblåvinge">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Cerambyx cerdo" family="Cerambycidae" guid="5820507" rank="SPECIES" commonName="större ekbock">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Bubo bubo" family="Strigidae" guid="5959092" rank="SPECIES" commonName="berguv">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Bubo scandiacus" family="Strigidae" guid="5959143" rank="SPECIES" commonName="fjälluggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Lobaria amplissima" family="Lobariaceae" guid="6018203" rank="SPECIES" commonName="jättelav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Accipiter gentilis buteoides" family="Accipitridae" guid="6066148" rank="SUBSPECIES" commonName="duvhök, underarten buteoides">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Calosoma auropunctatum" family="Carabidae" guid="6097931" rank="SPECIES" commonName="hedlarvmördare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Callisthenes reticulatus" family="Carabidae" guid="6097933" rank="SPECIES" commonName="alvarlarvmördare">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Strix uralensis liturata" family="Strigidae" guid="6176015" rank="SUBSPECIES" commonName="slaguggla, underarten liturata">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Strix nebulosa lapponica" family="Strigidae" guid="6176052" rank="SUBSPECIES" commonName="lappuggla, underarten lapponica">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tyto alba guttata" family="Tytonidae" guid="6176299" rank="SUBSPECIES" commonName="mörkbröstad tornuggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco columbarius aesalon" family="Falconidae" guid="6177986" rank="SUBSPECIES" commonName="stenfalk, underarten aesalon">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco subbuteo subbuteo" family="Falconidae" guid="7094834" rank="SUBSPECIES" commonName="lärkfalk, underarten subbuteo">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Milvus migrans migrans" family="Accipitridae" guid="7094921" rank="SUBSPECIES" commonName="brun glada, underarten migrans">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Milvus milvus milvus" family="Accipitridae" guid="7094923" rank="SUBSPECIES" commonName="röd glada, underarten milvus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tetrao urogallus urogallus" family="Phasianidae" guid="7191071" rank="SUBSPECIES" commonName="tjäder, underarten urogallus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Anser fabalis fabalis (staging)" family="Anatidae" guid="7191106" rank="SPECIES" commonName="tajgasädgås (rastande)">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Buteo lagopus lagopus" family="Accipitridae" guid="7191148" rank="SUBSPECIES" commonName="fjällvråk, underarten lagopus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Aquila chrysaetos chrysaetos" family="Accipitridae" guid="7191166" rank="SUBSPECIES" commonName="kungsörn, underarten chrysaetos">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Circus cyaneus cyaneus" family="Accipitridae" guid="7191171" rank="SUBSPECIES" commonName="blå kärrhök, underarten cyaneus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Accipiter gentilis gentilis" family="Accipitridae" guid="7191196" rank="SUBSPECIES" commonName="duvhök, underarten gentilis">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Pandion haliaetus haliaetus" family="Pandionidae" guid="7191206" rank="SUBSPECIES" commonName="fiskgjuse, underarten haliaetus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Bubo bubo bubo" family="Strigidae" guid="7191237" rank="SUBSPECIES" commonName="berguv, underarten bubo">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asio flammeus flammeus" family="Strigidae" guid="7191243" rank="SUBSPECIES" commonName="jorduggla, underarten flammeus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Surnia ulula ulula" family="Strigidae" guid="7191252" rank="SUBSPECIES" commonName="hökuggla, underarten ulula">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Tyto alba alba" family="Tytonidae" guid="7191333" rank="SUBSPECIES" commonName="ljusbröstad tornuggla">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Alcedo atthis atthis" family="Alcedinidae" guid="7191436" rank="SUBSPECIES" commonName="kungsfiskare, underarten atthis">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Coracias garrulus garrulus" family="Coraciidae" guid="7191480" rank="SUBSPECIES" commonName="blåkråka, underarten garrulus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Charadrius alexandrinus alexandrinus" family="Charadriidae" guid="7192445" rank="SUBSPECIES" commonName="svartbent strandpipare, underarten alexandrinus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Limosa lapponica lapponica" family="Scolopacidae" guid="7192460" rank="SUBSPECIES" commonName="myrspov, underarten lapponica">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dendrocopos leucotos leucotos" family="Picidae" guid="7192606" rank="SUBSPECIES" commonName="vitryggig hackspett, underarten leucotos">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Canis lupus lupus" family="Canidae" guid="7193871" rank="SUBSPECIES" commonName="eurasiatisk skogsvarg">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Ursus arctos arctos" family="Ursidae" guid="7193950" rank="SUBSPECIES" commonName="europeisk brunbjörn">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="25km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Viola alba" family="Violaceae" guid="7296398" rank="SPECIES" commonName="silverviol">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Parnassius mnemosyne nordstromi" family="Papilionidae" guid="7387437" rank="SUBSPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Nevesia sampaiana" family="Pannariaceae" guid="7633952" rank="SPECIES" commonName="kastanjegytterlav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Stereocaulon incrustatum" family="Stereocaulaceae" guid="7649786" rank="SPECIES" commonName="grynig påskrislav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza maculata subsp. fuchsii × Gymnadenia odoratissima" family="Orchidaceae" guid="7689" rank="SPECIES" commonName="skogsnycklar × luktsporre">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Chalcophora mariana" family="Buprestidae" guid="7878882" rank="SPECIES" commonName="jättepraktbagge">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Parnassius mnemosyne argiope" family="Papilionidae" guid="7887132" rank="SUBSPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Geastrum flexuosum" family="Geastraceae" guid="8042332" rank="SPECIES" commonName="jordstjärnstryffel">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco rusticolus" family="Falconidae" guid="8069880" rank="SPECIES" commonName="jaktfalk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza majalis subsp. baltica" family="Orchidaceae" guid="8119645" rank="SUBSPECIES" commonName="baltnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Parnassius mnemosyne romani" family="Papilionidae" guid="8123177" rank="SUBSPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Botrychium tenebrosum" family="Ophioglossaceae" guid="8157414" rank="SPECIES" commonName="pysslinglåsbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Parnassius mnemosyne atlanticus" family="Papilionidae" guid="8160393" rank="SUBSPECIES" commonName="">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Erioderma pedicellatum" family="Pannariaceae" guid="8224590" rank="SPECIES" commonName="värmlandslav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Monochamus sartor" family="Cerambycidae" guid="8265082" rank="SPECIES" commonName="granbock">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza majalis subsp. elatior" family="Orchidaceae" guid="8312867" rank="SUBSPECIES" commonName="gotlandsnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Arctomia fascicularis" family="Arctomiaceae" guid="8560983" rank="SPECIES" commonName="kuddgelélav">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dendrocopos medius" family="Picidae" guid="8773033" rank="SPECIES" commonName="mellanspett">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco peregrinus peregrinus" family="Falconidae" guid="8873117" rank="SUBSPECIES" commonName="pilgrimsfalk, underarten peregrinus">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="50km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dendrocopos medius medius" family="Picidae" guid="9038122" rank="SUBSPECIES" commonName="mellanspett, underarten medius">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Upupa epops epops" family="Upupidae" guid="9187376" rank="SUBSPECIES" commonName="härfågel, underarten epops">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Gymnadenia conopsea × odoratissima" family="Orchidaceae" guid="9708234" rank="SPECIES" commonName="brudsporre × luktsporre">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium adulterinum × viride" family="Aspleniaceae" guid="9735041" rank="SPECIES" commonName="brunbräken × grönbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Viola alba × hirta" family="Violaceae" guid="9787014" rank="SPECIES" commonName="silverviol × buskviol">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Falco columbarius" family="Falconidae" guid="9813242" rank="SPECIES" commonName="stenfalk">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Asplenium adulterinum × trichomanes subsp. quadrivalens" family="Aspleniaceae" guid="9819458" rank="SPECIES" commonName="brunbräken × kalksvartbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Milvus milvus x migrans" family="Accipitridae" guid="9927949" rank="SPECIES" commonName="röd glada x brun glada">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Dactylorhiza maculata subsp. fuchsii × majalis subsp. elatior" family="Orchidaceae" guid="9941957" rank="SPECIES" commonName="skogsnycklar × gotlandsnycklar">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+  <sensitiveSpecies name="Polystichum aculeatum × braunii" family="Dryopteridaceae" guid="9974384" rank="SPECIES" commonName="uddbräken × skuggbräken">
+    <instances>
+      <conservationInstance category="" authority="SLU Artdatabanken" dataResourceId="dr165" generalisation="5km" zone="Sweden" />
+    </instances>
+  </sensitiveSpecies>
+</sensitiveSpeciesList>
