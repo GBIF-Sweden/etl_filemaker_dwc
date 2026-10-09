@@ -22,6 +22,38 @@ They solve different problems. A DMS cleanup must never be presented as a sensit
 
 All three public-data approaches operate on WGS84 decimal latitude/longitude, but their rule models, grids, and outputs are materially different.
 
+### Configuration
+
+Add the selected transformation to a dataset's `transformations` list in its
+YAML configuration. Choose one approved public-coordinate strategy for an
+export; do not chain these transformations on the same coordinates.
+
+```yaml
+# GBIF-guide policy generalisation
+- function: sds_generalization_gbif
+  params:
+    rules_path: ./sensitivity-rules/gbif_sensitive_species_policy.csv
+
+# ALA / SDS rule generalisation using the Swedish restricted-access list
+- function: sds_generalization_ala
+  params:
+    rules_csv_path: ./sensitivity-rules/List_of_Restricted_Access_Species_In_Sweden.csv
+
+# SOS-compatible diffusion using the Swedish restricted-access list
+- function: sds_diffusion_sos
+  params:
+    rules_path: ./sensitivity-rules/List_of_Restricted_Access_Species_In_Sweden.csv
+    generalisation_to_protection_level:
+      1km: 2
+      5km: 3
+      25km: 4
+      50km: 5
+```
+
+The paths are resolved from the ETL working directory. The SOS mapping converts
+the generalisation labels in the source rules to SOS sensitivity categories;
+retain it as an explicit, curator-reviewed publication decision.
+
 | Approach and ETL function | Rule selection | Spatial logic | Public coordinate / uncertainty | Metadata and withholding behaviour |
 | --- | --- | --- | --- | --- |
 | **SOS diffusion** `sds_diffusion_sos` | Uses an existing `sensitivityCategory` (2-5), or looks up a Swedish restricted-species CSV by `taxonID` first and scientific name second. The explicit mapping is `1km -> 2`, `5km -> 3`, `25km -> 4`, `50km -> 5`. | Projects WGS84 to SWEREF99 TM (EPSG:3006); snaps each axis to the lower grid edge and adds the SOS offset; reprojects to WGS84. Levels use grids/offsets of 1,000/555 m, 5,000/2,505 m, 25,000/12,505 m, and 50,000/25,005 m. | One deterministic point inside each SOS grid cell. `coordinateUncertaintyInMeters` becomes at least the grid size. | Adds the location-removal statement to `dataGeneralizations` and sets `diffusionStatus=DiffusedBySystem`. Unmatched taxa and invalid/no-level rows are unchanged. It does not suppress a matched coordinate. |
