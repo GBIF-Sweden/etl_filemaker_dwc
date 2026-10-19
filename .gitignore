@@ -32,7 +32,8 @@ pip-delete-this-directory.txt
 env/
 venv/
 ENV/
-
+# pyenv
+.python-version
 
 # --- Secrets and Credentials ---
 # IMPORTANT: Never commit secrets or local configurations to version control.
