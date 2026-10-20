@@ -9,7 +9,7 @@ import pandas as pd
 from config.config_loader import load_yaml_config, validate_pipeline_config
 from dotenv import load_dotenv
 from extraction.extract import extract_from_csv
-from loading.load import create_dwca_archive, handle_output
+from loading.load import create_dwca_archive, create_index, handle_output
 from transformation.transform import apply_transformations, merge_dataframes
 from utils.logging_utils import configure_logging
 
@@ -216,6 +216,14 @@ def main(config_path: str):
             load_config_occurrence,
             config.get("dwca_metadata", {}),
         )
+
+        # --- CREATE index ---
+        create_index(
+            df_occurrence_final,
+            df_multimedia_final,
+            load_config_occurrence,
+        )
+
         logging.info("ETL process completed successfully.")
 
     except Exception as e:
