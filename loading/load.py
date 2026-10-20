@@ -265,3 +265,33 @@ def create_dwca_archive(
         output_dwca=str(dwca_path),
     )
     logging.info(f"Darwin Core Archive created at {dwca_path}")
+
+
+def create_index(
+    core_df: pd.DataFrame,
+    multimedia_df: pd.DataFrame,
+    load_config: Dict[str, Any],
+):
+    if not load_config.get("write_to_index"):
+        return
+
+    logging.info("Creating index...")
+    index_path_str = load_config.get("index_path")
+
+    if not index_path_str:
+        raise ValueError("'index_path' is required when 'write_to_index' is enabled.")
+
+    # media_by_occurrence = (
+    #     multimedia_df.groupby("occurrenceID", dropna=True)
+    #     .apply(lambda rows: rows.to_dict(orient="records"))
+    #     .to_dict()
+    # )
+    # core_df["associatedMedia"] = core_df["occurrenceID"].map(media_by_occurrence)
+    # core_df["associatedMedia"] = core_df["associatedMedia"].apply(
+    #     lambda media: media if isinstance(media, list) else []
+    # )
+
+    index_path = Path(index_path_str)
+    index_path.parent.mkdir(parents=True, exist_ok=True)
+    core_df.to_json(index_path, orient="records", indent=2)
+    logging.info(f"Written {core_df.shape[0]} records to {index_path}.")
