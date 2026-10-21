@@ -1,14 +1,9 @@
 dataset: mammals
-dwca_metadata:
-  dataset_name: "NRM Mammals Collection"
-  description: "Darwin Core Archive export for the NRM mammals collection."
-  citation: "NRM Mammals Collection. Darwin Core Archive export."
-  rights: "CC BY 4.0"
-  license: "https://creativecommons.org/licenses/by/4.0/"
 occurrence:
   defaults:
-#    basisOfRecord: PreservedSpecimen
-    collectionCode: Mammals
+    collectionName: Mammal collection
+    collectionCodeDwc: Mammals
+    indexIdPrefix: ma
     institutionCode: NRM
     kingdom: Animalia
   extract:
@@ -27,34 +22,37 @@ occurrence:
       sex: str
       dateIdentified: str
   load:
-    database_hostname: localhost
-    database_name: local_filemaker_exports
-    database_port: '3306'
-    database_table: dwc_mammals
     database_table_pk_column: occurrenceID
-    delimiter: "\t"
-    encoding: utf8
-    targetFilePath: ./data/ZOO/processed/dwc_mammals.csv
     write_to_db: false
     write_to_file: false
     write_to_dwca: false
-    dwcaPath: ./output/dr1018/dr1018.zip
     write_to_index: true
     index_path: ./data/ZOO/processed/index_mammals.json
     dwc_fields: {}
     batch_size: 100
   mapping:
-    continent: higherGeography
-    createdDate: modified
+    createdDate: catalogedDate
     Preservation: preservation
+    genericName: genus
+    class: clazz
+
   transformations:
     - function: clean_whitespace
       params: {}
     - function: generate_occ_id_triplet
+      params: 
+        collection_code_column: collectionCodeDwc
+    - function: generate_index_id
       params: {}
     - function: clean_column_sex
       params: {}
     - function: clean_column_lifestage
+      params: {}
+    - function: duplicate_column
+      params:
+        source_column: specificEpithet
+        target_column: species
+    - function: add_taxon_rank
       params: {}
     - function: trim_value
       params:
@@ -70,23 +68,24 @@ occurrence:
         col_month: month
         col_day: day
         col_date: eventDate
+    - function: duplicate_column
+      params:
+        source_column: eventDate
+        target_column: verbatimEventDate
     - function: convert_date_columns
       params:
-        date_column: modified
-#    - function: create_dynamicproperties
-#      params:
-#        list_of_columns:
-#          - createdDate
-#          - expeditionName
-#          - endDay
-#          - endMonth
-#          - endYear
-#          - preservation
-#          - synonyms
-    - function: trim_value
+        date_column: eventDate
+    - function: create_day_of_year
       params:
-        column: dateIdentified
-        value: "-"
+        col_date: eventDate
+        col_day_of_year: startDayOfYear
+    - function: convert_date_columns
+      params:
+        date_column: catalogedDate
+    - function: duplicate_column
+      params:
+        source_column: catalogedDate
+        target_column: dateIdentified
     - function: drop_empty_rows
       params:
         column_to_check: catalogNumber
@@ -97,3 +96,5 @@ occurrence:
   unmapped:
     - expeditionName
     - sex_p
+    - indexIdPrefix
+    - collectionCodeDwc

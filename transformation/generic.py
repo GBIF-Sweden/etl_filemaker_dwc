@@ -49,11 +49,11 @@ def addprefix(df: pd.DataFrame, target_column: str, prefix: str) -> pd.DataFrame
         raise
 
 
-def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
+def generate_occ_id_triplet(df: pd.DataFrame, collection_code_column: str = 'collectionCode') -> pd.DataFrame:
     """Generates occurrenceID from institutionCode, collectionCode, and catalogNumber."""
     df = df.copy()
     try:
-        required_cols = ["institutionCode", "collectionCode", "catalogNumber"]
+        required_cols = ["institutionCode", collection_code_column, "catalogNumber"]
         if not all(col in df.columns for col in required_cols):
             missing = [col for col in required_cols if col not in df.columns]
             raise KeyError(
@@ -64,7 +64,7 @@ def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
             df["institutionCode"]
             .astype(str)
             .str.cat(
-                [df["collectionCode"].astype(str), df["catalogNumber"].astype(str)],
+                [df[collection_code_column].astype(str), df["catalogNumber"].astype(str)],
                 sep=":",
             )
         )
@@ -75,6 +75,34 @@ def generate_occ_id_triplet(df: pd.DataFrame) -> pd.DataFrame:
         return df
     except Exception as e:
         logging.exception(f"An error occurred in generate_occ_id_triplet: {e}")
+        raise
+
+
+def generate_index_id(df: pd.DataFrame) -> pd.DataFrame:
+    """Generates id for index from indexIdPrefix and catalogNumber."""
+    df = df.copy()
+    try:
+        required_cols = ["indexIdPrefix", "catalogNumber"]
+        if not all(col in df.columns for col in required_cols):
+            missing = [col for col in required_cols if col not in df.columns]
+            raise KeyError(
+                f"Missing required columns for index id generation: {missing}"
+            )
+
+        df["id"] = (
+            df["indexIdPrefix"].astype(str)
+            .str.cat(
+                [df["catalogNumber"].astype(str)],
+                sep="_",
+            )
+        )
+
+        cols = ["id"] + [col for col in df.columns if col != "id"]
+        df = df[cols]
+        logging.info("Successfully generated 'id' column.")
+        return df
+    except Exception as e:
+        logging.exception(f"An error occurred in generate_index_id: {e}")
         raise
 
 
@@ -369,6 +397,19 @@ def replace_values(
         raise
 
 
+def duplicate_column(
+    df: pd.DataFrame, source_column: str, target_column: str
+) -> pd.DataFrame:
+    """Duplicates values from a specified column into a target column."""
+    df = df.copy()
+    if source_column not in df.columns:
+        logging.warning(f"Column '{source_column}' not found. Skipping filter.")
+        return df
+
+    df[target_column] = df[source_column]
+    return df
+
+
 def merge_columns(
     df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str
 ) -> pd.DataFrame:
@@ -420,3 +461,27 @@ def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataF
 
     logging.info(f"Exploded column '{column}' using delimiter '{delimiter}'.")
     return final_df
+
+
+def add_taxon_rank(df: pd.DataFrame, taxon_rank_column: str = "taxonRank") -> pd.DataFrame:
+    """Adds a taxon rank column based on the presence of taxonomic columns."""
+    df = df.copy()
+    taxonomic_columns = [
+        "species",
+        "genus",
+        "family",
+        "order",
+        "class",
+        "phylum",
+        "kingdom",
+    ]
+
+    df[taxon_rank_column] = ""
+    for rank in taxonomic_columns:
+        if df[rank].notna().any():
+            df[taxon_rank_column] = rank.capitalize()
+            break
+
+    logging.info(f"Added '{taxon_rank_column}' column.")
+
+    return df
