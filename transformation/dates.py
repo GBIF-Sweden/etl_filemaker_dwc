@@ -61,7 +61,8 @@ def create_date(
 
 
 def create_day_of_year(
-    df: pd.DataFrame, col_date: str, col_day_of_year: str) -> pd.DataFrame:
+    df: pd.DataFrame, col_date: str, col_day_of_year: str
+) -> pd.DataFrame:
     """
     Creates a new column representing the day of the year from a date column.
     """

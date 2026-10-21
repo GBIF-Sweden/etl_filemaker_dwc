@@ -10,9 +10,16 @@ from transformation.coordinates import (
     update_coordinates,
 )
 from transformation.dates import (
-    convert_date_columns, 
-    create_date, 
+    convert_date_columns,
+    create_date,
     create_day_of_year,
+)
+from transformation.domain import (
+    clean_column_lifestage,
+    clean_column_sex,
+    generate_occ_id_triplet,
+    generate_index_id,
+    add_taxon_rank,
 )
 from transformation.domain_pal import (
     move_entities_to_column,
@@ -24,8 +31,6 @@ from transformation.domain_pal import (
 )
 from transformation.generic import (
     addprefix,
-    clean_column_lifestage,
-    clean_column_sex,
     clean_whitespace,
     create_dynamicproperties,
     drop_columns,
@@ -35,14 +40,11 @@ from transformation.generic import (
     drop_unmapped_columns,
     duplicate_column,
     filter_by_string_match,
-    generate_occ_id_triplet,
-    generate_index_id,
     merge_columns,
     replace_values,
     select_matched_string,
     split_and_explode,
     trim_value,
-    add_taxon_rank,
 )
 
 
