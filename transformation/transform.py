@@ -9,7 +9,11 @@ from transformation.coordinates import (
     generate_dms_coordinates_column,
     update_coordinates,
 )
-from transformation.dates import convert_date_columns, create_date
+from transformation.dates import (
+    convert_date_columns, 
+    create_date, 
+    create_day_of_year,
+)
 from transformation.domain_pal import (
     move_entities_to_column,
     pad_zero,
@@ -29,13 +33,16 @@ from transformation.generic import (
     drop_empty_rows,
     drop_matched_string,
     drop_unmapped_columns,
+    duplicate_column,
     filter_by_string_match,
     generate_occ_id_triplet,
+    generate_index_id,
     merge_columns,
     replace_values,
     select_matched_string,
     split_and_explode,
     trim_value,
+    add_taxon_rank,
 )
 
 
@@ -47,6 +54,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "clean_whitespace": clean_whitespace,
     "addprefix": addprefix,
     "generate_occ_id_triplet": generate_occ_id_triplet,
+    "generate_index_id": generate_index_id,
     "drop_columns": drop_columns,
     "drop_unmapped_columns": drop_unmapped_columns,
     "drop_duplicate_rows": drop_duplicate_rows,
@@ -55,7 +63,9 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "drop_empty_rows": drop_empty_rows,
     "generate_dms_coordinates_column": generate_dms_coordinates_column,
     "create_date": create_date,
+    "create_day_of_year": create_day_of_year,
     "replace_values": replace_values,
+    "duplicate_column": duplicate_column,
     "merge_columns": merge_columns,
     "update_coordinates": update_coordinates,
     "create_dynamicproperties": create_dynamicproperties,
@@ -68,6 +78,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "clean_column_lifestage": clean_column_lifestage,
     "split_and_explode": split_and_explode,
     "convert_date_columns": convert_date_columns,
+    "add_taxon_rank": add_taxon_rank,
 }
 
 

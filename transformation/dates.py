@@ -60,6 +60,23 @@ def create_date(
     return df
 
 
+def create_day_of_year(
+    df: pd.DataFrame, col_date: str, col_day_of_year: str) -> pd.DataFrame:
+    """
+    Creates a new column representing the day of the year from a date column.
+    """
+    df = df.copy()
+    if col_date not in df.columns:
+        logging.warning(
+            f"Column '{col_date}' not found in DataFrame. Skipping day of year creation."
+        )
+
+    df[col_day_of_year] = pd.to_datetime(df[col_date], errors="coerce").dt.dayofyear \
+        .fillna("").astype(str).str.replace('.0', '')
+
+    return df
+
+
 def convert_date_columns(df: pd.DataFrame, date_column: str) -> pd.DataFrame:
     """
     Converts a specified string column to a consistent ISO 8601 UTC datetime format.

@@ -1,0 +1,3 @@
+== Mammals
+- Processing of dateIdentified is buggy or by design faulty. It uses catalogedDate instead. See JsonHelper:477
+- Processing of eventDate is buggy. Adds date from previous record if current is invalid. See JsonHelper:606
