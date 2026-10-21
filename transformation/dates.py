@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def create_date(
-    df: pd.DataFrame, col_year: str, col_month: str, col_day: str, col_date: str
+    df: pd.DataFrame, col_year: str, col_month: str, col_day: str, col_date: str, validate_and_clean: bool = False
 ) -> pd.DataFrame:
     """
     Creates a new ISO 8601 partial date column from year, month, and day columns.
@@ -55,6 +55,16 @@ def create_date(
         ],
         default="",
     )
+
+    # Remove invalid dates
+    if validate_and_clean:
+        valid_dates = df[col_date].apply(
+            lambda value: pd.notna(pd.to_datetime(value, errors="coerce"))
+        )
+        df[col_date] = df[col_date].where(valid_dates, "")
+        df[col_year] = df[col_year].where(valid_dates, "")
+        df[col_month] = df[col_month].where(valid_dates, "")
+        df[col_day] = df[col_day].where(valid_dates, "")
 
     logging.info(f"Generated date column '{col_date}'.")
     return df
