@@ -68,6 +68,7 @@ occurrence:
         col_month: month
         col_day: day
         col_date: eventDate
+        validate_and_clean: true
     - function: duplicate_column
       params:
         source_column: eventDate
