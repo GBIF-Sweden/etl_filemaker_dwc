@@ -47,6 +47,7 @@ help:
 	@echo "  install    Install Python dependencies locally using pip."
 	@echo "  lint       Run flake8 to lint the Python source code."
 	@echo "  format     Automatically format the code using black."
+	@echo "  type-check Type check with mypy."
 	@echo "  test       Run the Python test suite."
 	@echo "  check      Run tests and linting."
 	@echo "  build      Build the Docker image for the application."
@@ -70,11 +71,15 @@ format:
 	@echo "--> Formatting source code with black..."
 	black .
 
+type-check:
+	@echo "--> Type check with mypy..."
+	mypy main.py extraction/ transformation/ loading/ utils/ --ignore-missing-imports
+
 test:
 	@echo "--> Running Python test suite..."
 	$(PYTHON) -m pytest
 
-check: test lint
+check: test lint type-check
 
 build:
 	@echo "--> Building Docker image '$(IMAGE_NAME):$(IMAGE_TAG)'..."
