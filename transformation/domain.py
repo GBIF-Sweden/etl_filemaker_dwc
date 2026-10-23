@@ -114,29 +114,30 @@ def clean_column_sex(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def clean_column_lifestage(df: pd.DataFrame) -> pd.DataFrame:
+def clean_column_lifestage(df: pd.DataFrame, lifestage_mapping: dict = None) -> pd.DataFrame:
     """Cleans the 'lifeStage' column and standardizes values in place."""
     df = df.copy()
 
-    lifestage_mapping = {
-        "Adult": "adult",
-        "adult": "adult",
-        "Adult?": "adult",
-        "Adut": "adult",
-        "Embryo": "embryo",
-        "Featus": "fetus",
-        "Fetus": "fetus",
-        "Immature": "immature",
-        "Juvenil": "juvenile",
-        "juvenil": "juvenile",
-        "Juvenile": "juvenile",
-        "Juvenile?": "juvenile",
-        "Juvenlie": "juvenile",
-        "Okänd": "",
-        "Subadult": "subadult",
-        "Subadult?": "subadult",
-        "Unknown": "Unknown",
-    }
+    if lifestage_mapping is None:
+        lifestage_mapping = {
+            "Adult": "adult",
+            "adult": "adult",
+            "Adult?": "adult",
+            "Adut": "adult",
+            "Embryo": "embryo",
+            "Featus": "fetus",
+            "Fetus": "fetus",
+            "Immature": "immature",
+            "Juvenil": "juvenile",
+            "juvenil": "juvenile",
+            "Juvenile": "juvenile",
+            "Juvenile?": "juvenile",
+            "Juvenlie": "juvenile",
+            "Okänd": "",
+            "Subadult": "subadult",
+            "Subadult?": "subadult",
+            "Unknown": "Unknown",
+        }
 
     lifestage_mapping_lower = {k.lower(): v for k, v in lifestage_mapping.items()}
     df["lifeStage"] = df["lifeStage"].fillna("").astype(str).str.strip().str.lower()
@@ -176,16 +177,15 @@ def add_taxon_rank(df: pd.DataFrame, taxon_rank_column: str = "taxonRank") -> pd
         "genus",
         "family",
         "order",
-        "class",
+        "clazz",
         "phylum",
         "kingdom",
     ]
 
     df[taxon_rank_column] = ""
-    for rank in taxonomic_columns:
-        if df[rank].notna().any():
-            df[taxon_rank_column] = rank.capitalize()
-            break
+    for column in taxonomic_columns:
+        has_value = df[column].notna() & df[column].astype(str).str.strip().ne("")
+        df.loc[has_value & df[taxon_rank_column].eq(""), taxon_rank_column] = column.capitalize()
 
     logging.info(f"Added '{taxon_rank_column}' column.")
 

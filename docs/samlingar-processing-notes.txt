@@ -1,4 +1,29 @@
-== Mammals
+Mammals
+=======
 - Processing of dateIdentified is buggy or by design faulty. It uses catalogedDate instead. See JsonHelper:477
 - Processing of eventDate is buggy. Adds date from previous record if current is invalid. See JsonHelper:606
+- Years earlier than 1677 are not handled py pandas.to_datetime (se chatgpt)
+
+= Source file
 - Year, month, day may be invalid in source files
+month: cat ZOO/verbatim/MAexport.csv | cut -d ';' -f 24 | sort -u
+year: cat ZOO/verbatim/MAexport.csv | cut -d ';' -f 39 | sort -u
+
+= Examples
+id: ma_101552
+  only in OLD: month, verbatimEventDate, year
+    month (OLD only): "Juni"
+    verbatimEventDate (OLD only): "1904-Juni"
+    year (OLD only): "1904"
+
+- month and day swapped?
+id: ma_102643
+  only in OLD: day, month, verbatimEventDate, year
+    day (OLD only): "03"
+    month (OLD only): "23"
+    verbatimEventDate (OLD only): "1897-23-03"
+    year (OLD only): "1897"
+
+id: ma_750009
+  only in OLD: lifeStage
+    lifeStage (OLD only): "3"

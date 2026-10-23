@@ -47,7 +47,46 @@ occurrence:
     - function: clean_column_sex
       params: {}
     - function: clean_column_lifestage
-      params: {}
+      params:
+        lifestage_mapping: {
+            "Adult": "adult",
+            "adult": "adult",
+            "Adult?": "adult?",
+            "Adut": "adult",
+            "Embryo": "embryo",
+            "Featus": "fetus",
+            "Fetus": "fetus",
+            "Immature": "immature",
+            "Juvenil": "juvenile",
+            "juvenil": "juvenile",
+            "Juvenile": "juvenile",
+            "Juvenile?": "juvenile?",
+            "Juvenlie": "juvenile",
+            "Okänd": "",
+            "Subadult": "subadult",
+            "Subadult?": "subadult?",
+            "Unknown": "Unknown",
+        }
+    - function: trim_value
+      params:
+        column: maximumDepthInMeters
+        value: ".0"
+        from_start: False
+    - function: trim_value
+      params:
+        column: maximumElevationInMeters
+        value: ".0"
+        from_start: False
+    - function: trim_value
+      params:
+        column: minimumDepthInMeters
+        value: ".0"
+        from_start: False
+    - function: trim_value
+      params:
+        column: minimumElevationInMeters
+        value: ".0"
+        from_start: False
     - function: duplicate_column
       params:
         source_column: specificEpithet
@@ -95,7 +134,6 @@ occurrence:
     - function: drop_unmapped_columns
       params: {}
   unmapped:
-    - expeditionName
     - sex_p
     - indexIdPrefix
     - collectionCodeDwc

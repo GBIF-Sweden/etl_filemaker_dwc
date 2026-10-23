@@ -164,7 +164,7 @@ def create_dynamicproperties(
     return df
 
 
-def trim_value(df: pd.DataFrame, column: str, value: str) -> pd.DataFrame:
+def trim_value(df: pd.DataFrame, column: str, value: str, from_start: bool = True, from_end: bool = True) -> pd.DataFrame:
     """Trims occurrences of a specific value from the start and end of each string."""
     df = df.copy()
     if not isinstance(df, pd.DataFrame):
@@ -174,9 +174,18 @@ def trim_value(df: pd.DataFrame, column: str, value: str) -> pd.DataFrame:
             f"The specified column '{column}' does not exist in the DataFrame."
         )
 
+    if not from_start and not from_end:
+        return df
+
     df[column] = df[column].astype("string")
     escaped_value = re.escape(value)
-    pattern = rf"^\s*{escaped_value}+\s*|\s*{escaped_value}+\s*$"
+    if from_start and not from_end:
+        pattern = rf"^\s*{escaped_value}+\s*"
+    elif from_end and not from_start:
+        pattern = rf"\s*{escaped_value}+\s*$"
+    else:  # both start and end
+        pattern = rf"^\s*{escaped_value}+\s*|\s*{escaped_value}+\s*$"
+
     df[column] = df[column].replace(pattern, "", regex=True)
 
     logging.info(
