@@ -64,7 +64,7 @@ install:
 
 lint:
 	@echo "--> Linting source code with flake8..."
-	flake8 .
+	flake8 . --max-complexity=15 --max-line-length=88
 
 format:
 	@echo "--> Formatting source code with black..."
