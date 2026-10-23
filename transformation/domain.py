@@ -114,11 +114,11 @@ def clean_column_sex(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def clean_column_lifestage(df: pd.DataFrame, lifestage_mapping: dict = None) -> pd.DataFrame:
+def clean_column_lifestage(df: pd.DataFrame, lifestage_mapping: dict = {}) -> pd.DataFrame:
     """Cleans the 'lifeStage' column and standardizes values in place."""
     df = df.copy()
 
-    if lifestage_mapping is None:
+    if not lifestage_mapping:
         lifestage_mapping = {
             "Adult": "adult",
             "adult": "adult",
