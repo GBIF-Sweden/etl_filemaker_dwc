@@ -88,9 +88,9 @@ def update_coordinates(df: pd.DataFrame, coordinate_column: str) -> pd.DataFrame
     return df
 
 
-def validate_decimal_coordinates(df: pd.DataFrame, 
-                         decimal_lat_column: str = "decimalLatitude", 
-                         decimal_lon_column: str = "decimalLongitude") -> pd.DataFrame:
+def validate_decimal_coordinates(df: pd.DataFrame,
+                                 decimal_lat_column: str = "decimalLatitude",
+                                 decimal_lon_column: str = "decimalLongitude") -> pd.DataFrame:
     """Validates decimal latitude and longitude and removes them if invalid"""
     df = df.copy()
 
