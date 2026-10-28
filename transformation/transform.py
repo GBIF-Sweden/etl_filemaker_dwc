@@ -43,10 +43,13 @@ from transformation.generic import (
     filter_by_string_match,
     merge_columns,
     join_columns,
+    columns_to_list,
     replace_values,
     select_matched_string,
     split_and_explode,
     trim_value,
+    group_by_and_aggregate,
+    add_column,
 )
 
 
@@ -72,10 +75,13 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "duplicate_column": duplicate_column,
     "merge_columns": merge_columns,
     "join_columns": join_columns,
+    "columns_to_list": columns_to_list,
     "update_coordinates": update_coordinates,
     "validate_decimal_coordinates": validate_decimal_coordinates,
     "create_dynamicproperties": create_dynamicproperties,
     "trim_value": trim_value,
+    "group_by_and_aggregate": group_by_and_aggregate,
+    "add_column": add_column,
     "pal_move_continents": pal_move_continents,
     "pal_move_oceans": pal_move_oceans,
     "pal_adhoc_transform": pal_adhoc_transform,

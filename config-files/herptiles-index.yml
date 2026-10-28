@@ -165,8 +165,6 @@ multimedia:
   defaults:
     collectionCode: NRM-Herps
     institutionCode: NRM
-    type: StillImage
-    license: http://creativecommons.org/licenses/by/4.0/legalcode
   extract:
     delimiter: ;
     encoding: utf8
@@ -178,7 +176,6 @@ multimedia:
     write_to_file: false
   mapping:
     CatalogNumber: catalogNumber
-    ImageFileName: identifier
   transformations:
     - function: clean_whitespace
       params: {}
@@ -186,16 +183,38 @@ multimedia:
       params: {}
     - function: addprefix
       params:
-        target_column: identifier
-        prefix: https://media-service.nrm.se/images?dataset=herps&id=Full_size/
+        target_column: ImageFileName
+        prefix: Full_size/
+    - function: addprefix
+      params:
+        target_column: ThumbFileName
+        prefix: Thumbnails/
+    - function: columns_to_list
+      params:
+        columns: [ThumbFileName,ImageFileName]
+        targetcolumn: associatedMedia
     - function: drop_unmapped_columns
       params: {}
+    - function: group_by_and_aggregate
+      params:
+        group_by_column: occurrenceID
+        aggregate_column: associatedMedia
+    - function: add_column
+      params:
+        column: hasImage
+        value: true
   unmapped:
     - CollCatID
     - ImagePath
+    - ImageFileName
     - ThumbPath
     - ThumbFileName
     - catalogNumber
     - institutionCode
     - collectionCode
 
+merges:
+  - source: multimedia
+    left_on: occurrenceID
+    right_on: occurrenceID
+    how: left

@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+from itertools import chain
 from typing import Any, Dict, List
 
 import numpy as np
@@ -298,14 +299,6 @@ def join_columns(
 ) -> pd.DataFrame:
     """Joins values from two specified columns into a target column."""
     df = df.copy()
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError("Expected df to be a pandas DataFrame.")
-    if (
-        not isinstance(firstcolumn, str)
-        or not isinstance(secondcolumn, str)
-        or not isinstance(targetcolumn, str)
-    ):
-        raise TypeError("Column names must be strings.")
 
     for col in [firstcolumn, secondcolumn]:
         if col not in df.columns:
@@ -317,6 +310,26 @@ def join_columns(
     both_non_empty = s1.ne("") & s2.ne("")
     joined = (s1 + delim + s2).where(both_non_empty, "")
     df[targetcolumn] = joined.str.strip()
+
+    return df
+
+
+def columns_to_list(df: pd.DataFrame, columns: list[str], targetcolumn: str) -> pd.DataFrame:
+    """Copies values from the specified columns into a target column as a list."""
+    df = df.copy()
+
+    if not columns:
+        raise ValueError("At least one column name must be provided.")
+
+    for col in columns:
+        if col not in df.columns:
+            raise KeyError(f"Column '{col}' not found in DataFrame.")
+
+    column_values = [df[col].fillna("").astype(str).str.strip() for col in columns]
+    df[targetcolumn] = [
+        [value for value in row if value]
+        for row in zip(*column_values)
+    ]
 
     return df
 
@@ -334,3 +347,28 @@ def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataF
 
     logging.info(f"Exploded column '{column}' using delimiter '{delimiter}'.")
     return final_df
+
+
+def group_by_and_aggregate(df: pd.DataFrame, group_by_column: str, aggregate_column: str) -> pd.DataFrame:
+    """Groups by the group_by_column and aggregates the values of the aggregate_column into a flat list"""
+    df = df.copy()
+
+    for col in [group_by_column, aggregate_column]:
+        if col not in df.columns:
+            raise KeyError(f"Column '{col}' not found in DataFrame.")
+
+    df = (
+        df.groupby(group_by_column, as_index=False)[aggregate_column]
+          .agg(lambda lists: list(chain.from_iterable(lists)))
+    )
+
+    return df
+
+
+def add_column(df: pd.DataFrame, column: str, value: Any) -> pd.DataFrame:
+    """Adds a column with a default value"""
+    df = df.copy()
+
+    df[column] = value
+
+    return df
