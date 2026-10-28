@@ -27,3 +27,8 @@ id: ma_102643
 id: ma_750009
   only in OLD: lifeStage
     lifeStage (OLD only): "3"
+
+
+Herptiles
+=========
+- Coordinates starting with zero are lost in parsing: eg: 0.04777, -0.21431

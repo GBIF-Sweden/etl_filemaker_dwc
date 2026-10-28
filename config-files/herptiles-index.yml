@@ -1,14 +1,9 @@
 dataset: herptiles
-dwca_metadata:
-  dataset_name: "NRM Herptiles Collection"
-  description: "Darwin Core Archive export for the NRM herptiles collection."
-  citation: "NRM Herptiles Collection. Darwin Core Archive export."
-  rights: "CC BY 4.0"
-  license: "https://creativecommons.org/licenses/by/4.0/"
 occurrence:
   defaults:
-#    basisOfRecord: PreservedSpecimen
-    collectionCode: NRM-Herps
+    collectionName: Amphibians and reptiles collections
+    collectionCodeDwc: NRM-Herps
+    indexIdPrefix: he
     institutionCode: NRM
   extract:
     delimiter: ;
@@ -26,27 +21,23 @@ occurrence:
       waterBody: str
       dateIdentified: str
   load:
-    database_hostname: localhost
-    database_name: local_filemaker_exports
-    database_port: '3306'
-    database_table: dwc_herptiles
     database_table_pk_column: occurrenceID
-    delimiter: "\t"
-    encoding: utf8
-    targetFilePath: ./data/ZOO/processed/dwc_herptiles.csv
     write_to_db: false
     write_to_file: false
     write_to_dwca: false
-    dwcaPath: ./output/dr7/dr7.zip
     write_to_index: true
     index_path: ./data/ZOO/processed/index_herptiles.json
     dwc_fields: {}
   mapping:
     genericName: genus
-    continent: higherGeography
-    createdDate: modified
+    createdDate: catalogedDate
+    class: clazz
+    recordedBy: collectors
   transformations:
     - function: generate_occ_id_triplet
+      params: 
+        collection_code_column: collectionCodeDwc
+    - function: generate_index_id
       params: {}
     - function: replace_values
       params:
@@ -63,7 +54,7 @@ occurrence:
     - function: replace_values
       params:
         columns_to_replace:
-          - higherGeography
+          - continent
           - country
           - stateProvince
           - waterBody
@@ -72,7 +63,7 @@ occurrence:
     - function: replace_values
       params:
         columns_to_replace:
-          - higherGeography
+          - continent
           - country
           - stateProvince
           - waterBody
@@ -81,7 +72,7 @@ occurrence:
     - function: replace_values
       params:
         columns_to_replace:
-          - higherGeography
+          - continent
           - country
           - stateProvince
           - waterBody
@@ -90,7 +81,7 @@ occurrence:
     - function: replace_values
       params:
         columns_to_replace:
-          - higherGeography
+          - continent
           - country
           - stateProvince
           - waterBody
@@ -100,6 +91,17 @@ occurrence:
       params:
         column: waterBody
         value: ":"
+    - function: trim_value
+      params:
+        column: recordNumber
+        value: ".0"
+        from_start: False
+    - function: duplicate_column
+      params:
+        source_column: specificEpithet
+        target_column: species
+    - function: add_taxon_rank
+      params: {}
     - function: trim_value
       params:
         column: month
@@ -114,25 +116,27 @@ occurrence:
         col_month: month
         col_day: day
         col_date: eventDate
-    - function: trim_value
+        validate_and_clean: true
+    - function: duplicate_column
       params:
-        column: dateIdentified
-        value: "-"
-    - function: clean_whitespace
-      params: {}
+        source_column: eventDate
+        target_column: verbatimEventDate
     - function: convert_date_columns
       params:
-        date_column: createdDate
-#    - function: create_dynamicproperties
-#      params:
-#        list_of_columns:
-#          - createdDate
-#          - expeditionName
-#          - endDay
-#          - endMonth
-#          - endYear
-#          - preservation
-#          - synonyms
+        date_column: eventDate
+    - function: create_day_of_year
+      params:
+        col_date: eventDate
+        col_day_of_year: startDayOfYear
+    - function: convert_date_columns
+      params:
+        date_column: catalogedDate
+    - function: duplicate_column
+      params:
+        source_column: catalogedDate
+        target_column: dateIdentified
+    - function: clean_whitespace
+      params: {}
     - function: drop_empty_rows
       params:
         column_to_check: catalogNumber
@@ -140,12 +144,11 @@ occurrence:
       params: {}
   unmapped:
     - createdDate
-    - expeditionName
     - endDay
     - endMonth
     - endYear
-#    - preservation
-#    - synonyms
+    - indexIdPrefix
+    - collectionCodeDwc
 
 multimedia:
   defaults:
@@ -160,14 +163,6 @@ multimedia:
     dtype:
       CatalogNumber: str
   load:
-    database_hostname: localhost
-    database_name: local_filemaker_exports
-    database_port: '3306'
-    database_table: multimedia_herptile
-    database_table_pk_column: 'identifier'
-    delimiter: "\t"
-    encoding: utf8
-    targetFilePath: ./data/ZOO/processed/multimedia_herptile.csv
     write_to_db: false
     write_to_file: false
   mapping:

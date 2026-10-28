@@ -35,7 +35,6 @@ occurrence:
     Preservation: preservation
     genericName: genus
     class: clazz
-
   transformations:
     - function: clean_whitespace
       params: {}
