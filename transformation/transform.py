@@ -8,6 +8,7 @@ from transformation.coordinates import (
     construct_coordinate_string,
     generate_dms_coordinates_column,
     update_coordinates,
+    validate_decimal_coordinates,
 )
 from transformation.dates import (
     convert_date_columns,
@@ -41,6 +42,7 @@ from transformation.generic import (
     duplicate_column,
     filter_by_string_match,
     merge_columns,
+    join_columns,
     replace_values,
     select_matched_string,
     split_and_explode,
@@ -69,7 +71,9 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "replace_values": replace_values,
     "duplicate_column": duplicate_column,
     "merge_columns": merge_columns,
+    "join_columns": join_columns,
     "update_coordinates": update_coordinates,
+    "validate_decimal_coordinates": validate_decimal_coordinates,
     "create_dynamicproperties": create_dynamicproperties,
     "trim_value": trim_value,
     "pal_move_continents": pal_move_continents,

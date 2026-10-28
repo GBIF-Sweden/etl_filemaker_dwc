@@ -293,6 +293,34 @@ def merge_columns(
     return df
 
 
+def join_columns(
+    df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str, delim: str = " "
+) -> pd.DataFrame:
+    """Joins values from two specified columns into a target column."""
+    df = df.copy()
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("Expected df to be a pandas DataFrame.")
+    if (
+        not isinstance(firstcolumn, str)
+        or not isinstance(secondcolumn, str)
+        or not isinstance(targetcolumn, str)
+    ):
+        raise TypeError("Column names must be strings.")
+
+    for col in [firstcolumn, secondcolumn]:
+        if col not in df.columns:
+            raise KeyError(f"Column '{col}' not found in DataFrame.")
+
+    s1 = df[firstcolumn].fillna("").astype(str)
+    s2 = df[secondcolumn].fillna("").astype(str)
+
+    both_non_empty = s1.ne("") & s2.ne("")
+    joined = (s1 + delim + s2).where(both_non_empty, "")
+    df[targetcolumn] = joined.str.strip()
+
+    return df
+
+
 def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataFrame:
     """Splits a column by delimiter and explodes the resulting list values."""
     df = df.copy()

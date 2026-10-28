@@ -86,3 +86,20 @@ def update_coordinates(df: pd.DataFrame, coordinate_column: str) -> pd.DataFrame
 
     logging.info(f"Cleaning column '{coordinate_column}' completed successfully.")
     return df
+
+
+def validate_decimal_coordinates(df: pd.DataFrame, 
+                         decimal_lat_column: str = "decimalLatitude", 
+                         decimal_lon_column: str = "decimalLongitude") -> pd.DataFrame:
+    """Validates decimal latitude and longitude and removes them if invalid"""
+    df = df.copy()
+
+    for column, minimum, maximum in (
+        (decimal_lat_column, -90, 90),
+        (decimal_lon_column, -180, 180),
+    ):
+        values = pd.to_numeric(df[column], errors="coerce")
+        valid = values.between(minimum, maximum)
+        df.loc[~valid, column] = None
+
+    return df

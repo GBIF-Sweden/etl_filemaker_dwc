@@ -135,6 +135,17 @@ occurrence:
       params:
         source_column: catalogedDate
         target_column: dateIdentified
+    - function: validate_decimal_coordinates
+    - function: join_columns
+      params:
+        firstcolumn: decimalLatitude
+        secondcolumn: decimalLongitude
+        targetcolumn: lat_long
+        delim: ","
+    - function: duplicate_column
+      params:
+        source_column: lat_long
+        target_column: geo
     - function: clean_whitespace
       params: {}
     - function: drop_empty_rows
