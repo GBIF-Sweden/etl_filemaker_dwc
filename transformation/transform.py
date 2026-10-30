@@ -47,6 +47,7 @@ from transformation.generic import (
     replace_values,
     select_matched_string,
     split_and_explode,
+    split,
     trim_value,
     group_by_and_aggregate,
     add_column,
@@ -89,6 +90,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "clean_column_sex": clean_column_sex,
     "clean_column_lifestage": clean_column_lifestage,
     "split_and_explode": split_and_explode,
+    "split": split,
     "convert_date_columns": convert_date_columns,
     "add_taxon_rank": add_taxon_rank,
 }

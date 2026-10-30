@@ -102,6 +102,10 @@ occurrence:
         target_column: species
     - function: add_taxon_rank
       params: {}
+    - function: split
+      params:
+        column: synonyms
+        delimiter: "|"
     - function: trim_value
       params:
         column: month
@@ -141,7 +145,7 @@ occurrence:
         firstcolumn: decimalLatitude
         secondcolumn: decimalLongitude
         targetcolumn: lat_long
-        delim: ","
+        delimiter: ","
     - function: duplicate_column
       params:
         source_column: lat_long

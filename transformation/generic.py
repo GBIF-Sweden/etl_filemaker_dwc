@@ -295,7 +295,7 @@ def merge_columns(
 
 
 def join_columns(
-    df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str, delim: str = " "
+    df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str, delimiter: str = " "
 ) -> pd.DataFrame:
     """Joins values from two specified columns into a target column."""
     df = df.copy()
@@ -308,7 +308,7 @@ def join_columns(
     s2 = df[secondcolumn].fillna("").astype(str)
 
     both_non_empty = s1.ne("") & s2.ne("")
-    joined = (s1 + delim + s2).where(both_non_empty, "")
+    joined = (s1 + delimiter + s2).where(both_non_empty, "")
     df[targetcolumn] = joined.str.strip()
 
     return df
@@ -347,6 +347,19 @@ def split_and_explode(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataF
 
     logging.info(f"Exploded column '{column}' using delimiter '{delimiter}'.")
     return final_df
+
+
+def split(df: pd.DataFrame, column: str, delimiter: str) -> pd.DataFrame:
+    """Splits a column into a list by delimiter."""
+    df = df.copy()
+    if column not in df.columns:
+        raise ValueError(f"Column '{column}' not found in the DataFrame.")
+
+    df[column] = df[column].astype("string").str.split(delimiter).map(
+        lambda values: [value.strip() for value in values] if isinstance(values, list) else values
+    )
+
+    return df
 
 
 def group_by_and_aggregate(df: pd.DataFrame, group_by_column: str, aggregate_column: str) -> pd.DataFrame:

@@ -1,0 +1,217 @@
+dataset: fish
+occurrence:
+  defaults:
+    collectionName: Fish collection
+    collectionCodeDwc: NRM-Fish
+    indexIdPrefix: pi
+    institutionCode: NRM
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/fish.csv
+    dtype:
+      catalogNumber: str
+      individualCount: str
+      day: str
+      month: str
+      year: str
+      endDay: str
+      endMonth: str
+      endYear: str
+      dateIdentified: str
+  load:
+    database_table_pk_column: occurrenceID
+    write_to_db: false
+    write_to_file: false
+    write_to_dwca: false
+    write_to_index: true
+    index_path: ./data/ZOO/processed/index_fish.json
+    dwc_fields: {}
+  mapping:
+    genericName: genus
+    createdDate: catalogedDate
+    class: clazz
+    recordedBy: collectors
+  transformations:
+    - function: generate_occ_id_triplet
+      params: 
+        collection_code_column: collectionCodeDwc
+    - function: generate_index_id
+      params: {}
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - country
+        to_replace: 'UNKNOWN COUNTRY'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - country
+        to_replace: 'UNDETERMINED COUNTRY'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - continent
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'UNKNOWN'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - continent
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'Unkown'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - continent
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'Unknown'
+        value: ''
+    - function: replace_values
+      params:
+        columns_to_replace:
+          - continent
+          - country
+          - stateProvince
+          - waterBody
+        to_replace: 'N/A'
+        value: ''
+    - function: trim_value
+      params:
+        column: waterBody
+        value: ":"
+    - function: duplicate_column
+      params:
+        source_column: specificEpithet
+        target_column: species
+    - function: add_taxon_rank
+    - function: split
+      params:
+        column: synonyms
+        delimiter: "|"
+    - function: trim_value
+      params:
+        column: month
+        value: "00"
+    - function: trim_value
+      params:
+        column: day
+        value: "00"
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+        validate_and_clean: true
+    - function: duplicate_column
+      params:
+        source_column: eventDate
+        target_column: verbatimEventDate
+    - function: convert_date_columns
+      params:
+        date_column: eventDate
+    - function: create_day_of_year
+      params:
+        col_date: eventDate
+        col_day_of_year: startDayOfYear
+    - function: convert_date_columns
+      params:
+        date_column: catalogedDate
+    - function: duplicate_column
+      params:
+        source_column: catalogedDate
+        target_column: dateIdentified
+    - function: validate_decimal_coordinates
+    - function: join_columns
+      params:
+        firstcolumn: decimalLatitude
+        secondcolumn: decimalLongitude
+        targetcolumn: lat_long
+        delimiter: ","
+    - function: duplicate_column
+      params:
+        source_column: lat_long
+        target_column: geo
+    - function: clean_whitespace
+      params: {}
+    - function: drop_empty_rows
+      params:
+        column_to_check: catalogNumber
+    - function: drop_unmapped_columns
+      params: {}
+  unmapped:
+    - createdDate
+    - endDay
+    - endMonth
+    - endYear
+    - indexIdPrefix
+    - collectionCodeDwc
+
+multimedia:
+  defaults:
+    collectionCode: NRM-Fish
+    institutionCode: NRM
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/Fishimages.csv
+    dtype:
+      CatalogNumber: str
+  load:
+    write_to_db: false
+    write_to_file: false
+  mapping:
+    CatalogNumber: catalogNumber
+  transformations:
+    - function: clean_whitespace
+      params: {}
+    - function: generate_occ_id_triplet
+      params: {}
+    - function: addprefix
+      params:
+        target_column: ImageFileName
+        prefix: Full_size/
+    - function: addprefix
+      params:
+        target_column: ThumbFileName
+        prefix: Thumbnails/
+    - function: columns_to_list
+      params:
+        columns: [ThumbFileName,ImageFileName]
+        targetcolumn: associatedMedia
+    - function: drop_unmapped_columns
+      params: {}
+    - function: group_by_and_aggregate
+      params:
+        group_by_column: occurrenceID
+        aggregate_column: associatedMedia
+    - function: add_column
+      params:
+        column: hasImage
+        value: true
+  unmapped:
+    - CollCatID
+    - ImagePath
+    - ImageFileName
+    - ThumbPath
+    - ThumbFileName
+    - catalogNumber
+    - institutionCode
+    - collectionCode
+
+merges:
+  - source: multimedia
+    left_on: occurrenceID
+    right_on: occurrenceID
+    how: left
