@@ -27,7 +27,7 @@ occurrence:
     write_to_file: false
     write_to_dwca: false
     write_to_index: true
-    index_path: ./data/ZOO/processed/index_invertebrates_type.json
+    index_path: ./data/ZOO/processed/index_EVtype.json
     dwc_fields: {}
   mapping:
     genericName: genus
