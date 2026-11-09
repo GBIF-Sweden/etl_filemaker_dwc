@@ -174,6 +174,7 @@ def add_taxon_rank(df: pd.DataFrame, taxon_rank_column: str = "taxonRank") -> pd
     df = df.copy()
     taxonomic_columns = [
         "species",
+        "subgenus",
         "genus",
         "family",
         "order",
@@ -184,8 +185,9 @@ def add_taxon_rank(df: pd.DataFrame, taxon_rank_column: str = "taxonRank") -> pd
 
     df[taxon_rank_column] = ""
     for column in taxonomic_columns:
-        has_value = df[column].notna() & df[column].astype(str).str.strip().ne("")
-        df.loc[has_value & df[taxon_rank_column].eq(""), taxon_rank_column] = column.capitalize()
+        if column in df.columns:
+            has_value = df[column].notna() & df[column].astype(str).str.strip().ne("")
+            df.loc[has_value & df[taxon_rank_column].eq(""), taxon_rank_column] = column.capitalize()
 
     logging.info(f"Added '{taxon_rank_column}' column.")
 

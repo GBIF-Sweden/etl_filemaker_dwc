@@ -100,6 +100,8 @@ def validate_decimal_coordinates(df: pd.DataFrame,
     ):
         values = pd.to_numeric(df[column], errors="coerce")
         valid = values.between(minimum, maximum)
+        # Keep decimal values that are valid, set invalid values to None
+        df.loc[valid, column] = values
         df.loc[~valid, column] = None
 
     return df
