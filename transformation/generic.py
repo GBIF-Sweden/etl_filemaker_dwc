@@ -217,7 +217,7 @@ def drop_empty_rows(df: pd.DataFrame, column_to_check: str) -> pd.DataFrame:
 
 
 def replace_values(
-    df: pd.DataFrame, columns_to_replace: Any, to_replace: str, value: str = ""
+    df: pd.DataFrame, columns_to_replace: Any, to_replace: str, value: str = "", stringReplace: bool = False
 ) -> pd.DataFrame:
     """
     Replace occurrences of a specified string in one or more columns of a DataFrame.
@@ -229,7 +229,10 @@ def replace_values(
 
         for column in columns_to_replace:
             if column in df.columns:
-                df[column] = df[column].replace(to_replace, value)
+                if stringReplace:
+                    df[column] = df[column].str.replace(to_replace, value)
+                else:
+                    df[column] = df[column].replace(to_replace, value)
                 df[column] = df[column].replace({np.nan: value})
             else:
                 raise ValueError(f"Column '{column}' does not exist in the DataFrame.")

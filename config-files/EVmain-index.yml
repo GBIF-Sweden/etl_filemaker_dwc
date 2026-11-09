@@ -140,6 +140,7 @@ occurrence:
           - decimalLongitude
         to_replace: ','
         value: '.'
+        stringReplace: true
     - function: validate_decimal_coordinates
     - function: join_columns
       params:
