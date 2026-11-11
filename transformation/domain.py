@@ -15,6 +15,10 @@ def generate_occ_id_triplet(df: pd.DataFrame, collection_code_column: str = 'col
                 f"Missing required columns for occurrenceID generation: {missing}"
             )
 
+        has_catalog_number = (
+            df["catalogNumber"].notna()
+            & df["catalogNumber"].astype(str).str.strip().ne("")
+        )
         df["occurrenceID"] = (
             df["institutionCode"]
             .astype(str)
@@ -22,7 +26,7 @@ def generate_occ_id_triplet(df: pd.DataFrame, collection_code_column: str = 'col
                 [df[collection_code_column].astype(str), df["catalogNumber"].astype(str)],
                 sep=":",
             )
-        )
+        ).where(has_catalog_number, pd.NA)
 
         cols = ["occurrenceID"] + [col for col in df.columns if col != "occurrenceID"]
         df = df[cols]
@@ -33,7 +37,7 @@ def generate_occ_id_triplet(df: pd.DataFrame, collection_code_column: str = 'col
         raise
 
 
-def generate_index_id(df: pd.DataFrame) -> pd.DataFrame:
+def generate_index_id(df: pd.DataFrame, use_row_num: bool = False) -> pd.DataFrame:
     """Generates id for index from indexIdPrefix and catalogNumber."""
     df = df.copy()
     try:
@@ -47,14 +51,14 @@ def generate_index_id(df: pd.DataFrame) -> pd.DataFrame:
         df["id"] = (
             df["indexIdPrefix"].astype(str)
             .str.cat(
-                [df["catalogNumber"].astype(str)],
+                [(df.index + 1).astype(str) if use_row_num else df["catalogNumber"].astype(str)],
                 sep="_",
             )
         )
 
         cols = ["id"] + [col for col in df.columns if col != "id"]
         df = df[cols]
-        logging.info("Successfully generated 'id' column.")
+
         return df
     except Exception as e:
         logging.exception(f"An error occurred in generate_index_id: {e}")
@@ -81,6 +85,7 @@ def clean_column_sex(df: pd.DataFrame) -> pd.DataFrame:
         "Hermafrodit": "Hermaphrodite",
         "Hermaphrodite": "Hermaphrodite",
         "Hona": "Female",
+        "hona": "Female",
         "Okänt": "Unknown",
         "Unknown": "Unknown",
         "Castrated": "Castrated",

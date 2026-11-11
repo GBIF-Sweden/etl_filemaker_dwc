@@ -32,3 +32,19 @@ id: ma_750009
 Herptiles
 =========
 - Coordinates starting with zero are lost in parsing: eg: 0.04777, -0.21431
+
+
+Birds
+=====
+- Lifestage not cleaned
+- Empty rows: grep '"";"";;"";;;"";"";"";"";;;;"";"";"";;;;;;;;"";"";;"";;"";"";"";"";;"";"";;;;""' filemaker-exports/ZOO/verbatim/AVexport.csv | wc -l
+7123
+
+- Years earlier than 1677 are not handled py pandas.to_datetime (se chatgpt):
+id: av_123491
+  only in OLD: eventDate, month, startDayOfYear, verbatimEventDate, year
+    eventDate (OLD only): "Mon Apr 21 00:00:00 UTC 1522"
+    month (OLD only): "05"
+    startDayOfYear (OLD only): "121"
+    verbatimEventDate (OLD only): "1522-05"
+    year (OLD only): "1522"

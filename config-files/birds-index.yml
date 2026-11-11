@@ -1,0 +1,117 @@
+dataset: birds
+occurrence:
+  defaults:
+    collectionName: Bird collection
+    collectionCode: AV
+    collectionCodeDwc: Birds
+    indexIdPrefix: av
+    institutionCode: NRM
+    kingdom: Animalia
+  extract:
+    delimiter: ;
+    encoding: utf8
+    srcFilePath: ./data/ZOO/verbatim/AVexport.csv
+    dtype:
+      catalogNumber: str
+      individualCount: str
+      day: str
+      month: str
+      year: str
+      endDay: str
+      endMonth: str
+      endYear: str
+      sex: str
+      dateIdentified: str
+      Preservation: str
+  load:
+    database_table_pk_column: id
+    write_to_db: false
+    write_to_file: false
+    write_to_dwca: false
+    write_to_index: true
+    index_path: ./data/ZOO/processed/index_birds.json
+    dwc_fields: {}
+  mapping:
+    createdDate: catalogedDate
+    dateIdentified: identifiedYear
+    Preservation: preservation
+    genericName: genus
+    class: clazz
+
+  transformations:
+    - function: clean_whitespace
+      params: {}
+    - function: generate_occ_id_triplet
+      params: 
+        collection_code_column: collectionCodeDwc
+    - function: generate_index_id
+      params:
+        use_row_num: true
+    - function: clean_column_sex
+      params: {}
+    - function: trim_value
+      params:
+        column: maximumDepthInMeters
+        value: ".0"
+        from_start: False
+    - function: trim_value
+      params:
+        column: maximumElevationInMeters
+        value: ".0"
+        from_start: False
+    - function: trim_value
+      params:
+        column: minimumDepthInMeters
+        value: ".0"
+        from_start: False
+    - function: trim_value
+      params:
+        column: minimumElevationInMeters
+        value: ".0"
+        from_start: False
+    - function: duplicate_column
+      params:
+        source_column: specificEpithet
+        target_column: species
+    - function: add_taxon_rank
+    - function: trim_value
+      params:
+        column: month
+        value: "00"
+    - function: trim_value
+      params:
+        column: day
+        value: "00"
+    - function: create_date
+      params:
+        col_year: year
+        col_month: month
+        col_day: day
+        col_date: eventDate
+        validate_and_clean: true
+    - function: duplicate_column
+      params:
+        source_column: eventDate
+        target_column: verbatimEventDate
+    - function: convert_date_columns
+      params:
+        date_column: eventDate
+    - function: create_day_of_year
+      params:
+        col_date: eventDate
+        col_day_of_year: startDayOfYear
+    - function: convert_date_columns
+      params:
+        date_column: catalogedDate
+    - function: trim_value
+      params:
+        column: identifiedYear
+        value: "-"
+    - function: drop_duplicate_rows
+      params: {}
+    - function: drop_unmapped_columns
+      params: {}
+  unmapped:
+    - sex_p
+    - indexIdPrefix
+    - collectionCodeDwc
