@@ -5,7 +5,6 @@ occurrence:
     collectionName: Invertebrate type collection
     collectionCode: et
     collectionCodeDwc: EVtype
-    indexIdPrefix: et
     institutionCode: NRM
   extract:
     delimiter: ;
@@ -40,6 +39,8 @@ occurrence:
       params: 
         collection_code_column: collectionCodeDwc
     - function: generate_index_id
+      params:
+        prefix: et
     - function: replace_values
       params:
         columns_to_replace:
@@ -165,7 +166,6 @@ occurrence:
     - endDay
     - endMonth
     - endYear
-    - indexIdPrefix
     - collectionCodeDwc
 multimedia:
   defaults:

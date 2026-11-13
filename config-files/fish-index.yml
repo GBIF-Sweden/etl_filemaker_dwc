@@ -3,7 +3,6 @@ occurrence:
   defaults:
     collectionName: Fish collection
     collectionCodeDwc: NRM-Fish
-    indexIdPrefix: pi
     institutionCode: NRM
   extract:
     delimiter: ;
@@ -37,7 +36,8 @@ occurrence:
       params: 
         collection_code_column: collectionCodeDwc
     - function: generate_index_id
-      params: {}
+      params:
+        prefix: pi
     - function: replace_values
       params:
         columns_to_replace:
@@ -155,7 +155,6 @@ occurrence:
     - endDay
     - endMonth
     - endYear
-    - indexIdPrefix
     - collectionCodeDwc
 
 multimedia:

@@ -4,7 +4,6 @@ occurrence:
     collectionName: Bird collection
     collectionCode: AV
     collectionCodeDwc: Birds
-    indexIdPrefix: av
     institutionCode: NRM
     kingdom: Animalia
   extract:
@@ -46,6 +45,7 @@ occurrence:
         collection_code_column: collectionCodeDwc
     - function: generate_index_id
       params:
+        prefix: av
         use_row_num: true
     - function: clean_column_sex
       params: {}
@@ -113,5 +113,4 @@ occurrence:
       params: {}
   unmapped:
     - sex_p
-    - indexIdPrefix
     - collectionCodeDwc

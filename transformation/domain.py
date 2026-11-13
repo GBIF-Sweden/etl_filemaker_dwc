@@ -37,24 +37,23 @@ def generate_occ_id_triplet(df: pd.DataFrame, collection_code_column: str = 'col
         raise
 
 
-def generate_index_id(df: pd.DataFrame, use_row_num: bool = False) -> pd.DataFrame:
-    """Generates id for index from indexIdPrefix and catalogNumber."""
+def generate_index_id(df: pd.DataFrame, prefix: str, use_row_num: bool = False) -> pd.DataFrame:
+    """Generates id for index from prefix and catalogNumber."""
     df = df.copy()
     try:
-        required_cols = ["indexIdPrefix", "catalogNumber"]
+        required_cols = ["catalogNumber"]
         if not all(col in df.columns for col in required_cols):
             missing = [col for col in required_cols if col not in df.columns]
             raise KeyError(
                 f"Missing required columns for index id generation: {missing}"
             )
 
-        df["id"] = (
-            df["indexIdPrefix"].astype(str)
-            .str.cat(
-                [(df.index + 1).astype(str) if use_row_num else df["catalogNumber"].astype(str)],
-                sep="_",
-            )
+        suffix = (
+            (df.index + 1).astype(str)
+            if use_row_num
+            else df["catalogNumber"].astype(str)
         )
+        df["id"] = [f"{prefix}_{value}" for value in suffix]
 
         cols = ["id"] + [col for col in df.columns if col != "id"]
         df = df[cols]

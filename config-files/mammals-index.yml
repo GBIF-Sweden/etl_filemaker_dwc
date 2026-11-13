@@ -3,7 +3,6 @@ occurrence:
   defaults:
     collectionName: Mammal collection
     collectionCodeDwc: Mammals
-    indexIdPrefix: ma
     institutionCode: NRM
     kingdom: Animalia
   extract:
@@ -42,7 +41,8 @@ occurrence:
       params: 
         collection_code_column: collectionCodeDwc
     - function: generate_index_id
-      params: {}
+      params:
+        prefix: ma
     - function: clean_column_sex
       params: {}
     - function: clean_column_lifestage
@@ -134,5 +134,4 @@ occurrence:
       params: {}
   unmapped:
     - sex_p
-    - indexIdPrefix
     - collectionCodeDwc

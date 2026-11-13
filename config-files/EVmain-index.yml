@@ -4,7 +4,6 @@ occurrence:
     collectionName: Invertebrate main collection
     collectionCode: ev
     collectionCodeDwc: EVmain
-    indexIdPrefix: ev
     institutionCode: NRM
   extract:
     delimiter: ;
@@ -41,6 +40,8 @@ occurrence:
       params: 
         collection_code_column: collectionCodeDwc
     - function: generate_index_id
+      params:
+        prefix: ev
     - function: replace_values
       params:
         columns_to_replace:
@@ -162,7 +163,6 @@ occurrence:
     - endDay
     - endMonth
     - endYear
-    - indexIdPrefix
     - collectionCodeDwc
 multimedia:
   defaults:
@@ -220,4 +220,3 @@ merges:
     left_on: occurrenceID
     right_on: occurrenceID
     how: left
-

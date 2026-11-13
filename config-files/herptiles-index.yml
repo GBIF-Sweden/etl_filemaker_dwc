@@ -3,7 +3,6 @@ occurrence:
   defaults:
     collectionName: Amphibians and reptiles collections
     collectionCodeDwc: NRM-Herps
-    indexIdPrefix: he
     institutionCode: NRM
   extract:
     delimiter: ;
@@ -38,7 +37,8 @@ occurrence:
       params: 
         collection_code_column: collectionCodeDwc
     - function: generate_index_id
-      params: {}
+      params:
+        prefix: he
     - function: replace_values
       params:
         columns_to_replace:
@@ -162,7 +162,6 @@ occurrence:
     - endDay
     - endMonth
     - endYear
-    - indexIdPrefix
     - collectionCodeDwc
 
 multimedia:
