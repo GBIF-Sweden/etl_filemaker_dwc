@@ -220,7 +220,6 @@ def main(config_path: str):
         # --- CREATE index ---
         create_index(
             df_occurrence_final,
-            df_multimedia_final,
             load_config_occurrence,
         )
 

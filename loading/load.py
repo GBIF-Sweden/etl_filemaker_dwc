@@ -269,7 +269,6 @@ def create_dwca_archive(
 
 def create_index(
     core_df: pd.DataFrame,
-    multimedia_df: pd.DataFrame,
     load_config: Dict[str, Any],
 ):
     if not load_config.get("write_to_index"):
@@ -280,16 +279,6 @@ def create_index(
 
     if not index_path_str:
         raise ValueError("'index_path' is required when 'write_to_index' is enabled.")
-
-    # media_by_occurrence = (
-    #     multimedia_df.groupby("occurrenceID", dropna=True)
-    #     .apply(lambda rows: rows.to_dict(orient="records"))
-    #     .to_dict()
-    # )
-    # core_df["associatedMedia"] = core_df["occurrenceID"].map(media_by_occurrence)
-    # core_df["associatedMedia"] = core_df["associatedMedia"].apply(
-    #     lambda media: media if isinstance(media, list) else []
-    # )
 
     index_path = Path(index_path_str)
     index_path.parent.mkdir(parents=True, exist_ok=True)
