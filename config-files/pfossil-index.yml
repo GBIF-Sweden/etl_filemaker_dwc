@@ -6,6 +6,7 @@ occurrence:
     basisOfRecord: FossilSpecimen
     collectionCodeDwc: PAL
     institutionCode: NRM
+    institutionName: Swedish Museum of Natural History
   extract:
     delimiter: ;
     encoding: ISO-8859-1
@@ -63,6 +64,7 @@ occurrence:
     Preservation: preservation
     SiteName: fieldNumber
     LocalityName: locality
+    Species name: synonyms
   transformations:
   - function: pal_move_continents
     params: {}
@@ -98,6 +100,30 @@ occurrence:
   - function: convert_date_columns
     params:
       date_column: catalogedDate
+  - function: dms_to_decimal_coordinate
+    params:
+      dms_column: verbatimLatitude
+      decimal_column: decimalLatitude
+  - function: dms_to_decimal_coordinate
+    params:
+      dms_column: verbatimLongitude
+      decimal_column: decimalLongitude
+  - function: join_columns
+    params:
+      firstcolumn: decimalLatitude
+      secondcolumn: decimalLongitude
+      targetcolumn: lat_long
+      delimiter: ","
+  - function: duplicate_column
+    params:
+      source_column: lat_long
+      target_column: geo
+  - function: join_columns
+    params:
+      firstcolumn: synonyms
+      secondcolumn: Author
+      targetcolumn: synonymAuthor
+      require_both: False
   - function: clean_whitespace
     params: {}
   - function: drop_duplicate_rows
@@ -108,7 +134,6 @@ occurrence:
   - function: drop_unmapped_columns
     params: {}
   unmapped:
-  - Species name
   - Author
   - associatedMedia
   - collectionCodeDwc

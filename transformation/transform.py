@@ -9,6 +9,7 @@ from transformation.coordinates import (
     generate_dms_coordinates_column,
     update_coordinates,
     validate_decimal_coordinates,
+    dms_to_decimal_coordinate,
 )
 from transformation.dates import (
     convert_date_columns,
@@ -79,6 +80,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "columns_to_list": columns_to_list,
     "update_coordinates": update_coordinates,
     "validate_decimal_coordinates": validate_decimal_coordinates,
+    "dms_to_decimal_coordinate": dms_to_decimal_coordinate,
     "create_dynamicproperties": create_dynamicproperties,
     "trim_value": trim_value,
     "group_by_and_aggregate": group_by_and_aggregate,

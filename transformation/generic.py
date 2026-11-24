@@ -298,7 +298,8 @@ def merge_columns(
 
 
 def join_columns(
-    df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str, delimiter: str = " "
+    df: pd.DataFrame, firstcolumn: str, secondcolumn: str, targetcolumn: str, delimiter: str = " ",
+    require_both: bool = True
 ) -> pd.DataFrame:
     """Joins values from two specified columns into a target column."""
     df = df.copy()
@@ -311,7 +312,8 @@ def join_columns(
     s2 = df[secondcolumn].fillna("").astype(str)
 
     both_non_empty = s1.ne("") & s2.ne("")
-    joined = (s1 + delimiter + s2).where(both_non_empty, "")
+    fallback_value = "" if require_both else s1.where(s1.ne(""), s2)
+    joined = (s1 + delimiter + s2).where(both_non_empty, fallback_value)
     df[targetcolumn] = joined.str.strip()
 
     return df

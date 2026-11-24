@@ -5,6 +5,16 @@ from typing import Any
 import pandas as pd
 
 
+_DMS_PATTERN = (
+    r"^(?P<hemi1>[NSEW])?\s*"
+    r"(?P<sign>[-+])?\s*"
+    r"(?P<deg>\d+(?:\.\d+)?)"
+    r"(?:\s+(?P<min>\d+(?:\.\d+)?))?"
+    r"(?:\s+(?P<sec>\d+(?:\.\d+)?))?\s*"
+    r"(?P<hemi2>[NSEW])?$"
+)
+
+
 def construct_coordinate_string(
     degrees: Any, minutes: Any, seconds: Any, direction: Any
 ) -> str:
@@ -104,4 +114,50 @@ def validate_decimal_coordinates(df: pd.DataFrame,
         df.loc[valid, column] = values
         df.loc[~valid, column] = None
 
+    return df
+
+
+def dms_to_decimal_coordinate(
+    df: pd.DataFrame, dms_column: str, decimal_column: str
+) -> pd.DataFrame:
+    """Convert a DMS coordinate to decimal format.
+
+    Handles strings such as:
+        40°26'46"N, 40° 26' 46.5" S, -79 58 56, W 79°58'56", 40°26.767'N
+    S/W hemispheres and a leading minus produce negative values.
+    Unparseable or out-of-range values (minutes/seconds >= 60) become NaN.
+    """
+    df = df.copy()
+
+    # Normalize: uppercase, turn DMS symbols into spaces, collapse whitespace
+    cleaned = (
+        df[dms_column]
+        .astype("string")
+        .str.upper()
+        .str.replace("''", " ", regex=False)  # double apostrophe = seconds mark
+        .str.replace(r"[°º˚′'’″\"”]", " ", regex=True)
+        .str.replace(r"\s+", " ", regex=True)
+        .str.strip()
+    )
+
+    parts = cleaned.str.extract(_DMS_PATTERN)
+
+    deg = pd.to_numeric(parts["deg"], errors="coerce")
+    minutes = pd.to_numeric(parts["min"], errors="coerce").fillna(0)
+    seconds = pd.to_numeric(parts["sec"], errors="coerce").fillna(0)
+
+    hemisphere = parts["hemi2"].fillna(parts["hemi1"])
+    negative = (
+        ((parts["sign"] == "-") | hemisphere.isin(["S", "W"]))
+        .fillna(False)
+        .to_numpy(dtype=bool)
+    )
+
+    decimal = deg + minutes / 60 + seconds / 3600
+    decimal = decimal.where(~negative, -decimal)
+
+    # Invalidate impossible minute/second values
+    decimal = decimal.where((minutes < 60) & (seconds < 60))
+
+    df[decimal_column] = decimal.astype("float64").round(6)
     return df
