@@ -173,7 +173,9 @@ def clean_column_lifestage(df: pd.DataFrame, lifestage_mapping: dict = {}) -> pd
     return df
 
 
-def add_taxon_rank(df: pd.DataFrame, taxon_rank_column: str = "taxonRank") -> pd.DataFrame:
+def add_taxon_rank(df: pd.DataFrame,
+                   taxon_rank_column: str = "taxonRank",
+                   scientific_name_column: str | None = None) -> pd.DataFrame:
     """Adds a taxon rank column based on the presence of taxonomic columns."""
     df = df.copy()
     taxonomic_columns = [
@@ -188,10 +190,16 @@ def add_taxon_rank(df: pd.DataFrame, taxon_rank_column: str = "taxonRank") -> pd
     ]
 
     df[taxon_rank_column] = ""
+    if scientific_name_column:
+        df[scientific_name_column] = ""
+
     for column in taxonomic_columns:
         if column in df.columns:
             has_value = df[column].notna() & df[column].astype(str).str.strip().ne("")
             df.loc[has_value & df[taxon_rank_column].eq(""), taxon_rank_column] = column.capitalize()
+            if scientific_name_column:
+                df.loc[has_value & df[scientific_name_column].eq(""), scientific_name_column] \
+                    = df[column].astype(str).str.strip()
 
     logging.info(f"Added '{taxon_rank_column}' column.")
 

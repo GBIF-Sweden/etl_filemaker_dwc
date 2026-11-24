@@ -1,0 +1,114 @@
+dataset: paleobotany
+occurrence:
+  defaults:
+    collectionName: Paleobotany Collection
+    collectionCode: pb
+    basisOfRecord: FossilSpecimen
+    collectionCodeDwc: PAL
+    institutionCode: NRM
+  extract:
+    delimiter: ;
+    encoding: ISO-8859-1
+    srcFilePath: ./data/PAL/verbatim/pfossil.csv
+    quotechar: \"
+    dtype:
+      CollDay: str
+      CollMonth: str
+      CollYear: str
+      waterBody: str
+      Country: str
+      IdentifiedYear: str
+  load:
+    database_table_pk_column: occurrenceID
+    write_to_db: false
+    write_to_file: false
+    write_to_dwca: false
+    write_to_index: true
+    index_path: ./data/PAL/processed/index_paleobotany.json
+    dwc_fields: {}
+  mapping:
+    Catalogue ID: catalogNumber
+    Associated Media: associatedMedia
+    DateStamp: catalogedDate
+    Phylum: phylum
+    Class: clazz
+    Order: order
+    Family: family
+    Genus: genus
+    Species: species
+    Authority: scientificNameAuthorship
+    Type: typeStatus
+    Identifier: identifiedBy
+    IdentifiedYear: identifiedYear
+    Treatment: preservedSpecimen
+    Collector: collectors
+    CollYear: year
+    CollMonth: month
+    CollDay: day
+    Lithostratigraphy: lithostratigraphicTerms
+    PeriodMax: latestPeriodOrHighestSystem
+    EpochMax: latestEpochOrHighestSeries
+    StageMax: latestAgeOrHighestStage
+    PeriodMin: earliestPeriodOrLowestSystem
+    EpochMin: earliestEpochOrLowestSeries
+    StageMin: earliestAgeOrLowestStage
+    Latitude: verbatimLatitude
+    Longitude: verbatimLongitude
+    Continent: continent
+    CountyParish: county
+    RegionState: stateProvince
+    Country: country
+    Element: element
+    Description: description
+    Preservation: preservation
+    SiteName: fieldNumber
+    LocalityName: locality
+  transformations:
+  - function: pal_move_continents
+    params: {}
+  - function: pal_move_oceans
+    params: {}
+  - function: generate_occ_id_triplet
+    params: 
+      collection_code_column: collectionCodeDwc
+  - function: generate_index_id
+    params:
+      prefix: pb
+  - function: add_taxon_rank
+    params:
+      scientific_name_column: scientificName
+  - function: create_date
+    params:
+      col_year: year
+      col_month: month
+      col_day: day
+      col_date: eventDate
+      validate_and_clean: true
+  - function: duplicate_column
+    params:
+      source_column: eventDate
+      target_column: verbatimEventDate
+  - function: convert_date_columns
+    params:
+      date_column: eventDate
+  - function: create_day_of_year
+    params:
+      col_date: eventDate
+      col_day_of_year: startDayOfYear
+  - function: convert_date_columns
+    params:
+      date_column: catalogedDate
+  - function: clean_whitespace
+    params: {}
+  - function: drop_duplicate_rows
+    params: {}
+  - function: drop_empty_rows
+    params:
+      column_to_check: catalogNumber
+  - function: drop_unmapped_columns
+    params: {}
+  unmapped:
+  - Species name
+  - Author
+  - associatedMedia
+  - collectionCodeDwc
