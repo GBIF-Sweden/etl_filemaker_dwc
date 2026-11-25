@@ -125,7 +125,8 @@ def dms_to_decimal_coordinate(
     Handles strings such as:
         40°26'46"N, 40° 26' 46.5" S, -79 58 56, W 79°58'56", 40°26.767'N
     S/W hemispheres and a leading minus produce negative values.
-    Unparseable or out-of-range values (minutes/seconds >= 60) become NaN.
+    Minutes or seconds >= 60 roll over into minutes/degrees.
+    Unparseable values become NaN.
     """
     df = df.copy()
 
@@ -134,7 +135,7 @@ def dms_to_decimal_coordinate(
         df[dms_column]
         .astype("string")
         .str.upper()
-        .str.replace("''", " ", regex=False)  # double apostrophe = seconds mark
+        .str.replace("''", " ", regex=False)
         .str.replace(r"[°º˚′'’″\"”]", " ", regex=True)
         .str.replace(r"\s+", " ", regex=True)
         .str.strip()
@@ -155,9 +156,6 @@ def dms_to_decimal_coordinate(
 
     decimal = deg + minutes / 60 + seconds / 3600
     decimal = decimal.where(~negative, -decimal)
-
-    # Invalidate impossible minute/second values
-    decimal = decimal.where((minutes < 60) & (seconds < 60))
 
     df[decimal_column] = decimal.astype("float64").round(6)
     return df

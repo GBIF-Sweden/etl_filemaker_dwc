@@ -143,7 +143,7 @@ def convert_date_columns(df: pd.DataFrame, date_column: str) -> pd.DataFrame:
     if not remaining_indices.empty:
         remaining_cleaned_strings = cleaned_date_strings.loc[remaining_indices]
         general_parsed = pd.to_datetime(
-            remaining_cleaned_strings, utc=True, errors="coerce"
+            remaining_cleaned_strings, yearfirst=True, utc=True, errors="coerce"
         )
         parsed_dates.loc[remaining_indices] = general_parsed
 

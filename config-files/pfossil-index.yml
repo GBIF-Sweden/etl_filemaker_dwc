@@ -108,6 +108,7 @@ occurrence:
     params:
       dms_column: verbatimLongitude
       decimal_column: decimalLongitude
+  - function: validate_decimal_coordinates
   - function: join_columns
     params:
       firstcolumn: decimalLatitude
