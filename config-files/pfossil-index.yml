@@ -64,7 +64,6 @@ occurrence:
     Preservation: preservation
     SiteName: fieldNumber
     LocalityName: locality
-    Species name: synonyms
   transformations:
   - function: pal_move_continents
     params: {}
@@ -79,6 +78,8 @@ occurrence:
   - function: add_taxon_rank
     params:
       scientific_name_column: scientificName
+  - function: pal_fix_synonyms_index
+    params: {}
   - function: create_date
     params:
       col_year: year
@@ -119,12 +120,6 @@ occurrence:
     params:
       source_column: lat_long
       target_column: geo
-  - function: join_columns
-    params:
-      firstcolumn: synonyms
-      secondcolumn: Author
-      targetcolumn: synonymAuthor
-      require_both: False
   - function: clean_whitespace
     params: {}
   - function: drop_duplicate_rows
@@ -135,6 +130,7 @@ occurrence:
   - function: drop_unmapped_columns
     params: {}
   unmapped:
+  - Species name
   - Author
   - associatedMedia
   - collectionCodeDwc

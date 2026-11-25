@@ -83,6 +83,32 @@ def pal_fix_synonyms(df: pd.DataFrame) -> pd.DataFrame:
         raise
 
 
+def pal_fix_synonyms_index(df: pd.DataFrame) -> pd.DataFrame:
+    """Fix synonyms for indexing."""
+    df = df.copy()
+
+    df["catalogNumber"] = df["catalogNumber"].ffill()
+    df["Species name"] = df["Species name"].fillna("")
+    df["Author"] = df["Author"].fillna("")
+
+    species = df["Species name"].fillna("")
+    author = df["Author"].fillna("")
+
+    df["synonyms"] = species
+    df["synonymAuthor"] = (species + " " + author).str.strip()
+
+    agg_dict: Dict[str, Any] = {
+        col: "first"
+        for col in df.columns
+        if col not in ["synonyms", "synonymAuthor", "catalogNumber"]
+    }
+    agg_dict["synonyms"] = lambda x: list(x)
+    agg_dict["synonymAuthor"] = lambda x: list(x)
+    df2 = df.groupby("catalogNumber", as_index=False).agg(agg_dict)
+
+    return df2
+
+
 def pal_adhoc_transform(df: pd.DataFrame) -> pd.DataFrame:
     """Apply ad-hoc PAL transformations."""
     df = df.copy()

@@ -29,6 +29,7 @@ from transformation.domain_pal import (
     pad_zero,
     pal_adhoc_transform,
     pal_fix_synonyms,
+    pal_fix_synonyms_index,
     pal_move_continents,
     pal_move_oceans,
 )
@@ -92,6 +93,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "pal_move_oceans": pal_move_oceans,
     "pal_adhoc_transform": pal_adhoc_transform,
     "pal_fix_synonyms": pal_fix_synonyms,
+    "pal_fix_synonyms_index": pal_fix_synonyms_index,
     "clean_column_sex": clean_column_sex,
     "clean_column_lifestage": clean_column_lifestage,
     "split_and_explode": split_and_explode,
