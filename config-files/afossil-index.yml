@@ -1,0 +1,143 @@
+dataset: paleozoology
+occurrence:
+  defaults:
+    collectionName: Paleozoology Collection
+    collectionCode: pz
+    basisOfRecord: FossilSpecimen
+    collectionCodeDwc: PAL
+    institutionCode: NRM
+    institutionName: Swedish Museum of Natural History
+  dtype_dict:
+    CollDay: str
+    CollMonth: str
+    CollYear: str
+  extract:
+    delimiter: ;
+    encoding: ISO-8859-1
+    srcFilePath: ./data/PAL/verbatim/afossil.csv
+    quotechar: \"
+    dtype:
+      CollDay: str
+      CollMonth: str
+      CollYear: str
+      waterBody: str
+      Country: str
+      IdentifiedYear: str
+  load:
+    database_table_pk_column: 'occurrenceID'
+    write_to_db: false
+    write_to_file: false
+    write_to_dwca: false
+    write_to_index: true
+    index_path: ./data/PAL/processed/index_paleozoology.json
+    dwc_fields: {}
+  mapping:
+    Catalogue ID: catalogNumber
+    Associated Media: associatedMedia
+    DateStamp: catalogedDate
+    Phylum: phylum
+    Class: clazz
+    Order: order
+    Family: family
+    Genus: genus
+    Species: species
+    Authority: scientificNameAuthorship
+    Type: typeStatus
+    Identifier: identifiedBy
+    IdentifiedYear: identifiedYear
+    Treatment: preservedSpecimen
+    Preservation: preservation
+    Collector: collectors
+    CollYear: year
+    CollMonth: month
+    CollDay: day
+    Lithostratigraphy: lithostratigraphicTerms
+    PeriodMax: latestPeriodOrHighestSystem
+    EpochMax: latestEpochOrHighestSeries
+    StageMax: latestAgeOrHighestStage
+    PeriodMin: earliestPeriodOrLowestSystem
+    EpochMin: earliestEpochOrLowestSeries
+    StageMin: earliestAgeOrLowestStage
+    Latitude: verbatimLatitude
+    Longitude: verbatimLongitude
+    Continent: continent
+    CountyParish: county
+    RegionState: stateProvince
+    Country: country
+    SiteName: fieldNumber
+    LocalityName: locality
+  transformations:
+  - function: pal_move_continents
+    params: {}
+  - function: pal_move_oceans
+    params: {}
+  - function: generate_occ_id_triplet
+    params: 
+      collection_code_column: collectionCodeDwc
+  - function: generate_index_id
+    params:
+      prefix: pz
+  - function: add_taxon_rank
+    params:
+      scientific_name_column: scientificName
+  - function: pal_fix_synonyms
+    params: {}
+  - function: create_date
+    params:
+      col_year: year
+      col_month: month
+      col_day: day
+      col_date: eventDate
+      validate_and_clean: true
+  - function: duplicate_column
+    params:
+      source_column: eventDate
+      target_column: verbatimEventDate
+  - function: convert_date_columns
+    params:
+      date_column: eventDate
+  - function: create_day_of_year
+    params:
+      col_date: eventDate
+      col_day_of_year: startDayOfYear
+  - function: convert_date_columns
+    params:
+      date_column: catalogedDate
+  - function: dms_to_decimal_coordinate
+    params:
+      dms_column: verbatimLatitude
+      decimal_column: decimalLatitude
+  - function: dms_to_decimal_coordinate
+    params:
+      dms_column: verbatimLongitude
+      decimal_column: decimalLongitude
+  - function: validate_decimal_coordinates
+  - function: join_columns
+    params:
+      firstcolumn: decimalLatitude
+      secondcolumn: decimalLongitude
+      targetcolumn: lat_long
+      delimiter: ","
+  - function: duplicate_column
+    params:
+      source_column: lat_long
+      target_column: geo
+  - function: erase_whitespace_only
+    params:
+      column: associatedMedia
+  - function: split
+    params:
+      column: associatedMedia
+      delimiter: "/"
+  - function: add_has_image
+  - function: clean_whitespace
+    params: {}
+  - function: drop_duplicate_rows
+    params: {}
+  - function: drop_empty_rows
+    params:
+      column_to_check: catalogNumber
+  - function: drop_unmapped_columns
+  unmapped:
+    - Author
+    - collectionCodeDwc

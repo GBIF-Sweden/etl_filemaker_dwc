@@ -22,6 +22,7 @@ from transformation.domain import (
     generate_occ_id_triplet,
     generate_index_id,
     add_taxon_rank,
+    add_has_image,
 )
 from transformation.domain_pal import (
     move_entities_to_column,
@@ -34,6 +35,7 @@ from transformation.domain_pal import (
 from transformation.generic import (
     addprefix,
     clean_whitespace,
+    erase_whitespace_only,
     create_dynamicproperties,
     drop_columns,
     drop_duplicate_rows,
@@ -61,6 +63,7 @@ class TransformationError(Exception):
 
 TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "clean_whitespace": clean_whitespace,
+    "erase_whitespace_only": erase_whitespace_only,
     "addprefix": addprefix,
     "generate_occ_id_triplet": generate_occ_id_triplet,
     "generate_index_id": generate_index_id,
@@ -95,6 +98,7 @@ TRANSFORMATION_DISPATCHER: Dict[str, Callable] = {
     "split": split,
     "convert_date_columns": convert_date_columns,
     "add_taxon_rank": add_taxon_rank,
+    "add_has_image": add_has_image,
 }
 
 

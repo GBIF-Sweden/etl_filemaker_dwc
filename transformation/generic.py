@@ -28,6 +28,18 @@ def clean_whitespace(df: pd.DataFrame) -> pd.DataFrame:
         raise
 
 
+def erase_whitespace_only(df: pd.DataFrame, column: str) -> pd.DataFrame:
+    """Replace strings containing only whitespace with missing values."""
+    df = df.copy()
+    if column in df.columns:
+        whitespace_only = df[column].map(
+            lambda value: isinstance(value, str) and value.isspace()
+        )
+        df.loc[whitespace_only, column] = np.nan
+
+    return df
+
+
 def addprefix(df: pd.DataFrame, target_column: str, prefix: str) -> pd.DataFrame:
     """Prepends a prefix to non-empty values in a target column."""
     df = df.copy()

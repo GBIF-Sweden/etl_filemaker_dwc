@@ -204,3 +204,14 @@ def add_taxon_rank(df: pd.DataFrame,
     logging.info(f"Added '{taxon_rank_column}' column.")
 
     return df
+
+
+def add_has_image(df: pd.DataFrame, image_column: str = "associatedMedia") -> pd.DataFrame:
+    """Adds a hasImage flag column if the specified image column is not empty."""
+    df = df.copy()
+
+    df["hasImage"] = df[image_column].apply(
+        lambda value: True if isinstance(value, list) and len(value) > 0 else ""
+    )
+
+    return df
